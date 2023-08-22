@@ -258,7 +258,17 @@ END_SUB
 
 SUB(CaptchaInit)
 
-    $drawallpaths = 0
+    $drawallpaths = 1
+    $drawpathFor = 0
+
+    $color_array[1] = $color_RED
+    $color_array[2] = $color_ORANGE
+    $color_array[3] = $color_YELLOW
+    $color_array[4] = $color_GREEN
+    $color_array[5] = $color_CYAN
+    $color_array[6] = $color_BLUE
+    $color_array[7] = $color_MAGENTA
+    $color_array[8] = $color_HOTPINK
 
     for($foriterator = 0, $foriterator < 8, 1)
         $minimum_pixels[$foriterator] = 0
@@ -695,7 +705,8 @@ SUB(SolveCaptcha)
 
                 IF($captcha_clickpass = 1)
 
-                    message_click(rnd(($captcha_answer - 1) * 101 + 349,($captcha_answer - 1) * 101 + 373),rnd(560,591))
+                    move(rnd(($captcha_answer - 1) * 101 + 349,($captcha_answer - 1) * 101 + 373),rnd(560,591))
+                    //message_click(rnd(($captcha_answer - 1) * 101 + 349,($captcha_answer - 1) * 101 + 373),rnd(560,591))
 
                     WAIT(0.5)
                     GETSCREEN

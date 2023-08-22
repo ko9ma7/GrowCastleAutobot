@@ -584,11 +584,6 @@ SUB(SolveCaptcha)
 
                 end_cyc
 
-                wndpos($hwnd, 1783-393+85, 871-492)
-                wait(0.5)
-
-                getscreen(1783,871,1783+496-393,871+634-492)
-
                 if($gift_screen_before = 1)
                     screenshot("gift")
                 end_if

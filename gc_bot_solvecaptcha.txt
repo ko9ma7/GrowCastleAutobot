@@ -1,0 +1,802 @@
+SUB(BlackLine, $_scrtoblackUp, $_scrtoblackDn)
+
+    WHILE($_scrtoblackUp < $_scrtoblackDn)
+
+        IF((PXL($BBGX,$_scrtoblackUp) ! 0) & (PXL($BBGX,$_scrtoblackUp) ! 16777215))
+
+            PXLREPLACE(0, 0, 1920, 1080, PXL($BBGX, $_scrtoblackUp), 0)
+
+            if(pxlcount($BBGX, $_scrtoblackUp, $BBGX, $_scrtoblackDn, 0) = $_scrtoblackDn - $_scrtoblackUp + 1)
+                $_scrtoblackUp = $_scrtoblackDn
+            end_if
+
+        END_IF
+
+        inc($_scrtoblackUp, 3)
+
+    END_CYC
+
+END_SUB
+
+SUB(BlackBackgroundGift11)
+
+    logwrite($_date_str, " -bbg")
+
+    $scrtoblack = 57
+    $scrtoblackMax = 585
+
+    $BBGX = 1650
+
+    while($BBGX < 1826)
+
+        if(pxlcount($BBGX, $scrtoblack, $BBGX, $scrtoblackMax, 0) < $scrtoblackMax - $scrtoblack + 1)
+            BlackLine($scrtoblack, $scrtoblackMax)
+        end_if
+
+        inc($BBGX, 3)
+
+    end_cyc
+
+    PXLREPLACE(0,0,1920,1080, 4144959, 0)
+
+    logwrite($_date_str, " bbg-")
+
+END_SUB
+
+SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
+
+    $counter = 1
+    if($main_cycle_drawpathMode = 1)
+        $counter = 8
+    end_if
+
+    while($counter < 9)
+
+        $this_heropxlsum = 0
+
+        $frame_counter = 1
+        $frame_counter_from = 1
+        $bool_frame_jump = 0
+
+        if($main_cycle_drawpathMode = 0)
+            $main_cycle_key = $counter
+        end_if
+
+        $first_frame_pixels = 0
+
+        while($frame_counter < 19)
+
+            if(($frame_counter_from ! 1) & ($frame_counter ! 1) & ($bool_frame_jump = 0))
+
+                $frame_counter = $frame_counter_from
+                $bool_frame_jump = 1
+
+            end_if 
+
+            $screenpart_LR = int($frame_counter / 10)
+
+            switch($heronum)
+
+                case(1)
+
+                    $add_to_Y = ROUND(60 * (pow((($frame_counter - 1) / 16), 1.1) - pow((($frame_counter - 1) / 16), 2)), 0) //      60\ \cdot\left(\left(\frac{\left(x-1\right)}{16}\right)^{1.1}-\left(\frac{\left(x-1\right)}{16}\right)^{2}\right)
+
+                    // desmos generalized formula:
+                    // \frac{\left(x-1\right)}{17}\cdot\left(-a\cdot\left(x-1\right)+\left(17\cdot a+1\right)\right)
+
+                    if(($main_cycle_key < 2) | ($main_cycle_key > 5))
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125) //    \frac{\left(x-1\right)}{17}\cdot\left(-0.03125\cdot\left(x-1\right)+1.53125\right)
+                    else
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)//   \frac{\left(x-1\right)}{17}\cdot\left(-0.025\cdot\left(x-1\right)+1.425\right)
+                    end_if
+
+                case(2)
+                
+                    $add_to_Y = ROUND(60 * (pow((($frame_counter - 1) / 16), 1.1) - pow((($frame_counter - 1) / 16), 2)), 0)
+
+                    if(($main_cycle_key < 3) | ($main_cycle_key > 6))
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                    else
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
+                    end_if
+
+                case(3)
+
+                    $add_to_Y = -ROUND(10 / (-($frame_counter - 1) + 20), 0)
+
+                    if(($main_cycle_key < 4) | ($main_cycle_key > 7))
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                    else
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.0125 * ($frame_counter - 1) + 1.2125)
+                    end_if
+
+                case(4)
+
+                    $add_to_Y = 0
+
+                    if(($main_cycle_key < 2) | ($main_cycle_key > 5))
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                    else
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
+                    end_if
+
+                case(5)
+
+                    $add_to_Y = -ROUND(60 * (pow((($frame_counter - 1) / 16), 1.1) - pow((($frame_counter - 1) / 16), 2)), 0)
+
+                    if(($main_cycle_key < 3) | ($main_cycle_key > 6))
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                    else
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.0125 * ($frame_counter - 1) + 1.2125)
+                    end_if
+
+                case(6)
+
+                    $add_to_Y = 0
+
+                    if(($main_cycle_key < 4) | ($main_cycle_key > 7))
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                    else
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
+                    end_if
+
+                case(7)
+
+                    $add_to_Y = 0
+
+                    if($main_cycle_key > 5)
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                    else
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.01875 * ($frame_counter - 1) + 1.31875)
+                    end_if
+
+                case(8)
+
+                    $add_to_Y = 0
+                    if(($main_cycle_key < 4) | ($main_cycle_key > 6))
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                    else
+                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.01875 * ($frame_counter - 1) + 1.31875)
+                    end_if
+
+            END_SWITCH
+
+            $counting_square_LUX = ROUND($hero_path_cords_X + (844 + 99.3 * ($main_cycle_key - 1) - ($take_screen_rdx - $take_screen_lux + 1) - $hero_path_cords_X) * $shift_position_X + $screenpart_LR * ($take_screen_rdx + 1 - $take_screen_lux), 0)
+            $counting_square_LUY = $hero_path_cords_Y + 115 * ($frame_counter - 1 - 9 * $screenpart_LR)
+            $counting_square_RDX = $counting_square_LUX + $thishero_width
+            $counting_square_RDY = $counting_square_LUY + $thishero_height
+
+            $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
+            $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
+
+            $square_shape_changer = abs(SIN($start_angle - $start_angle * $shift_position_X)  * ($counting_square_h - $counting_square_w) / 2)
+
+            if($counting_square_h < $counting_square_w)
+                $square_shape_changer = -$square_shape_changer
+            end_if
+
+            $counting_square_LUX = ROUND($counting_square_LUX - $square_shape_changer, 0)
+            $counting_square_LUY = ROUND($counting_square_LUY + $square_shape_changer, 0) + $add_to_Y
+            $counting_square_RDX = ROUND($counting_square_RDX + $square_shape_changer, 0)
+            $counting_square_RDY = ROUND($counting_square_RDY - $square_shape_changer, 0) + $add_to_Y
+
+            $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
+            $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
+
+            if($counting_square_LUY < 115 * ($frame_counter - $screenpart_LR * 9 - 1))
+                $counting_square_LUY = 115 * ($frame_counter - $screenpart_LR * 9 - 1)
+            end_if
+
+            if($counting_square_RDY > 115 * ($frame_counter - $screenpart_LR * 9) - 1)
+                $counting_square_RDY = 115 * ($frame_counter - $screenpart_LR * 9) - 1
+            end_if
+
+            if($counting_square_LUX < 823 * $screenpart_LR)
+                $counting_square_LUX = 823 * $screenpart_LR
+            end_if
+
+            if($counting_square_RDX > 822 + 823 * $screenpart_LR)
+                $counting_square_RDX = 822 + 823 * $screenpart_LR
+            end_if
+
+            if($main_cycle_drawpathMode = 0)
+
+                $pxlsum_increment = $counting_square_h * $counting_square_w - pxlcount($counting_square_LUX, $counting_square_LUY, $counting_square_RDX, $counting_square_RDY, 0)
+
+                if($drawallpaths = 1)
+                    if(($drawpathFor = $counter) | ($drawpathFor = 0))
+                        DrawSquare($counting_square_LUX, $counting_square_LUY, $counting_square_RDX, $counting_square_RDY, $color_array[$counter])
+                    end_if
+                end_if
+
+                if($frame_counter = 1)
+
+                    $first_frame_pixels = (1866 - 1802 + 1) * (994 - 891 + 1) - pxlcount(1802, 891, 1866, 994, 0)
+                    
+                    $minimum_pixels[$counter - 1] = $first_frame_pixels
+                    $pxlsum_increment = $first_frame_pixels
+
+                else
+
+                    if($pxlsum_increment > $first_frame_pixels)
+
+                        $pxlsum_increment = $first_frame_pixels
+
+                    end_if
+
+                    if($pxlsum_increment < $minimum_pixels[$counter - 1])
+
+                        $minimum_pixels[$counter - 1] = $pxlsum_increment
+
+                    end_if
+                
+                end_if
+
+                inc($this_heropxlsum, $pxlsum_increment)
+
+            else
+
+                DrawSquare($counting_square_LUX, $counting_square_LUY, $counting_square_RDX, $counting_square_RDY, $this_square_color)
+
+            end_if
+
+            inc($frame_counter, 1)
+
+        end_cyc
+
+        if($main_cycle_drawpathMode = 0)
+
+            $all_pos_scores[$counter] = $this_heropxlsum
+
+        end_if
+
+        inc($counter, 1)
+
+    end_cyc
+
+END_SUB
+
+SUB(CaptchaInit)
+
+    $drawallpaths = 0
+
+    for($foriterator = 0, $foriterator < 8, 1)
+        $minimum_pixels[$foriterator] = 0
+    end_cyc
+
+    $first_frame_pixels = 0
+    $vertical_velocity = 0
+
+    $wms[1] = 0.04166
+    $wms[2] = 0.044266
+    $wms[3] = 0.04687
+    $wms[4] = 0.04947
+    $wms[5] = 0.05207
+    $wms[6] = 0.05468
+    $wms[7] = 0.05728
+    $wms[8] = 0.05988
+    $wms[9] = 0.06249
+    $wms[10] = 0.06509
+    $wms[11] = 0.0677
+    $wms[12] = 0.07030
+    $wms[13] = 0.07290
+    $wms[14] = 0.07551
+    $wms[15] = 0.07811
+    $wms[16] = 0.08072
+    $wms[17] = 0.083325
+    $wms[18] = 0
+
+    $counting_square_LUX = 0
+    $counting_square_LUY = 0
+    $counting_square_RDX = 0
+    $counting_square_RDY = 0
+
+    $counting_square_h = 0
+    $counting_square_w = 0
+
+    $captcha_answer = 0
+
+    for($foriterator = 0, $foriterator < 25, 1)
+        $all_pos_scores[$foriterator] = 0
+    end_cyc
+
+    $all_pos_scores_top[0] = 0
+
+    for($foriterator = 1, $foriterator < 9, 1)
+        $all_pos_scores_top[$foriterator] = $foriterator
+    end_cyc
+
+    for($foriterator = 1, $foriterator < 9, 1)
+        $all_pos_scores_top[$foriterator+8] = $foriterator
+    end_cyc
+
+    for($foriterator = 1, $foriterator < 9, 1)
+        $all_pos_scores_top[$foriterator+16] = $foriterator
+    end_cyc
+
+    $this_heropxlsum = 0
+
+    switch($heronum)
+
+        case(1)
+
+            $take_screen_luy = 417
+            $vertical_velocity = -5.5
+            $start_angle = 315
+
+            $hero_path_cords_X = 280
+            $hero_path_cords_Y = 7
+            
+        case(2)
+
+            $take_screen_luy = 389
+            $vertical_velocity = -7
+            $start_angle = 360
+            
+            $hero_path_cords_X = 363
+            $hero_path_cords_Y = 9
+
+        case(3)
+
+            $take_screen_luy = 417
+            $vertical_velocity = -5.5
+            $start_angle = 45
+            
+            $hero_path_cords_X = 444 + 10
+            $hero_path_cords_Y = 7 + 5
+
+        case(4)
+
+            $take_screen_luy = 596
+            $vertical_velocity = 5.5
+            $start_angle = 225
+
+            $hero_path_cords_X = 280 - 8
+            $hero_path_cords_Y = 7
+
+        case(5)
+
+            $take_screen_luy = 624
+            $vertical_velocity = 7
+            $start_angle = 180
+            
+            $hero_path_cords_X = 358
+            $hero_path_cords_Y = 12
+
+        case(6)
+
+            $take_screen_luy = 596
+            $vertical_velocity = 5.5
+            $start_angle = 135
+            
+            $hero_path_cords_X = 280 - 8 + 180
+            $hero_path_cords_Y = 7 + 5
+
+        case(7)
+
+            $take_screen_luy = 507
+            $vertical_velocity = 0
+            $start_angle = 270
+            
+            $hero_path_cords_X = 256 - 17
+            $hero_path_cords_Y = 9
+
+        case(8)
+
+            $take_screen_luy = 507
+            $vertical_velocity = 0
+            $start_angle = 90
+            
+            $hero_path_cords_X = 256 - 17 + 249
+            $hero_path_cords_Y = 9 -2 
+
+    END_SWITCH
+
+    $take_screen_lux = 394
+    $take_screen_rdx = 1216
+    $take_screen_rdy = $take_screen_luy + 114
+
+    $thishero_height = 92
+    $thishero_width = 65
+
+END_SUB
+
+SUB(SolveCaptcha)
+
+    if($background_mode = 0)
+
+        if($dungeonfarm_global = 1)
+            $dungeonfarm = 1
+        end_if
+
+        $failcounter = 0
+        $finished = 0
+        $timergift = $_ms
+        $restarts = 0
+
+        logwrite($_date_str, " Gift solving start")
+
+        WHILE(($finished = 0) & ($failcounter < 4))
+
+            $crystalrightpos= 0
+            $heronum= 0
+            $captcha_solving_bool = 1
+
+            WHILE(($crystalrightpos = 0) & ($finished = 0))
+
+                wait(0.05)
+
+                GETSCREEN
+
+                IF((pxl(795-85,348) = 16761923) | (pxl(785-85,775) = 16761923) | (pxl(638-85,402) = 16761923) | (pxl(629-85,713) = 16761923) | (pxl(949-85,409) = 16761923) | (pxl(953-85,707) = 16761923) | (pxl(575-85,555) = 16761923) | (pxl(1004-85,566) = 16761923))
+
+                    GETSCREEN
+
+                    $heronum = 0
+
+                    IF(pxl(638-85,402) = 16761923)
+
+                        $heronum = 1
+                        $crystalrightpos = 1
+
+                    end_if
+                    
+                    IF(pxl(795-85,348) = 16761923)
+
+                        $heronum = 2
+                        $crystalrightpos = 1
+
+                    end_if
+
+                    IF(pxl(949-85,409) = 16761923)
+
+                        $heronum = 3
+                        $crystalrightpos = 1
+
+                    end_if
+
+                    IF(pxl(629-85,713) = 16761923)
+
+                        $heronum = 4
+                        $crystalrightpos = 1
+
+                    end_if
+
+                    IF(pxl(785-85,775) = 16761923)
+
+                        $heronum = 5
+                        $crystalrightpos = 1
+
+                    end_if
+
+                    IF(pxl(953-85,707) = 16761923)
+
+                        $heronum = 6
+                        $crystalrightpos = 1
+
+                    end_if
+
+                    IF(pxl(575-85,555) = 16761923)
+
+                        $heronum = 7
+                        $crystalrightpos = 1
+
+                    end_if
+
+                    IF(pxl(1004-85,566) = 16761923)
+
+                        $heronum = 8
+                        $crystalrightpos = 1
+
+                    end_if
+
+                ELSE
+
+                    GETSCREEN
+
+                    CheckSky()
+                    if($sky_clear = 0)
+
+                        $restarts = $restarts + 1
+                        logwrite($_date_str, " ", $restarts, " restarts")
+
+                        Restart()
+                        $ab_skip_num = $ab_skip_num + 1
+                        Replay()
+
+                    ELSE
+
+                        $finished = 1
+
+                    END_IF
+
+                END_IF
+
+            END_CYC
+
+            if($crystalrightpos = 1)
+
+                WHILE(PXL(376-85,564) = 3687243)
+
+                    logwrite($_date_str, " wait for gift timer")
+                    WAIT(1)
+                    GETSCREEN
+
+                END_CYC
+
+                waitms(rnd(500, 1000))
+
+                $crystalrightpos = 0
+                $captcha_clickpass = 1
+
+                CaptchaInit()
+
+                logwrite($_date_str, " start click") // v11
+                message_click(rnd(300, 435),rnd(747, 805))
+
+                wait(0.4)
+
+                wndpos($hwnd, 1645-407+85 , -245)
+                wait(0.1)
+
+                getscreen(1645,0,1920, 587)
+
+                wait(0.1)
+
+                wndpos($hwnd, -$take_screen_lux+85, -$take_screen_luy + 2)
+                getscreen(0,0, $take_screen_rdx-$take_screen_lux, $take_screen_rdy-$take_screen_luy)
+
+                wait(0.23166)
+
+                $screen_counter=2
+
+                while($screen_counter < 10)
+
+                    wndpos($hwnd, -$take_screen_lux+85, round($vertical_velocity*($screen_counter-1),0)-$take_screen_luy + ($screen_counter-1)*($take_screen_rdy-$take_screen_luy)+($screen_counter+1))
+                    getscreen(0,($screen_counter-1)*($take_screen_rdy-$take_screen_luy)+($screen_counter-1), $take_screen_rdx-$take_screen_lux, ($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter-1))
+
+                    wait($wms[$screen_counter])
+
+                    $screen_counter = $screen_counter+ 1
+
+                end_cyc
+
+                $screen_counter=1
+
+                while($screen_counter < 10)
+
+                    wndpos($hwnd, -$take_screen_lux+85 + ($take_screen_rdx-$take_screen_lux)+1,round($vertical_velocity*($screen_counter+9-1),0) -$take_screen_luy + ($screen_counter-1)*($take_screen_rdy-$take_screen_luy)+($screen_counter+1))
+                    getscreen($take_screen_rdx-$take_screen_lux+1,($screen_counter-1)*($take_screen_rdy-$take_screen_luy)+($screen_counter-1), ($take_screen_rdx-$take_screen_lux)*2+1, ($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter-1))
+
+                    wait($wms[9+$screen_counter])
+
+                    $screen_counter = $screen_counter+ 1
+
+                end_cyc
+
+                wndpos($hwnd, 1783-393+85, 871-492)
+                wait(0.5)
+
+                getscreen(1783,871,1783+496-393,871+634-492)
+
+                if($gift_screen_before = 1)
+                    screenshot("gift")
+                end_if
+
+                wndpos($hwnd, 0,0)
+
+                logwrite($_date_str, " path saved on screen")
+
+                colormode(4)
+
+                BlackBackgroundGift11()
+
+                MainGiftCycle(0, 0)
+
+                for($sort_array_i = 1, $sort_array_i < 9, 1)
+
+                    for($sort_array_j = 1, $sort_array_j < 9 - $sort_array_i, 1)
+
+                        if($all_pos_scores[$sort_array_j] < $all_pos_scores[$sort_array_j+1])
+
+                            $tempval = $all_pos_scores[$sort_array_j]
+                            $all_pos_scores[$sort_array_j  ] = $all_pos_scores[$sort_array_j+1]
+                            $all_pos_scores[$sort_array_j+1] = $tempval
+
+                            $tempval = $all_pos_scores_top[$sort_array_j]
+                            $all_pos_scores_top[$sort_array_j  ] = $all_pos_scores_top[$sort_array_j+1]
+                            $all_pos_scores_top[$sort_array_j+1] = $tempval
+
+                        end_if
+
+                    end_cyc
+
+                end_cyc
+
+                for($foriterator = 1, $foriterator < 9, 1)
+
+                    logwrite(": pos ", $all_pos_scores_top[$foriterator], " score: ", $all_pos_scores[$foriterator])
+
+                end_cyc
+
+                $counter = 0
+
+                $chance_of_fail = pow(($all_pos_scores[2]/$all_pos_scores[1]), 10)*100
+                logwrite("pos ", $all_pos_scores_top[1], " chance of fail: ", $chance_of_fail, "%")
+
+                if(($minimum_pixels[$all_pos_scores_top[1]-1] < $minimum_pixels[$all_pos_scores_top[2]-1]) & ($chance_of_fail > 92))
+                
+                    logwrite($minimum_pixels[$all_pos_scores_top[1]-1], " arg 1")
+                    logwrite($minimum_pixels[$all_pos_scores_top[2]-1], " arg 2")
+
+                    $tempval = $all_pos_scores_top[1]
+                    $all_pos_scores_top[1] = $all_pos_scores_top[2]
+                    $all_pos_scores_top[2] = $tempval
+                    logwrite("swap 1 - 2 pos.")
+
+                end_if
+
+                $this_square_color = $color_LIMEGREEN
+
+                if($gift_screen_after = 1)
+                    MainGiftCycle($all_pos_scores_top[1], 1)
+                end_if
+
+                for($foriterator = 0, $foriterator < 8, 1)
+                    logwrite($foriterator + 1, ": minimum: ", $minimum_pixels[$foriterator])
+                end_cyc
+
+                if($chance_of_fail > 70)
+
+                    if($gift_screen_after = 1)
+
+                        $this_square_color = $color_ORANGE
+                        MainGiftCycle($all_pos_scores_top[2], 1)
+
+                    end_if
+
+                end_if
+
+                $captcha_answer = $all_pos_scores_top[1]
+
+                logwrite("answer: ", $captcha_answer)
+                
+                if($gift_screen_after = 1)
+                    screenshot("gift")
+                end_if
+
+                switch($failcounter)
+
+                    case(0)
+
+                        if($chance_of_fail > $captcha_fail0_maxchance)
+                            $captcha_clickpass = 0
+                        end_if
+
+                    case(1)
+
+                        if($chance_of_fail > $captcha_fail1_maxchance)
+                            $captcha_clickpass = 0
+                        end_if
+
+                    case(2)
+
+                        if($chance_of_fail > $captcha_fail2_maxchance)
+                            $captcha_clickpass = 0
+                        end_if
+
+                    case(3)
+
+                        if($chance_of_fail > $captcha_fail3_maxchance)
+                            $captcha_clickpass = 0
+                        end_if
+
+                END_SWITCH
+
+                IF($captcha_clickpass = 1)
+
+                    message_click(rnd(($captcha_answer - 1) * 101 + 349,($captcha_answer - 1) * 101 + 373),rnd(560,591))
+
+                    WAIT(0.5)
+                    GETSCREEN
+
+                    $totalseconds = INT(($_ms-$timergift)/1000)
+
+                    $hoursnum =  INT($totalseconds/3600)
+                    $minsnum =   INT(($totalseconds- $hoursnum*3600)/60)
+                    $secsnum =   $totalseconds- $hoursnum*3600 - $minsnum*60
+
+                    IF(strlen($hoursnum) = 1)
+                        $hoursnum = STRCONCAT("0",$hoursnum)
+                    END_IF
+
+                    IF(strlen($minsnum) = 1)
+                        $minsnum = STRCONCAT("0",$minsnum)
+                    END_IF
+
+                    IF(strlen($secsnum) = 1)
+                        $secsnum = STRCONCAT("0",$secsnum)
+                    END_IF
+
+                    IF(PXL(632-85,134) = 4806498)
+
+                        inc($failcounter, 1)
+                        logwrite($_date_str, " Fail ", $failcounter)
+                        TFWRITE("informgift.txt", STRCONCAT( " -   ", "h", $heronum, "p", $captcha_answer , ", ", $_date_str, " ", $_time_str, ", fc ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts"))
+                        message_click(790,714)  // 1974563
+                        wait(0.5)
+
+                    ELSE
+
+                        $captcha_solving_bool = 0
+                        logwrite($_date_str, " Gift solved in ", $hoursnum,":", $minsnum,":", $secsnum)
+                        TFWRITE("informgift.txt", STRCONCAT( " +   ", "h", $heronum, "p", $captcha_answer , ", ", $_date_str, " ", $_time_str, ", fc ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts, ", $hoursnum, ":", $minsnum, ":", $secsnum))
+
+                        $failcounter =0
+                        $finished =1
+
+                        $ms_of_last_replay_call = $_ms
+
+                        IF(($ab_skip_num < 1) & ($autobattlemode = 1))
+
+                            $quitcycle = 0
+                            while(($quitcycle < 5) & ((pxl(605,364) ! 4806498) | (pxl(867,364) ! 4806498) | (pxl(509,470) ! 3896999) | (pxl(690,470) ! 3896999) | (pxl(1022,476) ! 2342642) | (pxl(867,526) ! 1551083)))
+
+                                inc($quitcycle, 1)
+                                Rmessage_click(915-85,362)
+                                wait(0.5)
+                                GETSCREEN
+
+                            end_cyc
+
+                            if($quitcycle < 5)
+
+                                message_click(997-85,500)  
+                                wait(0.3)
+
+                            end_if
+                            $quitcycle = 0
+
+                        END_IF
+
+                        IF(($restarts > 0) & ($dungeon_number > 6) & ($dungeonfarm = 1))
+
+                            Rmessage_click(915-85,362)
+                            wait(0.3)
+                            message_click(997-85,500)  
+                            wait(0.3)
+
+                        END_IF
+
+                    END_IF
+
+                    $restarts=0
+
+                ELSE
+
+                    logwrite($_date_str, " [captcha] no clickpass")
+
+                END_IF
+
+                getscreen
+                
+            end_if
+
+        END_CYC
+
+        IF(($failcounter > 3) & (PXL(406-85,152) = 4806498))
+
+            logwrite($_date_str, " 4 fails on captcha. clicker will be stopped ")
+            WAIT(310)
+            $emerg_stop = 1
+
+        END_IF
+
+    else
+
+        $dialog = DIALOGBOX("CANT SOLVE CAPTCHA IN BACKGROUND MODE", 1, 1)
+        halt
+
+    end_if
+
+END_SUB

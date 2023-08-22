@@ -1,0 +1,3014 @@
+
+SUB(message_click, $posX, $posY)
+
+    if($background_mode = 1)
+
+        SendMessage($hwnd,513,1,$posX+$posY*65536)
+        SendMessage($hwnd,514,0,$posX+$posY*65536)
+
+    else 
+
+        lclick($posX, $posY)
+
+    end_if
+
+END_SUB
+
+SUB(Rmessage_click, $posX, $posY)
+
+    if($background_mode = 1)
+
+        SendMessage($hwnd,516,2,$posX+$posY*65536)
+        SendMessage($hwnd,517,0,$posX+$posY*65536)
+
+    else
+
+        rclick($posX, $posY)
+
+    end_if
+
+END_SUB
+
+SUB(dbmessage_click, $posX, $posY)
+
+    if($background_mode = 1)
+
+        SendMessage($hwnd,513,1,$posX+$posY*65536)
+        SendMessage($hwnd,514,0,$posX+$posY*65536)
+        wait(0.07)
+        SendMessage($hwnd,513,1,$posX+$posY*65536)
+        SendMessage($hwnd,514,0,$posX+$posY*65536)
+
+    else
+
+        lclick($posX, $posY)
+        wait(0.07)
+        lclick($posX, $posY)
+
+    end_if
+
+END_SUB
+
+sub(Random_click_in, $clickSX, $clickSY, $clickFX, $clickFY)
+
+    message_click($clickSX + rnd(0, $clickFX - $clickSX), $clickSY + rnd(0, $clickFY - $clickSY))
+
+END_SUB
+
+sub(Random_move_in, $clickSX, $clickSY, $clickFX, $clickFY)
+
+    move($clickSX + rnd(0, $clickFX - $clickSX), $clickSY + rnd(0, $clickFY - $clickSY))
+
+END_SUB
+
+SUB(CheckNoxState)
+
+    logwrite($_date_str, " CheckNoxState")
+
+    wndgetinfo($hwnd,$v1,$v2,$v3,$v4)
+
+    if(($v1 = -32000) & ($v2 = -32000))
+        
+        $nox_state = 0
+        WNDSTATE($hwnd, 1)
+
+    else
+
+        $nox_state = 1
+
+    END_IF
+
+END_SUB
+
+SUB(CheckMimic)
+
+    if(PXL(810,93) = 0)
+
+        IF(($chestopened = 0) & ($dungeonfarm = 0))
+
+            logwrite($_date_str, " mimic check")
+
+            IF_PIXEL_IN(522-85,768,1424-85,855,1600698)
+
+                logwrite($_date_str, " mimic detected. collecting")
+                
+                message_click($_return1+ rnd(-10,10),$_return2+ rnd(-10,10))
+
+            END_IF
+
+            $chestopened = 1
+
+        END_IF
+
+    END_IF
+
+END_SUB
+
+SUB(CheckSky)
+
+    GETSCREEN
+
+    IF(PXL(282,35) = $SKY_COLOR)
+        $sky_clear = 1
+    else
+        $sky_clear = 0
+    END_IF
+
+END_SUB
+
+SUB(CheckGCMenu)
+
+    GETSCREEN
+
+    IF(PXL(1388,201) = 13864504)
+        $gc_menu_open = 1
+    else
+        $gc_menu_open = 0
+    END_IF
+
+END_SUB
+
+SUB(CheckIfCaptcha)
+
+    GETSCREEN
+
+    IF((PXL(547,147) = 4806498) & (pxl(470,214) = 14671839) & (pxl(401,140) = 10987431))
+        $captcha_on_screen = 1
+    else
+        $captcha_on_screen = 0
+    END_IF
+
+END_SUB
+
+SUB(GetCurrentBattleLength)
+
+    if($captcha_solving_bool ! 1)
+
+        $current_battle_length = $_ms - $ms_of_last_replay_call
+    
+    else
+
+        $current_battle_length = -1
+    
+    end_if
+
+    if($log_CurrentBattleLength = 1)
+        logwrite($_date_str," ", $current_battle_length/1000, " [CurrentBattleLength]")
+    end_if
+
+END_SUB
+
+SUB(ShowBattleLength)
+
+    GetCurrentBattleLength()
+
+    logwrite($_date_str, " Battle length: ", $current_battle_length/1000, "s.")
+
+END_SUB
+
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//                                     8888888
+//                                           8
+//                                           8
+//                                     8888888
+//                                     8
+//                                     8
+//                                     8888888
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+
+SUB(CheckExitWindow)
+
+    if(pxl(512,419) = 4806498)
+    if(pxl(1056,419) = 4806498)
+    if(pxl(442,534) = 2839928)
+    if(pxl(684,540) = 2839928)
+    if(pxl(794,538) =1551083)
+    if(pxl(1030,540) = 1551083)
+    
+        logwrite($_date_str, " Close quit window ")
+
+        message_click(656-85,514)  // 3896999
+        wait(0.05)
+        GETSCREEN
+
+    END_IF
+    END_IF
+    END_IF
+    END_IF
+    END_IF
+    END_IF
+
+END_SUB
+
+SUB(CheckPauseWindow)
+
+    if(pxl(605,364) = 4806498)
+    if(pxl(867,364) = 4806498)
+    if(pxl(509,470) = 3896999)
+    if(pxl(690,470) = 3896999)
+    if(pxl(1022,476) = 2342642)
+    if(pxl(867,526) = 1551083)
+
+        logwrite($_date_str, " pause exit ")
+
+        message_click(656-85,514)  // 3896999
+        wait(0.05)
+        GETSCREEN
+
+    END_IF
+    END_IF
+    END_IF
+    END_IF
+    END_IF
+    END_IF
+
+END_SUB
+
+SUB(CheckSkipWindow)
+
+    if(pxl(502,413) = 6869487)
+    if(pxl(579,427) = 2342642)
+    if(pxl(896,411) = 6869487)
+    if(pxl(982,422) = 2342642)
+    if(pxl(783,461) = 1551083)
+
+        Rmessage_click(1157,466)
+        logwrite($_date_str, " skip exit ")
+        wait(0.05)
+        GETSCREEN
+
+    END_IF
+    END_IF
+    END_IF
+    END_IF
+    END_IF
+
+END_SUB
+
+SUB(CheckHeroWindow)
+
+    if(pxl(852,576) = 47615)
+
+        logwrite($_date_str, " hero quit")
+        Rmessage_click(603-85,404)  // 4806498
+        wait(0.1)
+        Rmessage_click(603-85,404)  // 4806498
+        wait(0.1)
+        GETSCREEN
+
+    END_IF
+
+END_SUB
+
+SUB(CheckRuneWindow)
+
+    if($dungeonfarm = 1)
+
+        if_pixel_in(692,435,1079,711,6869487)
+
+            wait(0.3)
+            getscreen
+
+            if_pixel_in(692,435,1079,711,6869487)
+
+                if($dungeon_number > 6)
+
+                    if($screenshot_runes = 1)
+
+                        screenshot("Rune")
+
+                    END_IF
+
+                    logwrite($_date_str, " rune collecting. dungeon: " ,$dungeon_number)
+
+                    message_click($_return1, $_return2)
+
+                    wait(0.1)
+
+                END_IF
+
+            END_IF
+
+        END_IF
+
+    END_IF
+
+END_SUB
+
+sub(CheckABExitWindow)
+
+    if(pxl(659,561) = 3879896)
+
+        wait(0.2)
+        logwrite($_date_str, " ab quit")
+        Rmessage_click(603-85,404)  // 4806498
+        GETSCREEN
+
+    END_IF
+
+END_SUB
+
+SUB(CountCrystals, $lightmode)
+
+    getscreen
+    
+    if($lightmode = 1)
+        $crystalwhitepxl = 16777215
+    else
+        $crystalwhitepxl = 5855577
+    END_IF
+
+    $upgxmin=288
+    $upgxmax=442
+    $upgymin=40
+    $upgymax=70
+
+    GETSCREEN
+
+    $counterx = $upgxmax
+    $foundmin = 0
+    $foundmax = 0
+
+    WHILE(($counterx > $upgxmin) & ($foundmax=0))
+
+        if_pixel_in($counterx-2, $upgymin, $counterx, $upgymax, $crystalwhitepxl)
+
+            $foundmax = $counterx - 1
+
+        ELSE
+
+            $counterx = $counterx - 3
+
+        END_IF
+    
+    END_CYC
+
+    $counterx = $foundmax - 45
+
+    WHILE(($counterx < $upgxmax) & ($foundmin=0))
+
+        if_pixel_in($counterx,$upgymin,$counterx + 2, $upgymax, $crystalwhitepxl)
+
+            $foundmin = $counterx + 1
+            
+        ELSE
+
+            $counterx = $counterx + 3
+
+        END_IF
+
+    end_cyc
+
+    $crystals_count_result = 0
+
+    if(($foundmax ! 0) & ($foundmin ! 0))
+
+        if($foundmax-$foundmin > 12)
+
+            $crystals_count_result = 0
+
+        END_IF
+
+        if($foundmax-$foundmin > 20)
+
+            $crystals_count_result = 10
+
+        END_IF
+
+        if($foundmax-$foundmin > 33)
+
+            $crystals_count_result = 20
+
+            if($lightmode = 1)
+
+                $counterx = $foundmin
+                $foundmin = 0
+                $foundmax = 0
+
+                WHILE(($counterx < $upgxmax) & ($foundmin=0))
+
+                    if(pxl($counterx, 67) = $crystalwhitepxl)
+
+                        $foundmin = $counterx
+
+                    END_IF
+
+                    $counterx = $counterx + 1
+
+                end_cyc
+
+                WHILE(($counterx < $upgxmax) & ($foundmax=0))
+
+                    if(pxl($counterx, 67) ! $crystalwhitepxl)
+
+                        $foundmax = $counterx
+
+                    ELSE
+
+                        $counterx = $counterx + 1
+
+                    END_IF
+
+                end_cyc
+
+                if(($foundmax ! 0) & ($foundmin ! 0) & ($foundmax - $foundmin < 13))
+                    $crystals_count_result = 30
+                end_if
+
+            end_if
+
+        END_IF
+
+    END_IF
+
+END_SUB
+
+SUB(Item_Drop, $itemgrade, $string_number)
+
+    if($wrong_item_bool = 0)
+
+        if($string_number ! 0)
+
+            $temp_item_grade = strfilter(TFREAD("dungeon_statistics.txt", $string_number),"1234567890", 1)
+
+            $temp_item_grade = $temp_item_grade + 1
+
+            TFDELETE ("dungeon_statistics.txt", $string_number)
+
+        END_IF
+
+        SWITCH($itemgrade)
+
+            CASE(1) // B
+
+                if($string_number ! 0)
+
+                    TFWRITE("dungeon_statistics.txt", STRCONCAT("B: ", $temp_item_grade), $string_number)
+
+                END_IF
+
+                IF($delete_B = 1)
+
+                    if_pixel_in(420-85,188,1225-85,700,10920838)
+
+                        dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+
+                    END_IF
+
+                ELSE
+
+                    getscreen
+                    
+                    if($screenshot_items = 1)
+                        screenshot("ItemB")
+                    END_IF
+
+                    if_pixel_in(420-85,188,1225-85,700,6869487)
+
+                        message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+
+                    END_IF
+
+                END_IF
+
+            CASE(2) // A
+
+                if($string_number ! 0)
+
+                    TFWRITE("dungeon_statistics.txt", STRCONCAT("A: ", $temp_item_grade), $string_number)
+
+                END_IF
+
+                IF($delete_A = 1)
+
+                    if_pixel_in(420-85,188,1225-85,700,15453464)
+
+                        dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+
+                    END_IF
+
+                ELSE
+
+                    getscreen
+                    
+                    if($screenshot_items = 1)
+                        screenshot("ItemA")
+                    END_IF
+
+                    if_pixel_in(420-85,188,1225-85,700,6869487)
+
+                        message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+
+                    END_IF
+
+                END_IF
+
+            CASE(3) // S
+
+                if($string_number ! 0)
+
+                    TFWRITE("dungeon_statistics.txt", STRCONCAT("S: ", $temp_item_grade), $string_number)
+                
+                END_IF
+
+                IF($delete_S = 1)
+
+                    if_pixel_in(420-85,188,1225-85,700,13897453)
+
+                        dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+
+                    END_IF
+
+                ELSE
+
+                    getscreen
+                    
+                    if($screenshot_items = 1)
+                        screenshot("ItemS")
+                    END_IF
+                    
+                    if_pixel_in(420-85,188,1225-85,700,6869487)
+                    
+                        message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+
+                    END_IF
+
+                END_IF
+
+            CASE(4) // L
+
+                if($string_number ! 0)
+
+                    TFWRITE("dungeon_statistics.txt", STRCONCAT("L: ", $temp_item_grade), $string_number)
+
+                END_IF
+
+                IF($delete_L = 1)
+
+                    if_pixel_in(420-85,188,1225-85,700,2894051)
+
+                        dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+
+                    END_IF
+
+                ELSE
+
+                    getscreen
+                    
+                    if($screenshot_items = 1)
+                        screenshot("ItemL")
+                    END_IF
+                    
+                    if_pixel_in(420-85,188,1225-85,700,6869487)
+                    
+                        message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+
+                    END_IF
+
+                END_IF
+
+            CASE(5) // E
+
+                if($string_number ! 0)
+
+                    TFWRITE("dungeon_statistics.txt", STRCONCAT("E: ", $temp_item_grade), $string_number)
+                
+                END_IF
+
+                IF($delete_E = 1)
+
+                    if_pixel_in(420-85,188,1225-85,700,2894051)
+
+                        dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+
+                    END_IF
+
+                ELSE
+
+                    getscreen
+
+                    if($screenshot_items = 1)
+                        screenshot("ItemE")
+                    END_IF
+
+                    if_pixel_in(420-85,188,1225-85,700,6869487)
+                    
+                        message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+
+                    END_IF
+
+                END_IF
+
+        END_SWITCH
+
+    else
+
+        logwrite("Wrong item")
+
+        if_pixel_in(420-85,188,1225-85,700,10920838)
+
+            logwrite("B item")
+
+            IF($delete_B = 1)
+
+                dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+
+            else
+
+                if_pixel_in(420-85,188,1225-85,700,6869487)
+                    message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+                END_IF
+
+            END_IF
+
+        else
+
+            if_pixel_in(420-85,188,1225-85,700,15453464)
+                logwrite("A item")
+
+                IF($delete_A = 1)
+
+                    dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+
+                else
+
+                    if_pixel_in(420-85,188,1225-85,700,6869487)
+                        message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+                    END_IF
+
+                END_IF
+
+            else
+
+                if_pixel_in(420-85,188,1225-85,700,13897453)
+
+                    logwrite("S item")
+                    IF($delete_S = 1)
+
+                        dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+
+                    else
+
+                        if_pixel_in(420-85,188,1225-85,700,6869487)
+                            message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+                        END_IF
+
+                    END_IF
+
+                else
+
+                    if_pixel_in(420-85,188,1225-85,700,55551)
+
+                        logwrite("E item")
+
+                        IF($delete_E = 1)
+
+                            if_pixel_in(420-85,188,1225-85,700,2894051)
+                                dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+                            end_if
+                        
+                        else
+
+                            if_pixel_in(420-85,188,1225-85,700,6869487)
+                                message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+                            END_IF
+
+                        END_IF
+
+                    else
+
+                        if_pixel_in(420-85,188,1225-85,700,2894051)
+
+                            logwrite("L item")
+
+
+                            IF($delete_L = 1)
+                                
+                                dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+
+                            else
+
+                                if_pixel_in(420-85,188,1225-85,700,6869487)
+                                    message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+                                END_IF
+
+                            END_IF
+                        
+                        END_IF
+
+                    END_IF
+
+                END_IF
+
+            END_IF
+
+        END_IF
+
+        $wrong_item_bool = 0
+
+    end_if
+
+END_SUB
+
+sub(AddSpeed)
+    
+    if($_ms - $last_addspeed > 1000)
+
+        IF(pxlcount(105-85,757,206-85,813,0) > 500)
+
+            CheckNoxState()
+            
+            if($nox_state ! 0) 
+
+                logwrite($_date_str, " add speed")
+                
+                message_click(174-85 + rnd(-10,10),788+ rnd(-10,10))
+                wait(0.1)
+
+            END_IF
+
+        END_IF
+
+        $last_addspeed = $_ms
+
+    END_IF
+
+END_SUB
+
+SUB(ChronoClick)
+
+    IF($this_chrono_pos ! 0)
+
+        CheckGCMenu()
+
+        IF(($gc_menu_open = 0) & (PXL($this_chrono_X,$this_chrono_Y) = 16759892))
+
+            message_click($this_chrono_X -RND(0,60),$this_chrono_Y + RND(0,60))
+            wait($hero_click_pause)
+            getscreen
+
+        END_IF
+
+    END_IF
+
+END_SUB
+
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//                                    88888888
+//                                           8
+//                                           8
+//                                    88888888
+//                                           8
+//                                           8
+//                                    88888888
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+
+SUB(Reset)
+
+    logwrite($_date_str, " Nox Reset")
+
+    message_click(1584-85,333)  // 3873817
+    logwrite($_date_str, " reset click")
+
+    wait(0.5)
+    move(1623,333)  // 4006674
+
+    wait(5)
+    logwrite($_date_str, " wait up to 2 minutes for nox load[reset]")
+
+    GETSCREEN
+
+    $stopwatch = 0
+
+    WHILE((PXL(923-85,150) ! 16777215) & ($stopwatch < 120))
+
+        WAIT(1)
+        GETSCREEN
+
+        $stopwatch = $stopwatch + 1
+
+    END_CYC
+
+    IF($stopwatch<119)
+
+        logwrite($_date_str, " 4s wait")
+        WAIT(4)
+
+        logwrite($_date_str, " nox opened")
+        $stopwatch = 0
+
+        message_click(928-85,446) // growcastle open
+        logwrite($_date_str, " gc click[reset] wait up to 20s for gc open")
+
+        CheckGCMenu()
+        
+        WHILE(($gc_menu_open = 0) & ($stopwatch < 100))
+            
+            WAIT(0.2)
+            CheckGCMenu()
+            $stopwatch = $stopwatch + 1
+
+        END_CYC
+
+        IF($stopwatch < 100)
+
+            wait(0.5)
+            logwrite($_date_str, " gc opened[reset]")
+
+            $restarted = 1
+
+        else
+
+            if($screenshot_long_gc_load = 1)
+                screenshot("resetgcloadfail")
+            end_if
+
+            logwrite($_date_str, " gc load too long[reset]")
+
+        END_IF
+        
+        stopwatch =0
+
+    ELSE
+
+        getscreen
+
+        if($screenshot_noxloadfail = 1)
+            screenshot("noxloadfail")
+        end_if
+
+        $stopwatch =0
+        
+        logwrite($_date_str, " nox load stuck. [reset]")
+        logwrite($_date_str, " window is overlapped by sth or wrong nox path. [reset]")
+        logwrite($_date_str, " stopped. [reset]")
+        halt
+
+    END_IF
+
+END_SUB
+
+SUB(Restart)
+
+    logwrite($_date_str, " Restart func entering")
+
+    $restartcounter = 0
+
+    $restarted = 0
+
+    WHILE(($restarted = 0) & ($restartcounter < $max_restarts_in_row_for_reset+1))
+
+        $restartcounter = $restartcounter + 1
+        logwrite($_date_str, " Restart ", $restartcounter)
+        
+        if($restartcounter < $max_restarts_in_row_for_reset+1)
+
+            $stopwatch = 0
+            logwrite($_date_str, " open recent")
+
+            message_click(1573-85,833)//open recent
+
+            wait(0.3)
+            logwrite($_date_str, " wait for clear all button")
+
+            WHILE(($quitcycle = 0) & ($stopwatch < 100))
+
+                WAIT(0.03)
+                GETSCREEN
+
+                IF_PIXEL_IN(1070-85,91,1186-85,131,16777215)
+
+                    logwrite($_date_str, " clear all button detected")
+
+                    $quitcycle = 1
+
+                END_IF
+
+                $stopwatch = $stopwatch + 1
+
+            END_CYC
+
+            $quitcycle = 0
+
+            IF($stopwatch<100)
+
+
+                $stopwatch =0
+
+                logwrite($_date_str, " close recent apps")
+                wait(0.4)
+
+                message_click(1147-85,113)//close all
+
+                logwrite($_date_str, " wait for nox main menu")
+
+
+                WHILE((PXL(923-85,150) ! 16777215) & ($stopwatch < 50) )
+
+                    WAIT(0.1)
+                    GETSCREEN
+                    $stopwatch = $stopwatch + 1
+
+                END_CYC
+
+                IF($stopwatch<50)
+
+
+                    $stopwatch =0
+
+                    wait(0.7)
+                    logwrite($_date_str, " nox main menu opened")
+
+                    message_click(928-85,446)//growcastle open
+
+                    logwrite($_date_str, " gc click[restart] wait 20s for gc open")
+
+                    CheckGCMenu()
+
+                    WHILE(($gc_menu_open = 0) & ($stopwatch < 100))
+
+                        $stopwatch = $stopwatch + 1
+                        WAIT(0.2)
+                        CheckGCMenu()
+
+                    END_CYC
+
+                    IF($stopwatch < 100)
+
+
+                        wait(0.2)
+                        logwrite($_date_str, " gc opened[restart]")
+
+                        $restarted = 1
+
+                        $ms_of_last_replay_call = $_ms
+
+                    else
+
+                        
+                        
+                        if($make_hints_long_gc_load = 1)
+                            hintpopup("gc loading too long")
+                        END_IF
+
+                        if($screenshot_long_gc_load = 1)
+                            screenshot("restartgcloadfail")
+                        end_if
+
+                        logwrite($_date_str, " too long loading. restarting.[restart]")
+
+                    END_IF
+
+                    $stopwatch =0
+                    
+                else
+
+
+                    if($make_hints_noxmainmenuloadfail = 1)
+                        hintpopup("main menu loading too long")
+                    END_IF
+
+                    if($screenshot_noxmainmenuloadfail = 1)
+                        screenshot("noxmainloadfail")
+                    end_if
+
+                    logwrite($_date_str, " nox main menu loading too long. restarting[restart]")
+
+                END_IF
+
+            else
+
+
+                $stopwatch = 0
+
+                if($make_hints_clearallfail = 1)
+                    hintpopup("Cant see clear all")
+                END_IF
+
+                if($screenshot_clearallfail = 1)
+                    screenshot("clearallfail")
+                end_if
+
+                logwrite($_date_str, " cant see clear all button.")
+
+            END_IF
+        
+        else
+
+
+
+            if($make_hints_reset = 1)
+                hintpopup("Reset")
+            END_IF
+
+            logwrite($_date_str, " ", $max_restarts_in_row_for_reset, " restarts in a row made. nox reset will be called")
+
+            Reset()
+
+        
+        END_IF
+
+    END_CYC
+    
+
+    if($restarted = 0)
+
+        logwrite($_date_str, " Unknown problem. couldnt load gc.")
+        halt
+
+    END_IF
+
+
+    $restarted = 0
+
+END_SUB
+
+SUB(UpgradeTower)
+
+    logwrite($_date_str, " [tower upgrade] called")
+
+    CountCrystals(1)
+    
+    IF($crystals_count_result > 7)
+
+        logwrite($_date_str, " >7 crystals. castle open [tower upgrade]")
+
+        message_click(525-85,557)  // opencastle
+
+        WAIT(0.2)
+
+        SWITCH($floor_to_upgrade)
+
+            CASE(1)
+                message_click(525-85,557)
+            CASE(2)
+                message_click(525-85,455)
+            CASE(3)
+                message_click(525-85,346)
+            CASE(4)
+                message_click(525-85,233)
+
+        END_SWITCH
+
+        WAIT(0.2)
+
+        message_click(1101-85,588)
+        WAIT(0.1)
+
+        CountCrystals(0)
+        
+        WHILE(($crystals_count_result > 7) & ($upgradecounter < 60))
+
+            message_click(1101-85,588)
+
+            waitms(100)
+
+            $upgradecounter = $upgradecounter+1
+
+            CountCrystals(0)
+
+        END_CYC
+
+        $upgradecounter = 0
+
+        Rmessage_click(1157,466)
+        WAIT(0.1)
+        Rmessage_click(1157,466)
+        WAIT(0.1)
+        Rmessage_click(1157,466)
+        WAIT(0.1)
+
+    else
+
+
+        logwrite($_date_str, " no upgrading [tower upgrade]")
+
+    END_IF
+
+END_SUB
+
+
+SUB(GetItem)
+
+    logwrite($_date_str, " GetItem")
+    
+    $stopwatch = 0
+
+    WHILE(($quitcycle = 0) & ($stopwatch < 35))
+
+        if_pixel_in(420-85,188,1225-85,700,6869487)
+
+            $quitcycle = 1
+
+        END_IF
+        
+        CheckGCMenu()
+        if($gc_menu_open = 1)
+
+            $stopwatch = 9999
+
+        END_IF
+        
+        wait(0.03)
+        $stopwatch = $stopwatch + 1
+        GETSCREEN
+
+    END_CYC
+
+    $quitcycle = 0
+
+    // 10920838    b stone
+    // 15453464    a stone
+    // 13897453    s stone
+    // 2894051     l stone
+
+    //LCLICK(773,235)  // 14342874 b word color
+    //LCLICK(743,220)  // 14352196 a word color
+    //LCLICK(408,280)  // 15292148 s word color
+    //LCLICK(391,294)  // 3289855  l word color
+    //LCLICK(391,294)  // 55551    e word color
+
+    if($stopwatch < 35)
+
+        logwrite($_date_str, " item dropped")
+        wait(0.3)
+        GETSCREEN
+
+        $item_correct_b = 0
+
+        SWITCH($dungeon_number)
+
+            CASE(1) // green dragon
+
+                if_pixel_in(482-85,134,1201-85,440, 14342874)
+
+                    if(pxlcount($_return1-5, $_return2-5,$_return1+5, $_return2+5, 16777215) = 0)
+
+                        Item_Drop(1, 0)
+                        
+                        $item_correct_b = 1
+
+                    end_if
+
+                end_if
+
+                if($item_correct_b = 0)
+
+                    $wrong_item_bool = 1
+
+                    Item_Drop(0, 0)
+
+                end_if
+
+            CASE(2) // black dragon
+
+                if_pixel_in(482-85,134,1201-85,440, 14342874)
+
+                    if(pxlcount($_return1-5, $_return2-5,$_return1+5, $_return2+5, 16777215) = 0)
+
+                        Item_Drop(1, 2)
+                        
+                        $item_correct_b = 1
+
+                    end_if
+
+                end_if
+
+                if($item_correct_b = 0)
+
+
+                    if_pixel_in(482-85,134,1201-85,440, 14352196)
+
+                        Item_Drop(2, 3)
+                    
+                    else
+
+                        $wrong_item_bool = 1
+                        Item_Drop(0, 0)
+
+                    end_if
+
+                end_if
+
+            CASE(3) // red dragon
+
+                if_pixel_in(482-85,134,1201-85,440, 14342874)
+
+                    if(pxlcount($_return1-5, $_return2-5,$_return1+5, $_return2+5, 16777215) = 0)
+
+                        Item_Drop(1, 6)
+                        
+                        $item_correct_b = 1
+
+                    end_if
+
+                end_if
+
+                if($item_correct_b = 0)
+
+
+                    if_pixel_in(482-85,134,1201-85,440, 14352196)
+
+                        Item_Drop(2, 7)
+                    
+                    ELSE
+
+                        if_pixel_in(482-85,134,1201-85,440,15292148)
+
+                            Item_Drop(3, 8)
+                        
+                        else
+
+                            $wrong_item_bool = 1
+                            Item_Drop(0, 0)
+                        
+                        end_if
+
+                    END_IF
+
+                END_IF
+
+            CASE(4) // SIN
+
+                if_pixel_in(482-85,134,1201-85,440, 14342874)
+
+                    if(pxlcount($_return1-5, $_return2-5,$_return1+5, $_return2+5, 16777215) = 0)
+
+                        Item_Drop(1, 11)
+
+                        $item_correct_b = 1
+
+                    end_if
+
+                end_if
+
+                if($item_correct_b = 0)
+
+
+                    if_pixel_in(482-85,134,1201-85,440, 14352196)
+
+                        Item_Drop(2, 12)
+
+                    ELSE
+
+                        if_pixel_in(482-85,134,1201-85,440,15292148)
+
+                            Item_Drop(3, 13)
+
+                        else
+
+                            $wrong_item_bool = 1
+                            Item_Drop(0, 0)
+
+                        end_if
+
+                    END_IF
+
+                END_IF
+
+            CASE(5) // legendary dragon
+
+
+                if_pixel_in(482-85,134,1201-85,440, 14352196)
+
+                    Item_Drop(2, 16)
+
+                ELSE
+
+                    if_pixel_in(482-85,134,1201-85,440,15292148)
+
+                        Item_Drop(3, 17)
+
+                    ELSE
+
+                        if_pixel_in(482-85,134,1201-85,440,3289855)
+
+                            Item_Drop(4, 18)
+
+                        else
+
+                            $wrong_item_bool = 1
+                            Item_Drop(0, 0)
+
+                        END_IF
+
+                    END_IF
+
+                END_IF
+
+            CASE(6) // bone dragon
+
+                if_pixel_in(482-85,134,1201-85,440, 14352196)
+
+                    Item_Drop(2, 21)
+
+                ELSE
+
+                    if_pixel_in(482-85,134,1201-85,440,15292148)
+
+                        Item_Drop(3, 22)
+
+                    ELSE
+
+                        if_pixel_in(482-85,134,1201-85,440,55551)
+
+                            Item_Drop(5, 23)
+
+                        else
+
+                            $wrong_item_bool = 1
+                            Item_Drop(0, 0)
+
+                        end_if
+
+                    END_IF
+
+                END_IF
+
+        END_SWITCH
+    
+    else
+
+
+        CheckGCMenu()
+        if($gc_menu_open = 0)
+
+
+            logwrite($_date_str, " Cant see GET button. rclick")
+            
+            Rmessage_click(603-85,404)  // 4806498
+            
+            wait(0.1)
+            getscreen
+
+        end_if
+
+    END_IF
+
+
+END_SUB
+
+SUB(AB_WAIT, $seconds_to_wait)
+
+    while($_ms - $AB_START < $seconds_to_wait * 1000)
+
+        $stopwatch = 0
+
+        CheckSky()
+        WHILE(($sky_clear = 1) & ($stopwatch < 240) & ($seconds_to_wait ! -1) & ($_ms - $AB_START < $seconds_to_wait * 1000))
+
+            AddSpeed()
+
+            $stopwatch = $stopwatch + 1
+            
+            WAIT(0.5)
+            CheckSky()
+
+        END_CYC
+
+        IF($stopwatch>239)
+
+
+            $stopwatch = 0
+
+            logwrite($_date_str, " 2min wave. restart gc")
+            
+            if($screenshot_on_esc = 1)
+                screenshot("AB_error2")
+            end_if
+
+            $seconds_to_wait = -1
+            Restart()
+
+        end_if
+
+        $stopwatch = 0
+
+        CheckSky()
+        WHILE(($sky_clear = 0) & ($stopwatch < 200) & ($seconds_to_wait ! -1) & ($_ms - $AB_START < $seconds_to_wait * 1000))
+
+            $stopwatch = $stopwatch + 1
+            WAIT(0.05)
+            CheckSky()
+
+        END_CYC
+
+        IF($stopwatch>199)
+
+            
+            $stopwatch = 0
+            logwrite($_date_str, " 10s closed sky. restart gc")
+
+            if($screenshot_on_esc = 1)
+                screenshot("AB_error")
+            end_if
+
+            $seconds_to_wait = -1
+            Restart()
+
+        end_if
+
+        $stopwatch = 0
+
+
+    end_cyc
+
+
+
+    if($seconds_to_wait ! -1)
+
+
+        logwrite($_date_str, " wait for cancel ab button")
+        getscreen
+
+        $stopwatch = 0
+
+        while((pxl(659,561) = 3879896) & ($stopwatch < 50))
+
+            wait(0.2)
+            getscreen
+            inc($stopwatch, 1)
+
+        END_CYC
+
+        if($stopwatch > 49)
+
+
+            logwrite("? ? ?")
+            Restart()
+
+        else
+
+            wait(0.2)
+
+            $stopwatch = 0
+
+            while((pxl(659,561) = 3879896) & ($stopwatch < 600))
+
+                wait(0.2)
+                getscreen
+
+                inc($stopwatch, 1)
+
+            END_CYC
+
+            if($stopwatch > 599)
+
+
+                logwrite("? ? ? ?")
+                Restart()
+
+            else
+
+                
+                wait(0.3)
+                logwrite($_date_str, " cancel button detected. ", $manuals_between_skips + 1, " manual battles will be called")
+
+                Rmessage_click(603-85,404)  // 4806498
+                wait(0.5)
+
+            end_if
+
+        end_if
+
+    end_if
+
+END_SUB
+
+
+SUB(Replay)
+
+
+    $chestopened = 0
+
+    $waitforad = $waitforad + 1
+
+    $replaysforupg = $replaysforupg + 1
+
+    $replaysforskip20 = $replaysforskip20 + 1
+
+    $puretimerbool = 0
+
+    $ab_skip_num = $ab_skip_num - 1
+
+    $heal_altar_used = 0
+
+    $death_altar_used_bool = 0
+
+    logwrite($_date_str, " replay")
+
+
+
+
+
+    IF($dungeonfarm = 1)
+
+
+        wait(0.1)
+        getscreen
+
+        logwrite($_date_str, " dungeon click. wait 15s for opening")
+        
+        message_click(rnd(699,752),rnd(280,323))  // 8028550
+        
+        $stopwatch = 0
+
+        WHILE((PXL(646-85,676) ! 3160645) & (pxl(943-85,575) ! 47615) & ($stopwatch < 500))
+
+            wait(0.03)
+            $stopwatch = $stopwatch + 1
+            GETSCREEN
+
+        END_CYC
+
+        IF($stopwatch > 499)
+
+            $dungeonfarm = 0
+            $makereplays = 1
+
+
+            if($make_hints_cant_fight_dungeon = 1)
+                hintpopup("cant fight dungeon")
+            END_IF
+
+            message_click(1498-85,120)  // 1974563
+            wait(0.3)
+            logwrite($_date_str, " 15s waited. replays will be called")
+            $stopwatch = 0
+
+        ELSE
+
+
+            logwrite($_date_str, " dungeon button detected. click on dungeon")
+
+            if(($captcha_solving_bool = 1) & ($dungeon_number > 6))
+
+                logwrite($_date_str, " captcha solving. green dragon click")
+
+                message_click(rnd(154-85,495-85),rnd(179,229))  // 2700867
+                wait(0.1)
+                message_click(rnd(1124-85,1226-85),rnd(728,770))  // 2700867
+
+            else
+
+                SWITCH($dungeon_number)
+
+                    CASE(1)
+                        message_click(rnd(154-85,495),rnd(179,229))  // 2700867
+
+                    CASE(2)
+                        message_click(rnd(630-85,980-85),rnd(169,228))  // 2700867
+
+                    CASE(3)
+                        message_click(rnd(1100-85,1455-85),rnd(177,230))  // 3161419
+
+                    CASE(4)
+                        message_click(rnd(168-85,498-85),rnd(312,363))  // 2700867
+
+                    CASE(5)
+                        message_click(rnd(638-85,975-85),rnd(302,360))  // 2700867
+
+                    CASE(6)
+                        message_click(rnd(1099-85,1452-85),rnd(312,366))  // 2700867
+
+                    CASE(7)
+                        message_click(rnd(158-85,508-85),rnd(440,490))  // 2700867
+
+                    CASE(8)
+                        message_click(rnd(626-85,969-85),rnd(437,492))  // 2700867
+
+                    CASE(9)
+                        message_click(rnd(1099-85,1452-85),rnd(433,494))  // 2700867
+
+                END_SWITCH
+
+
+                wait(0.15)
+                message_click(rnd(1124-85,1226-85),rnd(728,770))  // 2700867
+
+                if($captcha_solving_bool = 1)
+
+                    wait(0.4)
+
+                else
+
+                    wait(0.2)
+                    getscreen
+                    ChronoClick()
+
+                end_if
+
+            END_IF
+
+            wait(0.4)
+
+            CheckSky()
+            IF($sky_clear = 0)
+
+
+                logwrite($_date_str, " sky not clear[dungeon]")
+
+                wait(0.3)
+                getscreen
+
+                if(pxl(444-85,808) ! 2839928)
+                    
+
+                    if($make_hints_cant_fight_dungeon = 1)
+
+                        hintpopup("cant fight dungeon")
+
+                    END_IF
+
+                    logwrite($_date_str, " couldnt figth dungeon. captcha wasnt detected. replays will be called")
+
+                    $dungeonfarm = 0
+                    $makereplays = 1
+                    
+                    message_click(1250-85,134)  // 2105635
+                    wait(0.1)
+                    message_click(1527-85,122)  // 658189
+                    wait(0.1)
+
+                else
+
+
+                    logwrite($_date_str, " captcha detected[dungeon]")
+
+                END_IF
+
+            else
+                
+
+                logwrite($_date_str, " dungeon started")
+
+                $ms_of_last_replay_call = $_ms
+
+                if(($death_altar = 1) & ($dungeon_number < 7))
+
+                    message_click(229-85,264)  // 7570304
+                    wait($hero_click_pause)
+
+                    $death_altar_used_bool = 1
+
+                END_IF
+
+            END_IF
+        
+        END_IF
+
+        $stopwatch = 0
+
+    ELSE
+
+
+        if((pxl(1038,796) = 1551083) & (pxl(1038,728) = 2342642) & (pxl(1320,730) = 2342642) & (pxl(1320,796) = 1551083))
+
+            message_click(1442,672)  // 4806498
+            wait(0.3)
+
+        END_IF
+
+
+        IF($makereplays = 1)
+
+
+
+            wait(0.05)
+            logwrite($_date_str, " replay click 1")
+            message_click(rnd(1209-85,1328-85),rnd(744,814))
+            WAIT(0.2)
+            logwrite($_date_str, " replay click 2")
+            message_click(rnd(1025-85,1137-85),rnd(734,790))  // replay wave
+
+            WAIT(0.1)
+
+            if($captcha_solving_bool = 1)
+
+                wait(0.4)
+
+            else
+
+                wait(0.1)
+                ChronoClick()
+
+                GETSCREEN
+
+                CheckSky()
+                if($sky_clear = 0)
+
+
+                    logwrite($_date_str, " sky not clear[replays]")
+
+                    wait(0.4)
+                    getscreen
+                    
+
+                    CheckIfCaptcha()
+                    if($captcha_on_screen = 1)
+
+
+                        logwrite($_date_str, " captcha detected[replays]")
+
+                    END_IF
+
+
+                else
+
+
+                    $ms_of_last_replay_call = $_ms
+                    logwrite($_date_str, " sky clear[replays]")
+
+                END_IF
+
+            END_IF
+
+        ELSE
+
+
+            logwrite($_date_str, " battle click")
+
+            message_click(rnd(1404,1471)-85,rnd(754,785))  // 4806498
+
+            if($autobattlemode = 1)
+
+                wait($wait_after_battle_click_AB)
+
+            else
+
+                waitms($battle_click_wait_ms)
+
+                if($captcha_solving_bool = 1)
+
+                    WAIT(0.4)
+
+                else
+
+                    message_click(rnd(324-85,376-85),rnd(95,162)) //close top
+
+                END_IF
+
+            END_IF
+
+            getscreen
+
+
+            CheckSky()
+            IF($sky_clear = 0)
+
+                logwrite($_date_str, " sky not clear[battle]")
+                
+                wait(0.4)
+                getscreen
+
+                CheckIfCaptcha()
+                if($captcha_on_screen = 1)
+
+                    logwrite($_date_str, " captcha detected[battle]")
+
+                END_IF
+
+
+            else
+
+                
+                logwrite($_date_str, " no captcha[battle]")
+
+                if(($autobattlemode = 1) & ($ab_skip_num < 1))
+
+                    logwrite($_date_str, " ab open")
+                    wait(0.2)
+
+                    message_click(1343-85,796)  // 10657679
+                    wait(0.4)
+                    
+                    if($ab_tab = 1)
+
+                        message_click(592-85,528)  // 2143978
+                        wait(0.2)
+
+                    END_IF
+
+                    message_click(rnd(738-85,910-85),rnd(504,561))  // 6869487
+                    wait(0.5)
+
+                    logwrite("AB ",$seconds_between_skips, " seconds")
+
+                    $AB_START = $_ms
+
+                    AB_WAIT($seconds_between_skips)
+
+                    $ab_skip_num = $manuals_between_skips + 1
+
+                ELSE
+
+
+                    IF((($skipWithOranges = 1) | (($replaysforskip20>5) | ($fivewavespauseskip = 0))) & ($skipwaves = 1))
+                        
+                        logwrite($_date_str, " skip: oranges: ",$skipWithOranges)
+                        
+                        CountCrystals(1)
+
+                        IF(($crystals_count_result > 29) | ($skipWithOranges = 1))
+
+                            wait(0.25)
+
+                            getscreen
+
+                            CheckIfCaptcha()
+
+                            if($captcha_on_screen = 1)
+                                
+                                logwrite($_date_str, " captcha detected[2]")
+
+                            else
+
+                                logwrite($_date_str, " skip 30 click")
+
+                                Random_click_in(889,411,984,496)
+                                
+                                $Is_skip = 1
+
+                                $replaysforskip20 = 0
+
+                                wait(0.3)
+
+                            END_IF
+
+                        ELSE
+
+                            $Is_skip = 0
+                            logwrite($_date_str, " <30 crystals. rclick")
+                            Rmessage_click(1157,466)
+                            wait(0.3)
+
+                        END_IF
+
+                    ELSE
+
+                        $Is_skip = 0
+                        logwrite($_date_str, " no skip. esc click")
+                        Rmessage_click(1157,466)
+                        wait(0.7)
+
+                    END_IF
+
+
+                    CheckIfCaptcha()
+                    if(($captcha_on_screen = 0) & (($orc_and_military_on_skip_only = 0) | ($Is_skip = 1)))
+
+                        if($this_orcband_pos ! 0)
+
+                            message_click($this_orcband_X- rnd(0,40), $this_orcband_Y + rnd(0,40))
+                            logwrite($_date_str, " orcband click")
+
+                            wait(0.07)
+
+                        END_IF
+
+                        if($this_militaryF_pos ! 0)
+
+                            message_click($this_militaryF_X - rnd(0,40), $this_militaryF_Y + rnd(0,40))
+                            logwrite($_date_str, " militaryF click")
+
+                        END_IF
+
+                    end_if
+
+                    $ms_of_last_replay_call = $_ms
+                    wait(0.05)
+                    getscreen
+
+                    ChronoClick()
+
+                END_IF
+                
+            END_IF
+
+        END_IF
+
+    END_IF
+
+END_SUB
+
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//                                    8      8
+//                                    8      8
+//                                    8      8
+//                                    88888888
+//                                           8
+//                                           8
+//                                           8
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+
+SUB(WaitIfDragonTimer)
+
+    GETSCREEN(697-85,146,699-85,148)
+    
+    if((pxl(698-85,147) = 5197823) & ($dungeon_number < 7))
+
+        wait(0.05)
+        logwrite($_date_str, " dungeon farm: timer detected. waiting for timer ends")
+        
+        $dungeontimer_disapp = 0
+        
+        $dungeon_timer_start_ms = $_ms
+
+        WHILE(($dungeontimer_disapp = 0) & ($_ms - $dungeon_timer_start_ms < 10000))
+
+            if(pxl(613,147) = 5197823)
+
+                wait(0.03)
+                GETSCREEN(697-85,146,699-85,148)
+
+            ELSE
+
+
+                wait(0.01)
+                getscreen
+
+                CheckSky()
+                if($sky_clear = 1)
+
+                    logwrite($_date_str, " timer ended. click on speed")
+
+                    Random_click_in(50,781,95,825)
+                    wait(0.1)
+                    Random_click_in(50,781,95,825)
+
+                    if($_time_t - $x3timer < 1200)
+
+                        wait(0.1)
+                        Random_click_in(50,781,95,825)
+                    
+                    end_if
+
+                    $dungeontimer_disapp = 1
+                    logwrite($_date_str, " wait 4s for item drop")
+
+                    $stopwatch = 0
+
+                    CheckSky()
+                    WHILE(($sky_clear = 1) & ($stopwatch < 80))
+
+                        $stopwatch = $stopwatch + 1
+                        wait(0.05)
+                        CheckSky()
+
+                    END_CYC
+
+
+                    ShowBattleLength()
+
+                end_if
+
+                $stopwatch = 0
+
+            END_IF
+
+        END_CYC
+
+        $dungeontimer_disapp = 0
+
+        IF((pxl(1488-85,799) ! 1881240) & (pxl(1488-85,799) ! 13750211))
+
+            
+            GetItem()
+
+        END_IF
+
+        $stopwatch = 0
+
+    END_IF
+    
+END_SUB
+
+
+SUB(WaitForAdEnd, $coins_0_x3_1)
+
+    $esccounter = 0
+
+    CheckSky()
+    WHILE(($sky_clear = 0) & ($esccounter<51))
+
+
+        Rmessage_click(1157,466)
+
+        $esccounter = $esccounter+1
+        logwrite($_date_str, " ESC ", $esccounter)
+
+
+        WHILE(($resumead = 0) & ($stopwatch < 17))
+
+
+            GETSCREEN
+            $stopwatch = $stopwatch +1
+            
+            CheckSky()
+            IF($sky_clear = 1)
+
+                $resumead=1
+                logwrite($_date_str, " gc detected")
+
+            END_IF
+            
+            IF((PXL(976-85,586)>16220000) & (PXL(976-85,586)<16221000))
+                
+                logwrite($_date_str, " pause button[1] detected. click and 3s wait")
+                message_click(976-85,586)
+                WAIT(3)
+
+                $resumead = 1
+
+            ELSE
+
+                IF((PXL(948-85,538)>16220000) & (PXL(948-85,538)<16221000))
+
+                    logwrite($_date_str, " pause button[2] detected. click and 3s wait")
+                    message_click(948-85,538)
+                    WAIT(3)
+
+                    $resumead = 1
+
+                ELSE
+
+                    IF((PXL(1164-85,591)>16220000) & (PXL(1164-85,591)<16221000))
+
+                        logwrite($_date_str, " pause button[3] detected. click and 3s wait")
+                        message_click(1164-85,591)
+                        WAIT(3)
+                    
+                        $resumead = 1
+
+                    END_IF
+
+                END_IF
+
+            END_IF
+
+            WAIT(0.03)
+
+        END_CYC
+
+        $stopwatch = 0
+        $resumead = 0
+
+        CheckSky()
+
+    END_CYC
+
+    if($coins_0_x3_1 = 0)
+
+
+        IF($esccounter > 50)
+
+            logwrite($_date_str, " 51 esc clicked. restart will be called")
+            Restart()
+
+        else
+
+            wait(0.5)
+            logwrite($_date_str, " continue")
+
+        END_IF
+
+    else
+
+
+        IF($esccounter > 50)
+
+            logwrite($_date_str, " 51 esc clicked. restart will be called[ad for x3]")
+            Restart()
+            wait(0.3)
+
+        ELSE
+
+            logwrite($_date_str, " writing time to timerx3spd. continue[ad for x3]")
+            $x3timer = $_time_t
+            TFCLEAR("timerx3spd.txt")
+            TFWRITE("timerx3spd.txt" ,$x3timer)
+
+        END_IF
+
+    END_IF
+
+    $esccounter = 0
+    
+END_SUB
+
+SUB(TryUpgradeTower)
+    
+    if($autoupgrade = 1)
+
+
+        if($first_tower_upgrade = 1)
+
+            $first_tower_upgrade = 0
+
+            logwrite($_date_str, " first tower upgrade")
+            
+            $replaysforupg=0
+
+            UpgradeTower()
+
+        else
+
+
+            IF($replaysforupg > 10)
+
+
+                $replaysforupg=0
+
+                logwrite($_date_str, " tower upgrade calling")
+
+                UpgradeTower()
+                
+            END_IF
+
+        END_IF
+
+    END_IF
+
+END_SUB
+
+SUB(CheckItemOnScreen, $itemdustcolor)
+
+
+    //message_click(1110-85,507)  // 10920838     b stone
+    //message_click(162-85,648)  // 15453464      a stone
+    //message_click(163-85,506)  // 13897453     s stone
+    //message_click(636-85,497)  // 2894051     l stone
+
+    if_pixel_in(486-85,268,1277-85,703, $itemdustcolor)
+        
+
+        IF((pxl(1488-85,799) ! 1881240) & (pxl(1488-85,799) ! 13750211))
+        
+            logwrite($_date_str, " item[", $itemdustcolor, "]")
+            
+            GetItem()
+
+            $quitcycle = 1
+
+        END_IF
+
+    END_IF
+
+END_SUB
+
+SUB(EmergStop)
+
+    if($make_hints_emergstop = 1)
+        hintpopup("EmergStop")
+    END_IF
+
+    IF($restartongift = 1)
+        
+
+        Restart()
+
+        wait(0.3)
+
+        IF($autoupgrade = 1)
+
+            UpgradeTower()
+
+        END_IF
+        
+    END_IF
+
+    logwrite("stopped")
+    halt
+    
+END_SUB
+
+SUB(EscClickStart)
+    
+
+    if($make_hints_escclick = 1)
+        hintpopup("overlap. esc click")
+    END_IF
+
+    logwrite($_date_str, " overlap. esc press")
+
+    if($screenshot_on_esc = 1)
+        screenshot("pressesc")
+    END_IF
+
+    GETSCREEN
+
+    $esccounter = 0
+
+    $quitcycle = 0
+
+
+    CheckSky()
+
+    WHILE(($sky_clear = 0) & ($esccounter<10) & ($quitcycle = 0))
+
+        CheckIfCaptcha()
+        if($captcha_on_screen = 1)
+            
+            logwrite($_date_str, " captcha[esc]")
+            $quitcycle = 1
+
+        END_IF
+
+        Rmessage_click(1157,466)
+
+        $esccounter = $esccounter+1
+
+        logwrite($_date_str, " esc ", $esccounter, " pressing")
+        WAIT(0.5)
+        CheckSky()
+
+    END_CYC
+
+    IF($esccounter>9)
+
+
+        logwrite($_date_str, " 10 escapes pressed. unknown thing")
+
+        if($screenshot_10esc = 1)
+            screenshot("unknown")
+        end_if
+        
+        Restart()
+        wait(0.3)
+    
+    END_IF
+    
+    $esccounter = 0
+    $quitcycle = 0
+    
+END_SUB
+
+SUB(CHECK_ON_HINT)
+
+    IF_PIXEL_IN(3,34,1476,82, 65352)
+
+
+
+        logwrite($_date_str, " ___Hint detected___")
+        logwrite($_date_str, " 2 mins screenshotting")
+
+        for($i = 0, $i < 36)
+
+            screenshot("___unknownHint___")
+            logwrite($_date_str, " ___Screenshot ", $i, "___")
+            wait(5)
+            getscreen
+
+        end_cyc
+
+        screenshot("___unknownHint___")
+
+        logwrite($_date_str, " ___RESTART___")
+
+
+        Restart()
+
+        logwrite($_date_str, " ___RESTARTED___")
+        logwrite($_date_str, " 1 min screenshotting")
+
+        for($i = 0, $i < 24)
+
+            screenshot("__unknownHint__")
+            logwrite($_date_str, " __Screen ", $i, "__")
+            wait(5)
+            getscreen
+
+        end_cyc
+        
+        screenshot("__unknownHint__")
+        
+
+
+    end_if
+
+END_SUB
+
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//                                    88888888
+//                                    8
+//                                    8
+//                                    88888888
+//                                           8
+//                                           8
+//                                    88888888
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+
+SUB(AdForCoins)
+
+    Random_click_in(716,765,784,801)//ad click
+    logwrite($_date_str, " [ad for coins] ad for coins clicked. 4s wait")
+    WAIT(4)
+    GETSCREEN
+
+    WaitForAdEnd(0)
+
+END_SUB
+
+SUB(CheckAdForX3)
+    
+    IF(($adforx3 = 1) & ($_time_t - $x3timer > 3610))
+
+
+        logwrite($_date_str, " ad for x3 open[adforx3]")
+
+        Random_click_in(311,44,459,68)
+        WAIT(0.5)
+
+        Random_click_in(1253,93,1337,114)
+        WAIT(0.25)
+
+        getscreen
+
+        logwrite($_date_str, " wait for loading[adforx3]")
+
+
+        $stopwatch = 0
+
+        WHILE((PXL(78,418) ! 4806498) & ($stopwatch < 100))
+
+            WAIT(0.15)
+            GETSCREEN
+
+            $stopwatch = $stopwatch + 1
+
+            CheckSky()
+
+            if(($sky_clear = 1) & (pxl(158,795) = 4806498))
+                $stopwatch = 9999
+            end_if
+
+        END_CYC
+
+        IF($stopwatch > 99)
+
+            $adforx3=0
+
+            if($stopwatch = 9999)
+
+                $stopwatch = 0
+                logwrite($_date_str, " no internet (?)")
+            
+            else
+                
+                $stopwatch = 0
+                logwrite($_date_str, " too long loading. restart will be called[adforx3]")
+                Restart()
+            
+            end_if
+
+            wait(0.3)
+
+        ELSE
+
+            WAIT(0.4)
+            getscreen
+            $stopwatch =0
+
+            if(pxl(147,746) = 4806498)
+
+
+                logwrite($_date_str, " connection lost (?)")
+
+                $adforx3 = 0
+
+                message_click(1442,137)
+                wait(0.5)
+
+            else
+
+                logwrite($_date_str, " opened")
+
+                if(pxl(1365,819) = 4806241)
+
+                    logwrite($_date_str, " x3 is active (?). will be checked after 3610 sec")
+
+                    $x3timer = $_time_t
+                    TFCLEAR("timerx3spd.txt")
+                    TFWRITE("timerx3spd.txt" ,$x3timer)
+
+                    message_click(1442,137)
+
+                else
+                    
+                    if_pixel_in(140,253,592,367,5439314)  // 3293262
+
+
+                        logwrite($_date_str, " click on ad and 2s wait[adforx3]")
+
+                        Random_click_in(212,634,446,670)  // ad click
+                        WAIT(2)
+                        GETSCREEN
+
+                        IF(PXL(78,418) = 4806498)
+
+                            logwrite($_date_str, " ad didnt open. closing[adforx3]")
+                            
+                            $adforx3 = 0
+                            message_click(1442,137)
+                            WAIT(0.3)
+
+                        ELSE
+
+                            logwrite($_date_str, " ad started. 4.5s wait[adforx3]")
+                            WAIT(4.5)
+                            GETSCREEN
+                            
+                            WaitForAdEnd(1)
+
+                            $esccounter = 0
+
+                        END_IF
+
+                    else
+
+                        logwrite("cant see ad for x3 (???)")
+                        
+                        $adforx3 = 0
+                        message_click(1442,137)
+                        wait(0.3)
+
+                    end_if
+
+                end_if
+            
+            end_if
+
+        END_IF
+
+    END_IF
+
+END_SUB
+
+SUB(TryOpenSky)
+
+    GETSCREEN
+
+    CHECK_ON_HINT()
+
+    CheckIfCaptcha()
+    IF($captcha_on_screen = 1)
+
+        logwrite($_date_str, " captcha ")
+        
+        $quitcycle = 1
+
+    else
+
+        CheckItemOnScreen(10920838)
+        CheckItemOnScreen(15453464)
+        CheckItemOnScreen(13897453)
+        CheckItemOnScreen(2894051)
+
+        CheckABExitWindow()
+        CheckExitWindow()
+        CheckPauseWindow()
+        CheckSkipWindow()
+        CheckHeroWindow()
+        CheckRuneWindow()
+
+    END_IF
+
+END_SUB
+
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//                                    88888888
+//                                    8
+//                                    8
+//                                    88888888
+//                                    8      8
+//                                    8      8
+//                                    88888888
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+
+sub(WaitForAdAndWatch)
+    
+
+
+    IF((($adafterskip20 = 0)|($Is_skip = 1))&(($waitforad > 4) & ($adforcoins = 1) & (($adduringspeedup = 1)|(($_time_t - $x3timer) > 1205))))
+
+
+        logwrite($_date_str, " waiting ad for coins button[0]")
+        WAIT(0.4)
+        GETSCREEN
+
+        IF(PXL(714,806)  = 1551083)
+
+            logwrite($_date_str, " button detected. ad for coins calling[0]")
+
+            AdForCoins()
+
+            $waitforad = 0
+        
+        else
+
+            logwrite($_date_str, " button wasnt detected. continue[0]")
+
+        END_IF
+
+    END_IF
+
+END_SUB
+
+SUB(ActivateHeroes)
+
+    $quit_activating = 0
+
+    while(($sky_clear = 1) & ($gc_menu_open = 0) & ($quit_activating = 0))
+
+        AddSpeed()
+
+        CheckMimic()
+
+        CheckSkipWindow()
+
+        IF(($this_deck_1 = 1) & ((PXL(445-85,88) = 16759892)))
+
+            message_click(RND(407-85,448-85),RND(110,165))
+
+            wait($hero_click_pause)
+
+        END_IF
+
+        IF(($this_deck_2 = 1) & ((PXL(541-85,92) = 16759892)))
+            message_click(RND(503-85,540-85),RND(110,165))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_3 = 1) & ((PXL(632-85,91) = 16759892)))
+            message_click(RND(583-85,631-85),RND(110,165))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_4 = 1) & ((PXL(449-85,202) = 16759892)))
+            message_click(RND(407-85,448-85),RND(203,276))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_5 = 1) & ((PXL(540-85,202) = 16759892)))
+            message_click(RND(503-85,540-85),RND(203,276))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_6 = 1) & ((PXL(634-85,201) = 16759892)))
+            message_click(RND(583-85,631-85),RND(203,276))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_7 = 1) & ((PXL(447-85,311) = 16759892)))
+            message_click(RND(407-85,448-85),RND(311,387))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_8 = 1) & ((PXL(540-85,310) = 16759892)))
+            message_click(RND(503-85,540-85),RND(311,387))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_9 = 1) & ((PXL(632-85,311) = 16759892)))
+            message_click(RND(583-85,631-85),RND(311,387))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_10 = 1) & ((PXL(447-85,414) = 16759892)))
+            message_click(RND(407-85,448-85),RND(414,492))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_11 = 1) & ((PXL(541-85,414) = 16759892)))
+            message_click(RND(503-85,540-85),RND(414,492))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_12 = 1) & ((PXL(633-85,415) = 16759892)))
+            message_click(RND(583-85,631-85),RND(414,492))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_13 = 1) & ((PXL(356-85,203) = 16759892)))
+            message_click(RND(303-85,352-85),RND(197,266))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_14 = 1) & ((PXL(268-85,452) = 16759892)))
+            message_click(RND(181-85,320-85),RND(476,546))
+            wait($hero_click_pause)
+        END_IF
+
+        IF(($this_deck_15 = 1) & ((PXL(267-85,587) = 16759892)))
+            message_click(RND(175-85,317-85),RND(597,667))
+            wait($hero_click_pause)
+        END_IF
+
+
+        IF(($this_smith_pos ! 0) | ($heal_altar = 1))
+
+            IF(PXL(949-85,54) = 0)
+
+                IF(($this_smith_pos ! 0) & (PXL($this_smithpxl_X, $this_smithpxl_Y) = 16759892))
+
+
+                    message_click($this_smithpxl_X - RND(0,60), $this_smithpxl_Y+RND(0,60))
+                    logwrite($_date_str, " smith clicked [1,0] ")
+
+                else
+
+
+                    if(($heal_altar = 1) & ($heal_altar_used = 0))
+
+
+                        message_click(227-85,279)  // 11190201
+                        logwrite($_date_str, " altar clicked [1,0] ")
+
+                        $heal_altar_used = 1
+
+                    END_IF
+
+                END_IF
+            
+            END_IF
+
+        END_IF
+
+        getscreen
+
+        if(($this_pure_pos ! 0) & ($use_pw_on_boss = 1))
+
+            IF((PXL(1042-85,96) = 5066216) & ($puretimerbool = 0))
+
+
+                logwrite($_date_str, " boss hp bar detected[1,0]")
+
+                $puretimer = $_ms
+
+                $puretimerbool = 1
+
+            END_IF
+
+        END_IF
+
+        IF(($this_pure_pos ! 0) & (PXL($this_purepxl_X,$this_purepxl_Y) = 16759892) & (($this_deck_1 = 0) | (PXL(450-85,88) ! 5066239)) & (($this_deck_2 = 0) | (PXL(543-85,92) ! 5066239)) & (($this_deck_3 = 0) | (PXL(636-85,91) ! 5066239)) & (($this_deck_4 = 0) | (PXL(450-85,202) ! 5066239)) & (($this_deck_5 = 0) | (PXL(543-85,202) ! 5066239)) & (($this_deck_6 = 0) | (PXL(636-85,201) ! 5066239)) & (($this_deck_7 = 0) | (PXL(450-85,311) ! 5066239)) & (($this_deck_8 = 0) | (PXL(543-85,310) ! 5066239)) & (($this_deck_9 = 0) | (PXL(636-85,311) ! 5066239)) & (($this_deck_10 = 0) | (PXL(450-85,414) ! 5066239)) & (($this_deck_11 = 0) | (PXL(543-85,414) ! 5066239)) & (($this_deck_12 = 0) | (PXL(636-85,415) ! 5066239)) & (($this_deck_13 = 0) | (PXL(358-85,203) ! 5066239)))
+
+            if(($use_pw_on_boss = 1) & ($dungeonfarm_global = 0))
+
+
+                IF(((PXL(894-85,95)=16777215) | (((($_ms - $puretimer > $bosspause*0.7) & ($_time_t - $x3timer <= 1205)) | (($_ms - $puretimer > $bosspause) & ($_time_t - $x3timer > 1205))) & ($puretimerbool = 1))))
+
+                    message_click($this_purepxl_X-RND(0,60),$this_purepxl_Y+RND(0,60))
+                    wait($hero_click_pause)
+
+                END_IF
+
+            else
+
+                message_click($this_purepxl_X-RND(0,60),$this_purepxl_Y+RND(0,60))
+                wait($hero_click_pause)
+
+            END_IF
+
+        END_IF
+
+        ChronoClick()
+
+        GetCurrentBattleLength()
+        if($current_battle_length > $max_battle_length_ms)
+
+
+            logwrite("battle length: ", $current_battle_length/1000, "s. restart will be called")
+
+            if($screenshot_long_wave = 1)
+                screenshot("longWave")
+            end_if
+
+            Restart()
+            $quit_activating = 1
+
+        end_if
+
+        CheckSky()
+        CheckGCMenu()
+
+    end_cyc
+
+END_SUB
+
+SUB(ActivateHeroesDun)
+
+    $quit_activating = 0
+
+    while(($sky_clear = 1) & ($gc_menu_open = 0) & ($quit_activating = 0))
+
+        AddSpeed()
+
+        CheckMimic()
+
+        CheckSkipWindow()
+
+        ChronoClick()
+
+
+        IF(($this_deck_1 = 1) & ((PXL(445-85,88) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+
+            message_click(RND(407-85,448-85),RND(110,165))
+            
+            wait($hero_click_pause)
+            
+            getscreen
+
+        END_IF
+
+        
+        IF(($this_deck_2 = 1) & ((PXL(541-85,92) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(503-85,540-85),RND(110,165))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_3 = 1) & ((PXL(632-85,91) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(583-85,631-85),RND(110,165))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_4 = 1) & ((PXL(449-85,202) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(407-85,448-85),RND(203,276))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_5 = 1) & ((PXL(540-85,202) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(503-85,540-85),RND(203,276))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_6 = 1) & ((PXL(634-85,201) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(583-85,631-85),RND(203,276))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_7 = 1) & ((PXL(447-85,311) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(407-85,448-85),RND(311,387))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_8 = 1) & ((PXL(540-85,310) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(503-85,540-85),RND(311,387))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_9 = 1) & ((PXL(632-85,311) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(583-85,631-85),RND(311,387))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_10 = 1) & ((PXL(447-85,414) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(407-85,448-85),RND(414,492))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_11 = 1) & ((PXL(541-85,414) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(503-85,540-85),RND(414,492))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_12 = 1) & ((PXL(633-85,415) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(583-85,631-85),RND(414,492))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_13 = 1) & ((PXL(356-85,203) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(303-85,352-85),RND(197,266))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_14 = 1) & ((PXL(268-85,452) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(181-85,320-85),RND(476,546))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_deck_15 = 1) & ((PXL(267-85,587) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+            message_click(RND(175-85,317-85),RND(597,667))
+            wait($hero_click_pause)
+            getscreen
+        END_IF
+
+        IF(($this_smith_pos ! 0) | ($heal_altar = 1))
+
+            IF(PXL(949-85,54) ! 5066216)
+            
+                IF(($this_smith_pos ! 0) & (PXL($this_smithpxl_X, $this_smithpxl_Y) = 16759892) & (pxl(1477-85,205) ! 13864504))
+
+                    
+                    message_click($this_smithpxl_X - RND(0,60), $this_smithpxl_Y+RND(0,60))
+                    wait($hero_click_pause)
+                    getscreen
+                    logwrite($_date_str, " smith clicked [1,0]")
+
+                else
+
+
+                    if(($heal_altar = 1) & ($heal_altar_used = 0))
+
+
+                        message_click(227-85,279)  // 11190201
+                        wait($hero_click_pause)
+                        getscreen
+                        logwrite($_date_str, " altar clicked [1,0]")
+                        
+                        $heal_altar_used = 1
+
+                    END_IF
+
+                END_IF
+            
+            END_IF
+
+        END_IF
+
+        IF(($this_pure_pos ! 0) & (PXL($this_purepxl_X,$this_purepxl_Y) = 16759892) & (pxl(1477-85,205) ! 13864504) & (($this_deck_1 = 0) | (PXL(450-85,88) ! 5066239)) & (($this_deck_2 = 0) | (PXL(543-85,92) ! 5066239)) & (($this_deck_3 = 0) | (PXL(636-85,91) ! 5066239)) & (($this_deck_4 = 0) | (PXL(450-85,202) ! 5066239)) & (($this_deck_5 = 0) | (PXL(543-85,202) ! 5066239)) & (($this_deck_6 = 0) | (PXL(636-85,201) ! 5066239)) & (($this_deck_7 = 0) | (PXL(450-85,311) ! 5066239)) & (($this_deck_8 = 0) | (PXL(543-85,310) ! 5066239)) & (($this_deck_9 = 0) | (PXL(636-85,311) ! 5066239)) & (($this_deck_10 = 0) | (PXL(450-85,414) ! 5066239)) & (($this_deck_11 = 0) | (PXL(543-85,414) ! 5066239)) & (($this_deck_12 = 0) | (PXL(636-85,415) ! 5066239)) & (($this_deck_13 = 0) | (PXL(358-85,203) ! 5066239)))
+
+            IF(pxl(1477-85,205) ! 13864504)
+
+                message_click($this_purepxl_X-RND(0,60),$this_purepxl_Y+RND(0,60))
+                wait($hero_click_pause)
+                getscreen
+
+            END_IF
+
+        END_IF
+
+        if($death_altar = 1)
+
+
+            if(($death_altar_used_bool = 0) & (pxl(919-85,94) = 5066216))
+                
+                    
+
+                message_click(229-85,264)  // 7570304
+                wait($hero_click_pause)
+                $death_altar_used_bool = 1
+
+            END_IF
+
+        END_IF
+
+        ChronoClick()
+
+
+        GetCurrentBattleLength()
+        if($current_battle_length > $max_battle_length_ms)
+
+
+            logwrite("battle length: ", $current_battle_length/1000, "s. restart will be called")
+
+            if($screenshot_long_wave = 1)
+                screenshot("longWave")
+            end_if
+
+            Restart()
+            $quit_activating = 1
+
+        end_if
+
+        WaitIfDragonTimer()
+
+        CheckSky()
+        CheckGCMenu()
+
+    end_cyc
+
+END_SUB
+
+//other
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+//===================================================================================================================================================================
+
+SUB(OutputCurrentSettings)
+
+    logwrite("[SETTINGS_LOG]")
+    logwrite("[SETTINGS_LOG] hero_click_pause: ", $hero_click_pause)
+    logwrite("[SETTINGS_LOG] wait_after_battle_click_AB: ", $wait_after_battle_click_AB)
+    logwrite("[SETTINGS_LOG] settings_log: ", $settings_log)
+    logwrite("[SETTINGS_LOG] max_battle_length_ms: ", $max_battle_length_ms)
+    logwrite("[SETTINGS_LOG] log_CurrentBattleLength: ", $log_CurrentBattleLength)
+
+    logwrite("[SETTINGS_LOG] dungeonfarm: ", $dungeonfarm)
+    logwrite("[SETTINGS_LOG] dungeonfarm_global: ", $dungeonfarm_global)
+    logwrite("[SETTINGS_LOG] dungeon_number: ", $dungeon_number)
+    logwrite("[SETTINGS_LOG] delete_B: ", $delete_B)
+    logwrite("[SETTINGS_LOG] delete_A: ", $delete_A)
+    logwrite("[SETTINGS_LOG] delete_S: ", $delete_S)
+    logwrite("[SETTINGS_LOG] delete_L: ", $delete_L)
+    logwrite("[SETTINGS_LOG] delete_E: ", $delete_E)
+    logwrite("[SETTINGS_LOG] decktoplay: ", $decktoplay)
+    logwrite("[SETTINGS_LOG] manuals between skips: ", $manuals_between_skips)
+    logwrite("[SETTINGS_LOG] makereplays: ", $makereplays)
+    logwrite("[SETTINGS_LOG] skipwaves: ", $skipwaves)
+    logwrite("[SETTINGS_LOG] fivewavespauseskip: ", $fivewavespauseskip)
+    logwrite("[SETTINGS_LOG] skipWithOranges: ", $skipWithOranges)
+    logwrite("[SETTINGS_LOG] adforx3: ", $adforx3)
+    logwrite("[SETTINGS_LOG] adforcoins: ", $adforcoins)
+    logwrite("[SETTINGS_LOG] adafterskip20: ", $adafterskip20)
+    logwrite("[SETTINGS_LOG] adduringspeedup: ", $adduringspeedup)
+    logwrite("[SETTINGS_LOG] solve_capcha: ", $solve_capcha)
+    logwrite("[SETTINGS_LOG] restartongift: ", $restartongift)
+    logwrite("[SETTINGS_LOG] use_pw_on_boss: ", $use_pw_on_boss)
+    logwrite("[SETTINGS_LOG] bosspause: ", $bosspause)
+    logwrite("[SETTINGS_LOG] autoupgrade: ", $autoupgrade)
+    logwrite("[SETTINGS_LOG] floor_to_upgrade: ", $floor_to_upgrade)
+    logwrite("[SETTINGS_LOG] death_altar: ", $death_altar)
+    logwrite("[SETTINGS_LOG] window_name: ", $window_name)
+    logwrite("[SETTINGS_LOG] background_mode: ", $background_mode)
+    logwrite("[SETTINGS_LOG] autobattlemode: ", $autobattlemode)
+    logwrite("[SETTINGS_LOG] ab_tab: ", $ab_tab)
+    logwrite("[SETTINGS_LOG] seconds_between_skips: ", $seconds_between_skips)
+    logwrite("[SETTINGS_LOG] screenshot_items: ", $screenshot_items)
+    logwrite("[SETTINGS_LOG] screenshot_runes: ", $screenshot_runes)
+    logwrite("[SETTINGS_LOG] screenshot_on_esc: ", $screenshot_on_esc)
+    logwrite("[SETTINGS_LOG] screenshot_long_gc_load: ", $screenshot_long_gc_load)
+    logwrite("[SETTINGS_LOG] screenshot_long_wave: ", $screenshot_long_wave)
+    logwrite("[SETTINGS_LOG] screenshot_10esc: ", $screenshot_10esc)
+    logwrite("[SETTINGS_LOG] screenshot_noxloadfail: ", $screenshot_noxloadfail)
+    logwrite("[SETTINGS_LOG] screenshot_noxmainmenuloadfail: ", $screenshot_noxmainmenuloadfail)
+    logwrite("[SETTINGS_LOG] screenshot_clearallfail: ", $screenshot_clearallfail)
+    logwrite("[SETTINGS_LOG] gift_screen_before: ", $gift_screen_before)
+    logwrite("[SETTINGS_LOG] gift_screen_after: ", $gift_screen_after)
+
+    logwrite("[SETTINGS_LOG] make_hints_gift: ", $make_hints_gift)
+    logwrite("[SETTINGS_LOG] make_hints_cant_fight_dungeon: ", $make_hints_cant_fight_dungeon)
+    logwrite("[SETTINGS_LOG] make_hints_clearallfail: ", $make_hints_clearallfail)
+    logwrite("[SETTINGS_LOG] make_hints_emergstop: ", $make_hints_emergstop)
+    logwrite("[SETTINGS_LOG] make_hints_escclick: ", $make_hints_escclick)
+    logwrite("[SETTINGS_LOG] make_hints_long_gc_load: ", $make_hints_long_gc_load)
+    logwrite("[SETTINGS_LOG] make_hints_noxmainmenuloadfail: ", $make_hints_noxmainmenuloadfail)
+    logwrite("[SETTINGS_LOG] make_hints_reset: ", $make_hints_reset)
+
+    logwrite("[SETTINGS_LOG] this_deck_1: ", $this_deck_1)
+    logwrite("[SETTINGS_LOG] this_deck_2: ", $this_deck_2)
+    logwrite("[SETTINGS_LOG] this_deck_3: ", $this_deck_3)
+    logwrite("[SETTINGS_LOG] this_deck_4: ", $this_deck_4)
+    logwrite("[SETTINGS_LOG] this_deck_5: ", $this_deck_5)
+    logwrite("[SETTINGS_LOG] this_deck_6: ", $this_deck_6)
+    logwrite("[SETTINGS_LOG] this_deck_7: ", $this_deck_7)
+    logwrite("[SETTINGS_LOG] this_deck_8: ", $this_deck_8)
+    logwrite("[SETTINGS_LOG] this_deck_9: ", $this_deck_9)
+    logwrite("[SETTINGS_LOG] this_deck_10: ", $this_deck_10)
+    logwrite("[SETTINGS_LOG] this_deck_11: ", $this_deck_11)
+    logwrite("[SETTINGS_LOG] this_deck_12: ", $this_deck_12)
+    logwrite("[SETTINGS_LOG] this_deck_13: ", $this_deck_13)
+    logwrite("[SETTINGS_LOG] this_deck_14: ", $this_deck_14)
+    logwrite("[SETTINGS_LOG] this_deck_15: ", $this_deck_15)
+    logwrite("[SETTINGS_LOG] this_pure_pos: ", $this_pure_pos)
+    logwrite("[SETTINGS_LOG] this_smith_pos: ", $this_smith_pos)
+    logwrite("[SETTINGS_LOG] this_orcband_pos: ", $this_orcband_pos)
+    logwrite("[SETTINGS_LOG] this_militaryF_pos: ", $this_militaryF_pos)
+    logwrite("[SETTINGS_LOG] this_chrono_pos: ", $this_chrono_pos)
+
+END_SUB
+
+SUB(DrawSquare, $left_up_x, $left_up_y, $right_down_x, $right_down_y, $DrawSquare_color)
+
+    PXLREPLACE($left_up_x,$left_up_y,$right_down_x,$left_up_y,-1,$DrawSquare_color)
+    PXLREPLACE($left_up_x,$left_up_y,$left_up_x,$right_down_y,-1,$DrawSquare_color)
+    PXLREPLACE($left_up_x,$right_down_y,$right_down_x,$right_down_y,-1,$DrawSquare_color)
+    PXLREPLACE($right_down_x,$left_up_y,$right_down_x,$right_down_y,-1,$DrawSquare_color)
+
+END_SUB

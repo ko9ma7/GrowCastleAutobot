@@ -1,0 +1,126 @@
+
+
+
+
+$x3timer = TFREAD("timerx3spd.txt", 1)
+//TFWRITE("timerx3spd.txt" ,$_time_t)
+
+
+
+
+
+DEFINE($failcounter,0)
+DEFINE($clicked,0)
+DEFINE($upgradecounter,0)
+DEFINE($clickpass,0)
+DEFINE($esccounter,0)
+DEFINE($totalseconds,0)
+$checkscreen[0]=1
+DEFINE($scrxcopyint, 0)
+DEFINE($scrycopyint, 0)
+DEFINE($animated, 0)
+DEFINE($hoursnum, 0)
+DEFINE($minsnum, 0)
+DEFINE($secsnum, 0)
+DEFINE($x3timer, 0)
+DEFINE($stopwatch, 0)
+DEFINE($restarts,0)
+DEFINE($startx, 0)
+DEFINE($starty, 0)
+DEFINE($finishx, 0)
+DEFINE($finishy, 0)
+DEFINE($startxreal, 873)
+DEFINE($startyreal, 481)
+DEFINE($finishxreal, 0)
+DEFINE($finishyreal, 0)
+DEFINE($crossx, 0)
+DEFINE($crystalrightpos, 0)
+DEFINE($heronum, 0)
+DEFINE($position, 0)
+DEFINE($totaldotscomp,0)
+DEFINE($totaldotscomp2,0)
+DEFINE($replaysforupg,0)
+DEFINE($replaysforskip20,12)
+DEFINE($scrtoblack, 164)
+DEFINE($finished, 0)
+DEFINE($timergift, 0)
+DEFINE($resumead, 0)
+DEFINE($xsum, 0)
+DEFINE($ysum, 0)
+DEFINE($totaldots, 0)
+DEFINE($xcount, 0)
+DEFINE($ycount, 0)
+DEFINE($counterx , 0)
+DEFINE($countery , 0)
+DEFINE($foundmin , 0)
+DEFINE($foundmax , 0)
+DEFINE($pxlcopy1 , 0)
+DEFINE($pxlcopy2 , 0)
+DEFINE($pxlcopy3 , 0)
+DEFINE($pxlcopy4 , 0)
+DEFINE($pxlcopy5 , 0)
+DEFINE($pxlcopy6 , 0)
+DEFINE($upgxmin , 0)
+DEFINE($upgxmax , 0)
+DEFINE($upgymin , 0)
+DEFINE($upgymax , 0)
+DEFINE($chestopened , 0)
+DEFINE($restarted , 0)
+DEFINE($animcounter , 0)
+DEFINE($quitcycle , 0)
+DEFINE($waitforad , 4)
+DEFINE($scrtoblackY , 5)
+DEFINE($priority_pass , 0)
+DEFINE($angle_to_rotate_vector , 0)
+DEFINE($dungeontimer_disapp , 0)
+DEFINE($anim_difference , 0)
+DEFINE($xCountSum , 0)
+DEFINE($yCountSum , 0)
+DEFINE($temp_item_grade, 0)
+DEFINE($ab_skip_num, 0)
+DEFINE($puretimerbool, 0)
+DEFINE($nox_state, 0)
+DEFINE($captcha_on_screen, 0)
+DEFINE($windefeat_bool, 0)
+DEFINE($death_altar_used_bool, 1)
+DEFINE($sky_clear, 0)
+DEFINE($gc_menu_open, 0)
+DEFINE($windefeat_str, "")
+DEFINE($captcha_solving_bool, 0)
+DEFINE($Is_skip, 0)
+DEFINE($first_tower_upgrade, 1)
+DEFINE($current_battle_length, 0)
+DEFINE($ms_of_last_replay_call, $_ms)
+DEFINE($prev_frame_game_status, 0)
+DEFINE($dungeon_timer_start_ms, 0)
+DEFINE($item_correct_b, 0)
+
+
+$last_click_ms_1 = 0
+$last_click_ms_2 = 0
+$last_click_ms_3 = 0
+$last_click_ms_4 = 0
+$last_click_ms_5 = 0
+$last_click_ms_6 = 0
+$last_click_ms_7 = 0
+$last_click_ms_8 = 0
+$last_click_ms_9 = 0
+$last_click_ms_10 = 0
+$last_click_ms_11 = 0
+$last_click_ms_12 = 0
+$last_click_ms_13 = 0
+$last_click_ms_14 = 0
+$last_click_ms_15 = 0
+
+
+$last_addspeed = 0
+$quit_activating = 0
+
+
+
+
+
+DEFINE($drawline_dx, 0)
+DEFINE(drawline_dy, 0)
+DEFINE(drawline_switch_bool, 0)
+DEFINE(drawline_pk, 0)

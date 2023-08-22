@@ -1,0 +1,100 @@
+logwrite($_date_str, " Clicker started")
+
+WHILE(true)
+
+    GETSCREEN
+
+    CheckIfCaptcha()
+    IF($captcha_on_screen = 1)
+
+        if($make_hints_gift = 1)
+            hintpopup("Captcha")
+        end_if
+
+        IF($solve_capcha = 1)
+            SolveCaptcha()
+        ELSE
+            EmergStop()
+        END_IF
+
+    END_IF
+
+    GETSCREEN
+
+    CheckSky()
+    IF($sky_clear = 1)
+
+        CheckGCMenu()
+        IF($gc_menu_open = 1)
+
+            GETSCREEN
+
+            logwrite($_date_str, " GC main menu detected.")
+
+            if(($prev_frame_game_status = 1) & ($dungeon_number > 6))
+                ShowBattleLength()
+            end_if
+
+            CheckAdForX3()
+
+            WaitForAdAndWatch() // ?
+            TryUpgradeTower()
+            Replay()
+
+            $prev_frame_game_status = 2
+
+        ELSE
+
+            GETSCREEN
+
+            IF($dungeonfarm = 1)
+                ActivateHeroesDun()
+            else
+                ActivateHeroes()
+            END_IF
+
+            $prev_frame_game_status = 1
+
+        END_IF
+    
+    ELSE
+
+        logwrite($_date_str, " sky not clear. wait 4s")
+
+        CheckNoxState()
+
+        $quitcycle = 0
+
+        CheckSky()
+        WHILE(($sky_clear = 0) & ($stopwatch < 120) & ($quitcycle = 0))
+
+            TryOpenSky()
+            $stopwatch = $stopwatch + 1
+            WAIT(0.03)
+            CheckSky()
+
+        END_CYC
+        $quitcycle = 0
+
+        IF($stopwatch>119)
+
+            logwrite($_date_str, " 4s waited. ")
+            EscClickStart()
+
+        else
+
+            if(($stopwatch > 10) & ($stopwatch < 25))
+                ShowBattleLength()
+            end_if
+            
+            logwrite($_date_str, " sky cleared. continue")
+
+        END_IF
+
+        $stopwatch = 0
+
+        $prev_frame_game_status = 0
+
+    END_IF
+
+END_CYC

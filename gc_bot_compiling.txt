@@ -1,0 +1,609 @@
+$error_string = ""
+getscreen
+
+IF(($dungeon_number>9) | ($dungeon_number < 1) & ($dungeonfarm = 1))
+
+    $dialog = DIALOGBOX("wrong dungeon number", 1, 1)
+    halt
+
+END_IF
+
+$screenY = 1080
+$pxlfound = 0
+$wrongwind = 0
+
+$hwnd = wndfind($window_name)
+
+if($hwnd = 0)
+
+    $dialog = DIALOGBOX(STRCONCAT("cant find window ", $window_name), 1, 1)
+    halt
+
+end_if
+
+if(($background_mode = 1) & ($solve_capcha = 1))
+
+    $dialog = DIALOGBOX("cant solve gift in background mode", 1, 1)
+    halt
+
+end_if
+
+if($background_mode = 1)
+
+    hset($hwnd,1)
+
+else
+
+    hset($hwnd,0)
+
+end_if
+
+logwrite("hwnd: ", $hwnd)
+
+$v1 = 0
+$v2 = 0
+$v3 = 0
+$v4 = 0
+
+wndgetinfo($hwnd,$v1,$v2,$v3,$v4)
+
+logwrite("window: v1 - v4: xpos:", $v1, " ypos:", $v2, " w:", $v3, " h:", $v4)
+
+if(($v1 = -32000) & ($v2 = -32000))
+
+    WNDSTATE($hwnd, 1)
+    wndgetinfo($hwnd,$v1,$v2,$v3,$v4)
+
+end_if
+
+if($v3 ! 1520)
+
+    $error_string = STRCONCAT($error_string, "Expand by ", 1520 - $v3,char(10))
+
+end_if
+
+if($background_mode = 0)
+
+    if($v1 ! 0)
+
+        $error_string = STRCONCAT($error_string, -$v1, " pxls to right ",char(10))
+
+    end_if
+
+    if($v2 ! 0)
+
+        $error_string = STRCONCAT($error_string, -$v2, " pxls to up ",char(10))
+
+    end_if
+
+end_if
+
+IF(strlen($error_string) > 1)
+
+    $dialog = DIALOGBOX($error_string, 1, 1)
+    HALT
+
+END_IF
+
+if(($decktoplay<1) | ($decktoplay > 5))
+    $error_string = STRCONCAT($error_string, "wrond deck to play. 1...5",char(10))
+end_if
+
+IF(strlen($error_string) > 3)
+
+    $dialog = DIALOGBOX($error_string, 1, 1)
+    halt
+
+END_IF
+
+$error_string = ""
+
+IF(($this_pure_pos = $this_necr_pos) & ($this_pure_pos ! 0))
+    $error_string = STRCONCAT($error_string, "pure = necr",char(10))
+END_IF
+
+IF(($this_pure_pos = $this_smith_pos) & ($this_pure_pos ! 0))
+    $error_string = STRCONCAT($error_string, "pure = smith",char(10))
+END_IF
+
+IF(($this_necr_pos = $this_smith_pos) & ($this_smith_pos ! 0))
+    $error_string = STRCONCAT($error_string, "necr = smith",char(10))
+END_IF
+
+IF(($this_pure_pos = $this_orcband_pos) & ($this_pure_pos ! 0))
+    $error_string = STRCONCAT($error_string, "pure = orc band",char(10))
+END_IF
+
+IF(($this_necr_pos = $this_orcband_pos) & ($this_necr_pos ! 0))
+    $error_string = STRCONCAT($error_string, "necr = orc band",char(10))
+END_IF
+
+IF(($this_smith_pos = $this_orcband_pos) & ($this_smith_pos ! 0))
+    $error_string = STRCONCAT($error_string, "orc band = smith",char(10))
+END_IF
+
+IF(($this_pure_pos = $this_militaryF_pos) & ($this_pure_pos ! 0))
+    $error_string = STRCONCAT($error_string, "pure = military f",char(10))
+END_IF
+
+IF(($this_necr_pos = $this_militaryF_pos) & ($this_necr_pos ! 0))
+    $error_string = STRCONCAT($error_string, "necr = military f",char(10))
+END_IF
+
+IF(($this_smith_pos = $this_militaryF_pos) & ($this_smith_pos ! 0))
+    $error_string = STRCONCAT($error_string, "military f = smith",char(10))
+END_IF
+
+IF(($this_orcband_pos = $this_militaryF_pos) & ($this_orcband_pos ! 0))
+    $error_string = STRCONCAT($error_string, "military f = orc band",char(10))
+END_IF
+
+IF(($this_chrono_pos = $this_pure_pos) & ($this_chrono_pos ! 0))
+    $error_string = STRCONCAT($error_string, "chrono = pure",char(10))
+END_IF
+
+IF(($this_chrono_pos = $this_necr_pos) & ($this_chrono_pos ! 0))
+    $error_string = STRCONCAT($error_string, "chrono = necr",char(10))
+END_IF
+
+IF(($this_chrono_pos = $this_smith_pos) & ($this_chrono_pos ! 0))
+    $error_string = STRCONCAT($error_string, "chrono = smith",char(10))
+END_IF
+
+IF(($this_chrono_pos = $this_orcband_pos) & ($this_chrono_pos ! 0))
+    $error_string = STRCONCAT($error_string, "chrono = orc band",char(10))
+END_IF
+
+IF(($this_chrono_pos = $this_militaryF_pos) & ($this_chrono_pos ! 0))
+    $error_string = STRCONCAT($error_string, "chrono = militaryF",char(10))
+END_IF
+
+DEFINE($this_purepxl_X,543-85)
+DEFINE($this_purepxl_Y,250)
+DEFINE($this_smithpxl_X,100-85)
+DEFINE($this_smithpxl_Y,250)
+DEFINE($this_orcband_X,100-85)
+DEFINE($this_orcband_Y,250)
+DEFINE($this_militaryF_X,100-85)
+DEFINE($this_militaryF_Y,250)
+DEFINE($this_chrono_X,100-85)
+DEFINE($this_chrono_Y,250)
+
+SWITCH($this_pure_pos)
+
+    CASE(0)
+        $this_purepxl_X = 100-85
+        $this_purepxl_Y = 250
+    CASE(2)
+        $this_deck_2 = 0
+        $this_purepxl_Y = 92
+    CASE(5)
+        $this_deck_5 = 0
+        $this_purepxl_Y = 202
+    CASE(8)
+        $this_deck_8 = 0
+        $this_purepxl_Y = 310
+    CASE(11)
+        $this_deck_11 = 0
+        $this_purepxl_Y = 414
+    DEFAULT
+        $error_string = STRCONCAT($error_string, "put pw on center",char(10))
+
+END_SWITCH
+
+SWITCH($this_smith_pos)
+
+    CASE(0)
+        $this_smithpxl_X = 100-85
+        $this_smithpxl_Y = 250
+    CASE(1)
+        $this_deck_1 = 0
+        $this_smithpxl_X = 449-85
+        $this_smithpxl_Y = 90
+    CASE(2)
+        $this_deck_2 = 0
+        $this_smithpxl_X = 541-85
+        $this_smithpxl_Y = 90
+    CASE(3)
+        $this_deck_3 = 0
+        $this_smithpxl_X = 632-85
+        $this_smithpxl_Y = 90
+    CASE(4)
+        $this_deck_4 = 0
+        $this_smithpxl_X = 449-85
+        $this_smithpxl_Y = 202
+    CASE(5)
+        $this_deck_5 = 0
+        $this_smithpxl_X = 541-85
+        $this_smithpxl_Y = 202
+    CASE(6)
+        $this_deck_6 = 0
+        $this_smithpxl_X = 632-85
+        $this_smithpxl_Y = 202
+    CASE(7)
+        $this_deck_7 = 0
+        $this_smithpxl_X = 449-85
+        $this_smithpxl_Y = 311
+    CASE(8)
+        $this_deck_8 = 0
+        $this_smithpxl_X = 541-85
+        $this_smithpxl_Y = 311
+    CASE(9)
+        $this_deck_9 = 0
+        $this_smithpxl_X = 632-85
+        $this_smithpxl_Y = 311
+    CASE(10)
+        $this_deck_10 = 0
+        $this_smithpxl_X = 449-85
+        $this_smithpxl_Y = 415
+    CASE(11)
+        $this_deck_11 = 0
+        $this_smithpxl_X = 541-85
+        $this_smithpxl_Y = 415
+    CASE(12)
+        $this_deck_12 = 0
+        $this_smithpxl_X = 632-85
+        $this_smithpxl_Y = 415
+    CASE(13)
+        $this_deck_13 = 0
+        $this_smithpxl_X = 356-85
+        $this_smithpxl_Y = 203
+    DEFAULT
+        $error_string = STRCONCAT($error_string, "smith wrong position",char(10))
+
+END_SWITCH
+
+SWITCH($this_orcband_pos)
+
+    CASE(0)
+        $this_orcband_X = 100-85
+        $this_orcband_Y = 250
+    CASE(1)
+        $this_deck_1 = 0
+        $this_orcband_X = 449-85
+        $this_orcband_Y = 90
+    CASE(2)
+        $this_deck_2 = 0
+        $this_orcband_X = 541-85
+        $this_orcband_Y = 90
+    CASE(3)
+        $this_deck_3 = 0
+        $this_orcband_X = 632-85
+        $this_orcband_Y = 90
+    CASE(4)
+        $this_deck_4 = 0
+        $this_orcband_X = 449-85
+        $this_orcband_Y = 202
+    CASE(5)
+        $this_deck_5 = 0
+        $this_orcband_X = 541-85
+        $this_orcband_Y = 202
+    CASE(6)
+        $this_deck_6 = 0
+        $this_orcband_X = 632-85
+        $this_orcband_Y = 202
+    CASE(7)
+        $this_deck_7 = 0
+        $this_orcband_X = 449-85
+        $this_orcband_Y = 311
+    CASE(8)
+        $this_deck_8 = 0
+        $this_orcband_X = 541-85
+        $this_orcband_Y = 311
+    CASE(9)
+        $this_deck_9 = 0
+        $this_orcband_X = 632-85
+        $this_orcband_Y = 311
+    CASE(10)
+        $this_deck_10 = 0
+        $this_orcband_X = 449-85
+        $this_orcband_Y = 415
+    CASE(11)
+        $this_deck_11 = 0
+        $this_orcband_X = 541-85
+        $this_orcband_Y = 415
+    CASE(12)
+        $this_deck_12 = 0
+        $this_orcband_X = 632-85
+        $this_orcband_Y = 415
+    CASE(13)
+        $this_deck_13 = 0
+        $this_orcband_X = 356-85
+        $this_orcband_Y = 203
+    DEFAULT
+        $error_string = STRCONCAT($error_string, "orcband wrong position",char(10))
+
+END_SWITCH
+
+SWITCH($this_militaryF_pos)
+
+    CASE(0)
+        $this_militaryF_X = 100-85
+        $this_militaryF_Y = 250
+    CASE(1)
+        $this_deck_1 = 0
+        $this_militaryF_X = 449-85
+        $this_militaryF_Y = 90
+    CASE(2)
+        $this_deck_2 = 0
+        $this_militaryF_X = 541-85
+        $this_militaryF_Y = 90
+    CASE(3)
+        $this_deck_3 = 0
+        $this_militaryF_X = 632-85
+        $this_militaryF_Y = 90
+    CASE(4)
+        $this_deck_4 = 0
+        $this_militaryF_X = 449-85
+        $this_militaryF_Y = 202
+    CASE(5)
+        $this_deck_5 = 0
+        $this_militaryF_X = 541-85
+        $this_militaryF_Y = 202
+    CASE(6)
+        $this_deck_6 = 0
+        $this_militaryF_X = 632-85
+        $this_militaryF_Y = 202
+    CASE(7)
+        $this_deck_7 = 0
+        $this_militaryF_X = 449-85
+        $this_militaryF_Y = 311
+    CASE(8)
+        $this_deck_8 = 0
+        $this_militaryF_X = 541-85
+        $this_militaryF_Y = 311
+    CASE(9)
+        $this_deck_9 = 0
+        $this_militaryF_X = 632-85
+        $this_militaryF_Y = 311
+    CASE(10)
+        $this_deck_10 = 0
+        $this_militaryF_X = 449-85
+        $this_militaryF_Y = 415
+    CASE(11)
+        $this_deck_11 = 0
+        $this_militaryF_X = 541-85
+        $this_militaryF_Y = 415
+    CASE(12)
+        $this_deck_12 = 0
+        $this_militaryF_X = 632-85
+        $this_militaryF_Y = 415
+    CASE(13)
+        $this_deck_13 = 0
+        $this_militaryF_X = 356-85
+        $this_militaryF_Y = 203
+    DEFAULT
+        $error_string = STRCONCAT($error_string, "militaryF wrong position",char(10))
+
+END_SWITCH
+
+SWITCH($this_chrono_pos)
+
+    CASE(0)
+        $this_chrono_X = 100-85
+        $this_chrono_Y = 250
+    CASE(1)
+        $this_deck_1 = 0
+        $this_chrono_X = 449-85
+        $this_chrono_Y = 90
+    CASE(2)
+        $this_deck_2 = 0
+        $this_chrono_X = 541-85
+        $this_chrono_Y = 90
+    CASE(3)
+        $this_deck_3 = 0
+        $this_chrono_X = 632-85
+        $this_chrono_Y = 90
+    CASE(4)
+        $this_deck_4 = 0
+        $this_chrono_X = 449-85
+        $this_chrono_Y = 202
+    CASE(5)
+        $this_deck_5 = 0
+        $this_chrono_X = 541-85
+        $this_chrono_Y = 202
+    CASE(6)
+        $this_deck_6 = 0
+        $this_chrono_X = 632-85
+        $this_chrono_Y = 202
+    CASE(7)
+        $this_deck_7 = 0
+        $this_chrono_X = 449-85
+        $this_chrono_Y = 311
+    CASE(8)
+        $this_deck_8 = 0
+        $this_chrono_X = 541-85
+        $this_chrono_Y = 311
+    CASE(9)
+        $this_deck_9 = 0
+        $this_chrono_X = 632-85
+        $this_chrono_Y = 311
+    CASE(10)
+        $this_deck_10 = 0
+        $this_chrono_X = 449-85
+        $this_chrono_Y = 415
+    CASE(11)
+        $this_deck_11 = 0
+        $this_chrono_X = 541-85
+        $this_chrono_Y = 415
+    CASE(12)
+        $this_deck_12 = 0
+        $this_chrono_X = 632-85
+        $this_chrono_Y = 415
+    CASE(13)
+        $this_deck_13 = 0
+        $this_chrono_X = 356-85
+        $this_chrono_Y = 203
+    DEFAULT
+        $error_string = STRCONCAT($error_string, "chrono wrong position",char(10))
+
+END_SWITCH
+
+IF(strlen($error_string) > 1)
+    $dialog = DIALOGBOX($error_string, 1, 1)
+    HALT
+END_IF
+
+if($makereplays = 1)
+
+    $skipwaves = 0
+
+end_if
+
+IF(($adforcoins = 1) & ($skipwaves = 0) & ($adafterskip20 = 1))
+
+    $adafterskip20 = 0
+
+end_if
+
+IF($skipwaves = 1)
+
+    $autoupgrade = 0
+
+END_IF
+
+IF($dungeonfarm = 1)
+
+    $adforcoins = 0
+    $use_pw_on_boss = 0
+
+END_IF
+
+IF($autoupgrade = 1)
+
+    IF(($floor_to_upgrade < 1) | ($floor_to_upgrade > 4))
+
+        $dialog = DIALOGBOX("wrong floor to upgrade", 1, 1)
+        halt
+        
+    end_if
+
+end_if
+
+
+IF((($_xmax < 1919) | ($_ymax < 1079)) & ($solve_capcha = 1) & ($background_mode = 0))
+
+    $dialog = DIALOGBOX("small screen size", 1, 1)
+    halt
+
+end_if
+
+//LCLICK(1519,864)  // max
+IF((($_xmax < 1519) | ($_ymax < 864)) & ($background_mode = 0))
+
+    $dialog = DIALOGBOX("small screen size.", 1, 1)
+    halt
+
+end_if
+
+if($autobattlemode = 1)
+
+    $skipwaves = 1
+    $makereplays = 0
+    $fivewavespauseskip = 0
+
+end_if
+
+if($background_mode = 0)
+
+    $make_hints_cant_fight_dungeon = 0
+    $make_hints_clearallfail = 0
+    $make_hints_emergstop = 0
+    $make_hints_escclick = 0
+    $make_hints_long_gc_load = 0
+    $make_hints_noxmainmenuloadfail = 0
+    $make_hints_reset = 0
+    $make_hints_gift = 0
+
+end_if
+
+if($print_settings = 1)
+
+    OutputCurrentSettings()
+
+end_if
+
+//files check
+
+tfwrite("gc_reg.txt", "teststring")
+tfdelete("gc_reg.txt", tfcount("gc_reg.txt"))
+
+tfwrite("informgift.txt", "teststring")
+tfdelete("informgift.txt", tfcount("informgift.txt"))
+
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 2),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 3),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 6),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 7),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 8),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 11),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 12),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 13),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 16),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 17),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 18),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 21),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 22),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+$tempval = strfilter(TFREAD("dungeon_statistics.txt", 23),"1234567890", 1)
+if(strlen($tempval) < 1)
+    $dialog = DIALOGBOX("cant read numbers from dungeon_statistics.txt", 1, 1)
+    halt
+end_if
+
+$tempval = strfilter(TFREAD("timerx3spd.txt", 1),"1234567890", 1)
+if(strlen($tempval) < 1)
+    TFCLEAR("timerx3spd.txt")
+    TFWRITE("timerx3spd.txt", "0")
+end_if

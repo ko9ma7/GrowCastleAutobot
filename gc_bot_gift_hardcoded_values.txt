@@ -4,6 +4,8 @@ sub(Hardcode_wndpos_setup)
     switch($heronum)
 
         case(1)
+        
+            $total_screens_to_make = 43
 
             $block_coords_LUX[0] = 1603
             $block_coords_LUY[0] = 913
@@ -307,6 +309,8 @@ sub(Hardcode_wndpos_setup)
             $window_pos_in_frame_Y[42] = -517
 
         case(2)
+        
+            $total_screens_to_make = 43
 
             $block_coords_LUX[0] = 1746
             $block_coords_LUY[0] = 924
@@ -610,6 +614,8 @@ sub(Hardcode_wndpos_setup)
             $window_pos_in_frame_Y[42] = -517
 
         case(3)
+        
+            $total_screens_to_make = 36
 
             $block_coords_LUX[0] = 1802
             $block_coords_LUY[0] = 621
@@ -864,6 +870,8 @@ sub(Hardcode_wndpos_setup)
             $window_pos_in_frame_Y[35] = -508
 
         case(4)
+        
+            $total_screens_to_make = 43
 
             $block_coords_LUX[0] = 1646
             $block_coords_LUY[0] = 922
@@ -1167,6 +1175,8 @@ sub(Hardcode_wndpos_setup)
             $window_pos_in_frame_Y[42] = -512
 
         case(5)
+        
+            $total_screens_to_make = 43
 
             $block_coords_LUX[0] = 1639
             $block_coords_LUY[0] = 916
@@ -1470,6 +1480,8 @@ sub(Hardcode_wndpos_setup)
             $window_pos_in_frame_Y[42] = -519
 
         case(6)
+        
+            $total_screens_to_make = 43
 
             $block_coords_LUX[0] = 1630
             $block_coords_LUY[0] = 929
@@ -1773,6 +1785,8 @@ sub(Hardcode_wndpos_setup)
             $window_pos_in_frame_Y[42] = -516
             
         case(7)
+        
+            $total_screens_to_make = 44
 
             $block_coords_LUX[0] = 1751
             $block_coords_LUY[0] = 925
@@ -2083,6 +2097,8 @@ sub(Hardcode_wndpos_setup)
             $window_pos_in_frame_Y[43] = -517
 
         case(8)
+
+            $total_screens_to_make = 43
 
             $block_coords_LUX[0] = 1798
             $block_coords_LUY[0] = 627

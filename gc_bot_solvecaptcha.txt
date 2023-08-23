@@ -22,12 +22,12 @@ SUB(BlackBackgroundGift11)
 
     logwrite($_date_str, " -bbg")
 
-    $scrtoblack = 57
-    $scrtoblackMax = 585
+    $scrtoblack = 0
+    $scrtoblackMax = 530
 
-    $BBGX = 1650
+    $BBGX = 1745
 
-    while($BBGX < 1826)
+    while($BBGX <= $ancillary_area_FX)
 
         if(pxlcount($BBGX, $scrtoblack, $BBGX, $scrtoblackMax, 0) < $scrtoblackMax - $scrtoblack + 1)
             BlackLine($scrtoblack, $scrtoblackMax)
@@ -37,165 +37,123 @@ SUB(BlackBackgroundGift11)
 
     end_cyc
 
-    PXLREPLACE(0,0,1920,1080, 4144959, 0)
-
     logwrite($_date_str, " bbg-")
 
 END_SUB
 
 SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
-    $counter = 1
+    $counter = 0
+
     if($main_cycle_drawpathMode = 1)
-        $counter = 8
+        $counter = 7
     end_if
 
-    while($counter < 9)
+    while($counter < 8)
 
         $this_heropxlsum = 0
 
-        $frame_counter = 1
-        $frame_counter_from = 1
-        $bool_frame_jump = 0
+        $frame_counter = 0
 
         if($main_cycle_drawpathMode = 0)
-            $main_cycle_key = $counter
+            $main_cycle_key = $counter + 1
         end_if
 
         $first_frame_pixels = 0
 
-        while($frame_counter < 19)
-
-            if(($frame_counter_from ! 1) & ($frame_counter ! 1) & ($bool_frame_jump = 0))
-
-                $frame_counter = $frame_counter_from
-                $bool_frame_jump = 1
-
-            end_if 
+        while($frame_counter < $total_screens_to_make)
 
             switch($heronum)
 
                 case(1)
 
-                    $add_to_Y = ROUND(60 * (pow((($frame_counter - 1) / 16), 1.1) - pow((($frame_counter - 1) / 16), 2)), 0) //      60\ \cdot\left(\left(\frac{\left(x-1\right)}{16}\right)^{1.1}-\left(\frac{\left(x-1\right)}{16}\right)^{2}\right)
-
-                    // desmos generalized formula:
-                    // \frac{\left(x-1\right)}{17}\cdot\left(-a\cdot\left(x-1\right)+\left(17\cdot a+1\right)\right)
-
                     if(($main_cycle_key < 2) | ($main_cycle_key > 5))
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125) //    \frac{\left(x-1\right)}{17}\cdot\left(-0.03125\cdot\left(x-1\right)+1.53125\right)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
                     else
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)//   \frac{\left(x-1\right)}{17}\cdot\left(-0.025\cdot\left(x-1\right)+1.425\right)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.025 * (17 * $frame_counter / $total_screens_to_make) + 1.425)
                     end_if
 
                 case(2)
-                
-                    $add_to_Y = ROUND(60 * (pow((($frame_counter - 1) / 16), 1.1) - pow((($frame_counter - 1) / 16), 2)), 0)
 
                     if(($main_cycle_key < 3) | ($main_cycle_key > 6))
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
                     else
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.025 * (17 * $frame_counter / $total_screens_to_make) + 1.425)
                     end_if
 
                 case(3)
 
-                    $add_to_Y = -ROUND(10 / (-($frame_counter - 1) + 20), 0)
-
                     if(($main_cycle_key < 4) | ($main_cycle_key > 7))
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
                     else
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.0125 * ($frame_counter - 1) + 1.2125)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.0215 * (17 * $frame_counter / $total_screens_to_make) + 1.2125)
                     end_if
 
                 case(4)
 
-                    $add_to_Y = 0
-
                     if(($main_cycle_key < 2) | ($main_cycle_key > 5))
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
                     else
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.025 * (17 * $frame_counter / $total_screens_to_make) + 1.425)
                     end_if
 
                 case(5)
 
-                    $add_to_Y = -ROUND(60 * (pow((($frame_counter - 1) / 16), 1.1) - pow((($frame_counter - 1) / 16), 2)), 0)
-
                     if(($main_cycle_key < 3) | ($main_cycle_key > 6))
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
                     else
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.0125 * ($frame_counter - 1) + 1.2125)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.025 * (17 * $frame_counter / $total_screens_to_make) + 1.425)
                     end_if
 
                 case(6)
 
-                    $add_to_Y = 0
-
                     if(($main_cycle_key < 4) | ($main_cycle_key > 7))
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
                     else
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.025 * (17 * $frame_counter / $total_screens_to_make) + 1.425)
                     end_if
 
                 case(7)
 
-                    $add_to_Y = 0
-
                     if($main_cycle_key > 5)
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
                     else
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.01875 * ($frame_counter - 1) + 1.31875)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.01875 * (17 * $frame_counter / $total_screens_to_make) + 1.31875)
                     end_if
 
                 case(8)
 
-                    $add_to_Y = 0
                     if(($main_cycle_key < 4) | ($main_cycle_key > 6))
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
                     else
-                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.01875 * ($frame_counter - 1) + 1.31875)
+                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.01875 * (17 * $frame_counter / $total_screens_to_make) + 1.31875)
                     end_if
+
 
             END_SWITCH
 
-            $counting_square_LUX = ROUND($hero_path_cords_X + (844 + 99.3 * ($main_cycle_key - 1) - ($take_screen_rdx - $take_screen_lux + 1) - $hero_path_cords_X) * $progress_normalized + $screenpart_LR * ($take_screen_rdx + 1 - $take_screen_lux), 0)
-            $counting_square_LUY = $hero_path_cords_Y + 115 * ($frame_counter - 1 - 9 * $screenpart_LR)
+            $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 99.3 * ($main_cycle_key - 1) - $hero_path_cords_X) * $lerp_progress_normalized, 0) + $window_pos_in_frame_X[$frame_counter]
+            $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized + $window_pos_in_frame_Y[$frame_counter]
+
             $counting_square_RDX = $counting_square_LUX + $hero_width
             $counting_square_RDY = $counting_square_LUY + $hero_height
 
             $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
             $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
 
-            $square_shape_changer = abs(SIN($start_angle - $start_angle * $progress_normalized)  * ($counting_square_h - $counting_square_w) / 2)
+            $square_shape_changer = abs(SIN($start_angle - $start_angle * $lerp_progress_normalized)  * ($counting_square_h - $counting_square_w) / 2)
 
             if($counting_square_h < $counting_square_w)
                 $square_shape_changer = -$square_shape_changer
             end_if
 
             $counting_square_LUX = ROUND($counting_square_LUX - $square_shape_changer, 0)
-            $counting_square_LUY = ROUND($counting_square_LUY + $square_shape_changer, 0) + $add_to_Y
+            $counting_square_LUY = ROUND($counting_square_LUY + $square_shape_changer, 0)
             $counting_square_RDX = ROUND($counting_square_RDX + $square_shape_changer, 0)
-            $counting_square_RDY = ROUND($counting_square_RDY - $square_shape_changer, 0) + $add_to_Y
+            $counting_square_RDY = ROUND($counting_square_RDY - $square_shape_changer, 0)
 
             $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
             $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
-
-            if($counting_square_LUY < 115 * ($frame_counter - $screenpart_LR * 9 - 1))
-                $counting_square_LUY = 115 * ($frame_counter - $screenpart_LR * 9 - 1)
-            end_if
-
-            if($counting_square_RDY > 115 * ($frame_counter - $screenpart_LR * 9) - 1)
-                $counting_square_RDY = 115 * ($frame_counter - $screenpart_LR * 9) - 1
-            end_if
-
-            if($counting_square_LUX < 823 * $screenpart_LR)
-                $counting_square_LUX = 823 * $screenpart_LR
-            end_if
-
-            if($counting_square_RDX > 822 + 823 * $screenpart_LR)
-                $counting_square_RDX = 822 + 823 * $screenpart_LR
-            end_if
 
             if($main_cycle_drawpathMode = 0)
 
@@ -207,12 +165,10 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
                     end_if
                 end_if
 
-                if($frame_counter = 1)
+                if($frame_counter = 0)
 
-                    $first_frame_pixels = (1866 - 1802 + 1) * (994 - 891 + 1) - pxlcount(1802, 891, 1866, 994, 0)
-                    
-                    $minimum_pixels[$counter - 1] = $first_frame_pixels
-                    $pxlsum_increment = $first_frame_pixels
+                    $first_frame_pixels = $pxlsum_increment
+                    $minimum_pixels[$counter] = $first_frame_pixels
 
                 else
 
@@ -222,9 +178,9 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
                     end_if
 
-                    if($pxlsum_increment < $minimum_pixels[$counter - 1])
+                    if($pxlsum_increment < $minimum_pixels[$counter])
 
-                        $minimum_pixels[$counter - 1] = $pxlsum_increment
+                        $minimum_pixels[$counter] = $pxlsum_increment
 
                     end_if
                 
@@ -561,13 +517,13 @@ sub(Dynamic_windowpos_setup)
         $window_pos_in_frame_X[$dwsi] = $block_coords_LUX[$dwsi] - $window_pos_static_X[$dwsi]
         $window_pos_in_frame_Y[$dwsi] = $block_coords_LUY[$dwsi] - $window_pos_static_Y[$dwsi]
 
-        logwrite("$block_coords_LUX[",$dwsi,"] = ", $block_coords_LUX[$dwsi])
-        logwrite("$block_coords_LUY[",$dwsi,"] = ", $block_coords_LUY[$dwsi])
-        logwrite("$block_size_X[",$dwsi,"] = ", $block_size_X[$dwsi])
-        logwrite("$block_size_Y[",$dwsi,"] = ", $block_size_Y[$dwsi])
-        logwrite("$window_pos_in_frame_X[",$dwsi,"] = ", $window_pos_in_frame_X[$dwsi])
-        logwrite("$window_pos_in_frame_Y[",$dwsi,"] = ", $window_pos_in_frame_Y[$dwsi])
-        logwrite(" ")
+        //logwrite("$block_coords_LUX[",$dwsi,"] = ", $block_coords_LUX[$dwsi])
+        //logwrite("$block_coords_LUY[",$dwsi,"] = ", $block_coords_LUY[$dwsi])
+        //logwrite("$block_size_X[",$dwsi,"] = ", $block_size_X[$dwsi])
+        //logwrite("$block_size_Y[",$dwsi,"] = ", $block_size_Y[$dwsi])
+        //logwrite("$window_pos_in_frame_X[",$dwsi,"] = ", $window_pos_in_frame_X[$dwsi])
+        //logwrite("$window_pos_in_frame_Y[",$dwsi,"] = ", $window_pos_in_frame_Y[$dwsi])
+        //logwrite(" ")
 
     end_cyc
 
@@ -582,24 +538,26 @@ END_SUB
 
 SUB(CaptchaInit)
 
-    $drawallpaths = 1
+    $drawallpaths = 0
     $drawpathFor = 0
 
-    $heronum = 8
+    //$heronum = 1
+
+    Hardcode_wndpos_setup()
 
     $ancillary_area_SX = 1745
     $ancillary_area_SY = 0
     $ancillary_area_FX = 1920
     $ancillary_area_FY = 530
 
-    $color_array[1] = $color_RED
-    $color_array[2] = $color_ORANGE
-    $color_array[3] = $color_YELLOW
-    $color_array[4] = $color_GREEN
-    $color_array[5] = $color_CYAN
-    $color_array[6] = $color_BLUE
-    $color_array[7] = $color_MAGENTA
-    $color_array[8] = $color_HOTPINK
+    $color_array[0] = $color_RED
+    $color_array[1] = $color_ORANGE
+    $color_array[2] = $color_YELLOW
+    $color_array[3] = $color_GREEN
+    $color_array[4] = $color_CYAN
+    $color_array[5] = $color_BLUE
+    $color_array[6] = $color_MAGENTA
+    $color_array[7] = $color_HOTPINK
 
     for($foriterator = 0, $foriterator < 8, 1)
         $minimum_pixels[$foriterator] = 0
@@ -610,7 +568,7 @@ SUB(CaptchaInit)
 
     $whole_path_time = 1.062321
 
-    $total_screens_to_make = 43
+    //$total_screens_to_make = 43
 
     $tilt = 2*$whole_path_time / (3 * ($total_screens_to_make - 1))
 
@@ -737,13 +695,9 @@ SUB(CaptchaInit)
 
     PlaceBlocksOnScreen()
     screenshot("gift")
+    halt
 
-
-
-
-
-
-    Dynamic_windowpos_setup()
+    //Dynamic_windowpos_setup()
 
 
 END_SUB
@@ -883,41 +837,28 @@ SUB(SolveCaptcha)
 
                 wait(0.4)
 
-                wndpos($hwnd, $ancillary_area_FX-322 , $ancillary_area_FY-302)
+                wndpos($hwnd, $ancillary_area_SX-322 , $ancillary_area_SY-302)
                 wait(0.1)
 
                 getscreen($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY)
 
                 wait(0.1)
 
-                wndpos($hwnd, -$take_screen_lux+85, -$take_screen_luy + 2)
-                getscreen(0,0, $take_screen_rdx-$take_screen_lux, $take_screen_rdy-$take_screen_luy)
+                wndpos($hwnd, $window_pos_in_frame_X[0], $window_pos_in_frame_Y[0])
+                getscreen($block_coords_LUX[0], $block_coords_LUY[0], $block_coords_LUX[0] + $block_size_X[0], $block_coords_LUY[0] + $block_size_Y[0])
 
                 wait(0.23166)
 
                 $screen_counter=1
 
-                while($screen_counter < 9)
+                while($screen_counter < $total_screens_to_make)
 
-                    wndpos($hwnd, -$take_screen_lux+85, round($vertical_velocity*($screen_counter),0)-$take_screen_luy + ($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter+2))
-                    getscreen(0,($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter), $take_screen_rdx-$take_screen_lux, ($screen_counter+1)*($take_screen_rdy-$take_screen_luy)+($screen_counter))
+                    wndpos($hwnd, $window_pos_in_frame_X[$screen_counter], $window_pos_in_frame_Y[$screen_counter])
+                    getscreen($block_coords_LUX[$screen_counter], $block_coords_LUY[$screen_counter], $block_coords_LUX[$screen_counter] + $block_size_X[$screen_counter]-1, $block_coords_LUY[$screen_counter] + $block_size_Y[$screen_counter]-1)
 
                     wait($wms[$screen_counter])
 
                     $screen_counter = $screen_counter+ 1
-
-                end_cyc
-
-                $screen_counter=0
-
-                while($screen_counter < 9)
-
-                    wndpos($hwnd, -$take_screen_lux+85 + ($take_screen_rdx-$take_screen_lux)+1,round($vertical_velocity*($screen_counter+9),0) -$take_screen_luy + ($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter+2))
-                    getscreen($take_screen_rdx-$take_screen_lux+1,($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter), ($take_screen_rdx-$take_screen_lux)*2+1, ($screen_counter+1)*($take_screen_rdy-$take_screen_luy)+($screen_counter))
-
-                    wait($wms[9+$screen_counter])
-
-                    $screen_counter = $screen_counter + 1
 
                 end_cyc
 
@@ -935,9 +876,9 @@ SUB(SolveCaptcha)
 
                 MainGiftCycle(0, 0)
 
-                for($sort_array_i = 1, $sort_array_i < 9, 1)
+                for($sort_array_i = 0, $sort_array_i < 8, 1)
 
-                    for($sort_array_j = 1, $sort_array_j < 9 - $sort_array_i, 1)
+                    for($sort_array_j = 0, $sort_array_j < 8 - $sort_array_i, 1)
 
                         if($all_pos_scores[$sort_array_j] < $all_pos_scores[$sort_array_j+1])
 
@@ -955,33 +896,21 @@ SUB(SolveCaptcha)
 
                 end_cyc
 
-                for($foriterator = 1, $foriterator < 9, 1)
+                for($foriterator = 0, $foriterator < 8, 1)
 
-                    logwrite(": pos ", $all_pos_scores_top[$foriterator], " score: ", $all_pos_scores[$foriterator])
+                    logwrite("pos ", $all_pos_scores_top[$foriterator], " score: ", $all_pos_scores[$foriterator])
 
                 end_cyc
 
                 $counter = 0
 
-                $chance_of_fail = pow(($all_pos_scores[2]/$all_pos_scores[1]), 10)*100
-                logwrite("pos ", $all_pos_scores_top[1], " chance of fail: ", $chance_of_fail, "%")
-
-                if(($minimum_pixels[$all_pos_scores_top[1]-1] < $minimum_pixels[$all_pos_scores_top[2]-1]) & ($chance_of_fail > 92))
-                
-                    logwrite($minimum_pixels[$all_pos_scores_top[1]-1], " arg 1")
-                    logwrite($minimum_pixels[$all_pos_scores_top[2]-1], " arg 2")
-
-                    $tempval = $all_pos_scores_top[1]
-                    $all_pos_scores_top[1] = $all_pos_scores_top[2]
-                    $all_pos_scores_top[2] = $tempval
-                    logwrite("swap 1 - 2 pos.")
-
-                end_if
+                $chance_of_fail = pow(($all_pos_scores[1]/$all_pos_scores[0]), 10)*100
+                logwrite("pos ", $all_pos_scores_top[0], " chance of fail: ", $chance_of_fail, "%")
 
                 $this_square_color = $color_LIMEGREEN
 
                 if($gift_screen_after = 1)
-                    MainGiftCycle($all_pos_scores_top[1], 1)
+                    MainGiftCycle($all_pos_scores_top[0], 1)
                 end_if
 
                 for($foriterator = 0, $foriterator < 8, 1)
@@ -993,13 +922,13 @@ SUB(SolveCaptcha)
                     if($gift_screen_after = 1)
 
                         $this_square_color = $color_ORANGE
-                        MainGiftCycle($all_pos_scores_top[2], 1)
+                        MainGiftCycle($all_pos_scores_top[1], 1)
 
                     end_if
 
                 end_if
 
-                $captcha_answer = $all_pos_scores_top[1]
+                $captcha_answer = $all_pos_scores_top[0]
 
                 logwrite("answer: ", $captcha_answer)
                 

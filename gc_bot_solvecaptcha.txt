@@ -260,7 +260,7 @@ sub(Intersects_ancillary_area, $m_arlux, $m_arluy, $m_arrdx, $m_arrdy)
 
     $intersect_return = 0
 
-    if(($m_arlux < 1920) & ($m_arrdx >= 1645) & ($m_arluy <= 587) & ($m_arrdy >= 0))
+    if(($m_arlux <= $ancillary_area_FX) & ($m_arrdx >= $ancillary_area_SX) & ($m_arluy <= $ancillary_area_FY) & ($m_arrdy >= $ancillary_area_SY))
         $intersect_return = 1
     end_if
 
@@ -301,7 +301,33 @@ END_SUB
 sub(PlaceBlocksOnScreen)
 
 
-    PXLREPLACE(1645,0, 1919,587, -1, $color_RED)
+    PXLREPLACE($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY, -1, 0)
+
+    $scrtoblack = 0
+    $scrtoblackMax = 530
+
+    $BBGX = 1745
+
+    while($BBGX <= $ancillary_area_FX)
+
+        PXLREPLACE($BBGX,$scrtoblack, $BBGX,$scrtoblackMax, -1, 16777215)
+        inc($BBGX, 3)
+
+    end_cyc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     $total_blocks = $getwidth_max
@@ -313,13 +339,9 @@ sub(PlaceBlocksOnScreen)
 
     $breakBlockCycle = 0
 
-    $curr_line_num = 0
-
     $placed_blocks_counter = 0
 
     while($breakBlockCycle = 0)
-
-        //logwrite("curr line: ", $curr_line_num)
 
         $quitBlockLineCycle = 0
         $placedBlockOnLine = 0
@@ -384,7 +406,8 @@ sub(PlaceBlocksOnScreen)
 
         if($placedBlockOnLine = 0)
 
-            logwrite("didnt place any block on line")
+            logwrite("didnt place any block on line. block ", $placed_blocks_counter)
+
             $breakBlockCycle = 1
 
         end_if
@@ -510,6 +533,16 @@ SUB(CaptchaInit)
     $drawpathFor = 0
 
     $heronum = 8
+
+
+    $ancillary_area_SX = 1745
+    $ancillary_area_SY = 0
+    $ancillary_area_FX = 1920
+    $ancillary_area_FY = 530
+
+
+
+
 
     $color_array[1] = $color_RED
     $color_array[2] = $color_ORANGE
@@ -653,7 +686,7 @@ SUB(CaptchaInit)
     $thishero_width = 65
 
 
-    $getwidth_max = 41
+    $getwidth_max = 43
 
     for($i = 0, $i <= $getwidth_max)
 
@@ -812,10 +845,10 @@ SUB(SolveCaptcha)
 
                 wait(0.4)
 
-                wndpos($hwnd, 1645-407+85 , -245)
+                wndpos($hwnd, $ancillary_area_FX-322 , $ancillary_area_FY-302)
                 wait(0.1)
 
-                getscreen(1645,0,1919, 587)
+                getscreen($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY)
 
                 wait(0.1)
 

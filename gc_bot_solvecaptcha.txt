@@ -293,13 +293,7 @@ sub(CanPlaceBlock, $arlux, $arluy, $arrdx, $arrdy)
 END_SUB
 
 
-
-
-
-
-
 sub(PlaceBlocksOnScreen)
-
 
     PXLREPLACE($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY, -1, 0)
 
@@ -314,20 +308,6 @@ sub(PlaceBlocksOnScreen)
         inc($BBGX, 3)
 
     end_cyc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     $total_blocks = $getwidth_max
@@ -607,6 +587,7 @@ SUB(CaptchaInit)
         case(1)
 
             $take_screen_luy = 417
+            $vertical_length = 93
             $vertical_velocity = -5.5
             $start_angle = 315
 
@@ -616,15 +597,17 @@ SUB(CaptchaInit)
         case(2)
 
             $take_screen_luy = 389
+            $vertical_length = 119
             $vertical_velocity = -7
             $start_angle = 360
-            
+
             $hero_path_cords_X = 363
             $hero_path_cords_Y = 9
 
         case(3)
 
             $take_screen_luy = 417
+            $vertical_length = 93
             $vertical_velocity = -5.5
             $start_angle = 45
             
@@ -634,6 +617,7 @@ SUB(CaptchaInit)
         case(4)
 
             $take_screen_luy = 596
+            $vertical_length = -93
             $vertical_velocity = 5.5
             $start_angle = 225
 
@@ -643,6 +627,7 @@ SUB(CaptchaInit)
         case(5)
 
             $take_screen_luy = 624
+            $vertical_length = -119
             $vertical_velocity = 7
             $start_angle = 180
             
@@ -652,6 +637,7 @@ SUB(CaptchaInit)
         case(6)
 
             $take_screen_luy = 596
+            $vertical_length = -93
             $vertical_velocity = 5.5
             $start_angle = 135
 
@@ -661,15 +647,17 @@ SUB(CaptchaInit)
         case(7)
 
             $take_screen_luy = 507
+            $vertical_length = 0
             $vertical_velocity = 0
             $start_angle = 270
-            
+
             $hero_path_cords_X = 256 - 17
             $hero_path_cords_Y = 9
 
         case(8)
 
             $take_screen_luy = 507
+            $vertical_length = 0
             $vertical_velocity = 0
             $start_angle = 90
             
@@ -701,12 +689,6 @@ SUB(CaptchaInit)
 
     screenshot("gift")
     halt
-
-
-
-
-halt
-
 
 END_SUB
 

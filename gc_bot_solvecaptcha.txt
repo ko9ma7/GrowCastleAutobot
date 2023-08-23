@@ -163,8 +163,8 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
             $counting_square_LUX = ROUND($hero_path_cords_X + (844 + 99.3 * ($main_cycle_key - 1) - ($take_screen_rdx - $take_screen_lux + 1) - $hero_path_cords_X) * $shift_position_X + $screenpart_LR * ($take_screen_rdx + 1 - $take_screen_lux), 0)
             $counting_square_LUY = $hero_path_cords_Y + 115 * ($frame_counter - 1 - 9 * $screenpart_LR)
-            $counting_square_RDX = $counting_square_LUX + $thishero_width
-            $counting_square_RDY = $counting_square_LUY + $thishero_height
+            $counting_square_RDX = $counting_square_LUX + $hero_width
+            $counting_square_RDY = $counting_square_LUY + $hero_height
 
             $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
             $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
@@ -309,11 +309,17 @@ sub(PlaceBlocksOnScreen)
 
     end_cyc
 
+    $block_coords_LUX[0] = 0
+    $block_coords_LUY[0] = 0
 
-    $total_blocks = $getwidth_max
+    $block_size_X[0] = 0
+    $block_size_Y[0] = 0
+
+
+    $total_blocks = $total_screens_to_make
 
     $curr_upper_edge = 0
-    $curr_right_edge = 0
+    $curr_left_edge = 0
 
     $this_line_max_height = 0
 
@@ -337,20 +343,23 @@ sub(PlaceBlocksOnScreen)
 
                 if($areaInfo_Width[$j] > -1)
 
-                    CanPlaceBlock($curr_right_edge, $curr_upper_edge, $curr_right_edge + $areaInfo_Width[$j], $curr_upper_edge + $areaInfo_Height[$j])
+                    CanPlaceBlock($curr_left_edge, $curr_upper_edge, $curr_left_edge + $areaInfo_Width[$j], $curr_upper_edge + $areaInfo_Height[$j])
 
                     if($CanPlaceBlock_return = 1)
 
                         $foundBlock = 1
 
-                        //logwrite("place block at ",$curr_right_edge, " ", $curr_upper_edge," ", $curr_right_edge + $areaInfo_Width[$j]," ", $curr_upper_edge + $areaInfo_Height[$j])
-                        PXLREPLACE($curr_right_edge, $curr_upper_edge, $curr_right_edge + $areaInfo_Width[$j] - 1, $curr_upper_edge + $areaInfo_Height[$j] - 1, -1, $color_array[$placed_blocks_counter - int($placed_blocks_counter / 7) * 7 + 1])
+                        //logwrite("place block at ",$curr_left_edge, " ", $curr_upper_edge," ", $curr_left_edge + $areaInfo_Width[$j]," ", $curr_upper_edge + $areaInfo_Height[$j])
+                        PXLREPLACE($curr_left_edge, $curr_upper_edge, $curr_left_edge + $areaInfo_Width[$j] - 1, $curr_upper_edge + $areaInfo_Height[$j] - 1, -1, $color_array[$placed_blocks_counter - int($placed_blocks_counter / 7) * 7 + 1])
                         
-                        $curr_right_edge = $curr_right_edge + $areaInfo_Width[$j]
+                        $curr_left_edge = $curr_left_edge + $areaInfo_Width[$j]
 
                         if($areaInfo_Height[$j] > $this_line_max_height)
                             $this_line_max_height = $areaInfo_Height[$j]
                         end_if
+
+                        $block_coords_LUX[$placed_blocks_counter] = $curr_left_edge
+                        $block_coords_LUY[$placed_blocks_counter] = $curr_upper_edge
 
                         $placed_blocks_counter = $placed_blocks_counter + 1
 
@@ -382,7 +391,7 @@ sub(PlaceBlocksOnScreen)
         end_cyc
         
         $curr_upper_edge = $curr_upper_edge + $this_line_max_height
-        $curr_right_edge = 0
+        $curr_left_edge = 0
 
         if($placedBlockOnLine = 0)
 
@@ -397,6 +406,14 @@ sub(PlaceBlocksOnScreen)
 
 
 END_SUB
+
+
+
+
+
+
+
+
 
 
 
@@ -461,11 +478,10 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized)
 
     for($j = 1, $j < 9)
 
-
         $counting_square_LUX = ROUND($hero_path_cords_X + (844 + 99.3 * ($j - 1) - ($take_screen_rdx - $take_screen_lux + 1) - $hero_path_cords_X) * $lerp_progress_normalized_left + $screenpart_LR * ($take_screen_rdx + 1 - $take_screen_lux), 0)
         $counting_square_LUY = $hero_path_cords_Y + 115 * ($frame_counter - 1 - 9 * $screenpart_LR)
-        $counting_square_RDX = $counting_square_LUX + $thishero_width
-        $counting_square_RDY = $counting_square_LUY + $thishero_height
+        $counting_square_RDX = $counting_square_LUX + $hero_width
+        $counting_square_RDY = $counting_square_LUY + $hero_height
 
         $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
         $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
@@ -481,7 +497,6 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized)
         $counting_square_RDX = ROUND($counting_square_RDX + $square_shape_changer, 0)
         $counting_square_RDY = ROUND($counting_square_RDY - $square_shape_changer, 0) + $add_to_Y
 
-        
         if($counting_square_LUX < $MIN_area_X)
             $MIN_area_X = $counting_square_LUX
         end_if
@@ -497,13 +512,55 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized)
 
     end_cyc
 
-
-
     $returned_width = $MAX_area_X - $MIN_area_X + 1
     $returned_height = $MAX_area_Y - $MIN_area_Y + 1
 
+END_SUB
+
+
+
+sub(Dynamic_wndpos_setup)
+
+    $window_pos_in_frame_X[0] = 0
+    $window_pos_in_frame_Y[0] = 0
+
+    for($dwsi, $dwsi < $total_screens_to_make)
+
+
+
+
+    end_cyc
+
 
 END_SUB
+
+
+sub(Hardcode_wndpos_setup)
+
+    switch($heronum)
+
+        case(1)
+            
+        case(2)
+
+        case(3)
+
+        case(4)
+
+        case(5)
+
+        case(6)
+
+        case(7)
+
+        case(8)
+
+    END_SWITCH
+
+END_SUB
+
+
+
 
 
 
@@ -514,15 +571,10 @@ SUB(CaptchaInit)
 
     $heronum = 8
 
-
     $ancillary_area_SX = 1745
     $ancillary_area_SY = 0
     $ancillary_area_FX = 1920
     $ancillary_area_FY = 530
-
-
-
-
 
     $color_array[1] = $color_RED
     $color_array[2] = $color_ORANGE
@@ -542,7 +594,7 @@ SUB(CaptchaInit)
 
     $whole_path_time = 1.062321
 
-    $total_screens_to_make = 18
+    $total_screens_to_make = 43
 
     $tilt = 2*$whole_path_time / (3 * ($total_screens_to_make - 1))
 
@@ -586,109 +638,101 @@ SUB(CaptchaInit)
 
         case(1)
 
-            $take_screen_luy = 417
             $vertical_length = 93
-            $vertical_velocity = -5.5
             $start_angle = 315
 
-            $hero_path_cords_X = 280
-            $hero_path_cords_Y = 7
+            $hero_path_cords_X = 589
+            $hero_path_cords_Y = 424
             
         case(2)
 
-            $take_screen_luy = 389
             $vertical_length = 119
-            $vertical_velocity = -7
             $start_angle = 360
 
-            $hero_path_cords_X = 363
-            $hero_path_cords_Y = 9
+            $hero_path_cords_X = 672
+            $hero_path_cords_Y = 398
 
         case(3)
 
-            $take_screen_luy = 417
             $vertical_length = 93
-            $vertical_velocity = -5.5
             $start_angle = 45
             
-            $hero_path_cords_X = 444 + 10
-            $hero_path_cords_Y = 7 + 5
+            $hero_path_cords_X = 763
+            $hero_path_cords_Y = 429
 
         case(4)
 
-            $take_screen_luy = 596
             $vertical_length = -93
-            $vertical_velocity = 5.5
             $start_angle = 225
 
-            $hero_path_cords_X = 280 - 8
-            $hero_path_cords_Y = 7
+            $hero_path_cords_X = 581
+            $hero_path_cords_Y = 603
 
         case(5)
 
-            $take_screen_luy = 624
             $vertical_length = -119
-            $vertical_velocity = 7
             $start_angle = 180
             
-            $hero_path_cords_X = 358
-            $hero_path_cords_Y = 12
+            $hero_path_cords_X = 667
+            $hero_path_cords_Y = 636
 
         case(6)
 
-            $take_screen_luy = 596
             $vertical_length = -93
-            $vertical_velocity = 5.5
             $start_angle = 135
 
-            $hero_path_cords_X = 280 - 8 + 180
-            $hero_path_cords_Y = 7 + 5
+            $hero_path_cords_X = 761
+            $hero_path_cords_Y = 608
 
         case(7)
 
-            $take_screen_luy = 507
             $vertical_length = 0
-            $vertical_velocity = 0
             $start_angle = 270
 
-            $hero_path_cords_X = 256 - 17
-            $hero_path_cords_Y = 9
+            $hero_path_cords_X = 548
+            $hero_path_cords_Y = 516
 
         case(8)
 
-            $take_screen_luy = 507
             $vertical_length = 0
-            $vertical_velocity = 0
             $start_angle = 90
             
-            $hero_path_cords_X = 256 - 17 + 249
-            $hero_path_cords_Y = 9 -2 
+            $hero_path_cords_X = 797
+            $hero_path_cords_Y = 514
 
     END_SWITCH
 
-    $take_screen_lux = 394
-    $take_screen_rdx = 1216
-    $take_screen_rdy = $take_screen_luy + 114
-
-    $thishero_height = 92
-    $thishero_width = 65
+    $hero_height = 92
+    $hero_width = 65
 
 
-    $getwidth_max = 43
 
-    for($i = 0, $i <= $getwidth_max)
+            $total_screens_to_make = 43
 
-        GetInfoOfCountedSection($i/$getwidth_max)
+            for($i = 0, $i <= $total_screens_to_make)
 
-        $areaInfo_Width[$i] = $returned_width
-        $areaInfo_Height[$i] = $returned_height
+                GetInfoOfCountedSection($i/$total_screens_to_make)
 
-    end_cyc
+                $areaInfo_Width[$i] = $returned_width
+                $areaInfo_Height[$i] = $returned_height
 
-    PlaceBlocksOnScreen()
+                $block_size_X[$i] = $returned_width
+                $block_size_Y[$i] = $returned_height
 
-    screenshot("gift")
-    halt
+            end_cyc
+
+            PlaceBlocksOnScreen()
+
+            screenshot("gift")
+            halt
+
+
+
+
+
+
+    Dynamic_wndpos_setup()
+
 
 END_SUB
 

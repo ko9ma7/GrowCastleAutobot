@@ -256,6 +256,43 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
 END_SUB
 
+sub(Intersects_ancillary_area, $m_arlux, $m_arluy, $m_arrdx, $m_arrdy)
+
+    $intersect_return = 0
+
+    if(($m_arlux < 1920) & ($m_arrdx >= 1645) & ($m_arluy > 0) & ($m_arrdy <= 587))
+        $intersect_return = 1
+    end_if
+
+END_SUB
+
+sub(OutOfBounds, $m_arlux, $m_arluy, $m_arrdx, $m_arrdy)
+
+    $outOfBounds_return = 0
+
+    if(($m_arlux < 0) | ($m_arrdx > 1919) | ($m_arluy < 0) | ($m_arrdy > 1079) | ($m_arrdx < 0) | ($m_arlux > 1919) | ($m_arrdy < 0) | ($m_arluy > 1079))
+        $outOfBounds_return = 1
+    end_if
+
+END_SUB
+
+
+sub(CanPlaceBlock, $arlux, $arluy, $arrdx, $arrdy)
+
+    $CanPlaceBlock_return = 0
+
+    Intersects_ancillary_area($arlux, $arluy, $arrdx, $arrdy)
+    OutOfBounds($arlux, $arluy, $arrdx, $arrdy)
+
+    if(($intersect_return = 0) & ($outOfBounds_return = 0))
+        $CanPlaceBlock_return = 1
+    end_if
+
+END_SUB
+
+
+
+
 
 
 
@@ -524,6 +561,10 @@ SUB(CaptchaInit)
 
     for($i = 0, $i <= $getwidth_max)
         GetInfoOfCountedSection($i/$getwidth_max)
+
+        $areaInfo_Width[$i] = $returned_width
+        $areaInfo_Height[$i] = $returned_height
+
     end_cyc
 
 
@@ -672,7 +713,7 @@ SUB(SolveCaptcha)
                 wndpos($hwnd, 1645-407+85 , -245)
                 wait(0.1)
 
-                getscreen(1645,0,1920, 587)
+                getscreen(1645,0,1919, 587)
 
                 wait(0.1)
 

@@ -260,7 +260,7 @@ sub(Intersects_ancillary_area, $m_arlux, $m_arluy, $m_arrdx, $m_arrdy)
 
     $intersect_return = 0
 
-    if(($m_arlux < 1920) & ($m_arrdx >= 1645) & ($m_arluy > 0) & ($m_arrdy <= 587))
+    if(($m_arlux < 1920) & ($m_arrdx >= 1645) & ($m_arluy <= 587) & ($m_arrdy >= 0))
         $intersect_return = 1
     end_if
 
@@ -270,7 +270,7 @@ sub(OutOfBounds, $m_arlux, $m_arluy, $m_arrdx, $m_arrdy)
 
     $outOfBounds_return = 0
 
-    if(($m_arlux < 0) | ($m_arrdx > 1919) | ($m_arluy < 0) | ($m_arrdy > 1079) | ($m_arrdx < 0) | ($m_arlux > 1919) | ($m_arrdy < 0) | ($m_arluy > 1079))
+    if(($m_arlux < 0) | ($m_arrdx > 1919) | ($m_arluy < 0) | ($m_arrdy > 1039) | ($m_arrdx < 0) | ($m_arlux > 1919) | ($m_arrdy < 0) | ($m_arluy > 1039))
         $outOfBounds_return = 1
     end_if
 
@@ -284,6 +284,8 @@ sub(CanPlaceBlock, $arlux, $arluy, $arrdx, $arrdy)
     Intersects_ancillary_area($arlux, $arluy, $arrdx, $arrdy)
     OutOfBounds($arlux, $arluy, $arrdx, $arrdy)
 
+    //logwrite("intersect: ", $intersect_return, " OutOfBounds: ", $outOfBounds_return)
+
     if(($intersect_return = 0) & ($outOfBounds_return = 0))
         $CanPlaceBlock_return = 1
     end_if
@@ -293,6 +295,105 @@ END_SUB
 
 
 
+
+
+
+sub(PlaceBlocksOnScreen)
+
+
+    PXLREPLACE(1645,0, 1919,587, -1, $color_RED)
+
+
+    $total_blocks = $getwidth_max
+
+    $curr_upper_edge = 0
+    $curr_right_edge = 0
+
+    $this_line_max_height = 0
+
+    $breakBlockCycle = 0
+
+    $curr_line_num = 0
+
+    $placed_blocks_counter = 0
+
+    while($breakBlockCycle = 0)
+
+        //logwrite("curr line: ", $curr_line_num)
+
+        $quitBlockLineCycle = 0
+        $placedBlockOnLine = 0
+
+        $this_line_max_height = 0
+
+        while(($quitBlockLineCycle = 0) & ($breakBlockCycle = 0))
+
+            $j = $total_blocks
+            $foundBlock = 0
+
+            while(($j > 0) & ($foundBlock = 0) & ($breakBlockCycle = 0))
+
+                if($areaInfo_Width[$j] > -1)
+
+                    CanPlaceBlock($curr_right_edge, $curr_upper_edge, $curr_right_edge + $areaInfo_Width[$j], $curr_upper_edge + $areaInfo_Height[$j])
+
+                    if($CanPlaceBlock_return = 1)
+
+                        $foundBlock = 1
+
+                        //logwrite("place block at ",$curr_right_edge, " ", $curr_upper_edge," ", $curr_right_edge + $areaInfo_Width[$j]," ", $curr_upper_edge + $areaInfo_Height[$j])
+                        PXLREPLACE($curr_right_edge, $curr_upper_edge, $curr_right_edge + $areaInfo_Width[$j] - 1, $curr_upper_edge + $areaInfo_Height[$j] - 1, -1, $color_array[$placed_blocks_counter - int($placed_blocks_counter / 7) * 7 + 1])
+                        
+                        $curr_right_edge = $curr_right_edge + $areaInfo_Width[$j]
+
+                        if($areaInfo_Height[$j] > $this_line_max_height)
+                            $this_line_max_height = $areaInfo_Height[$j]
+                        end_if
+
+                        $placed_blocks_counter = $placed_blocks_counter + 1
+
+                        if($placed_blocks_counter = $total_blocks)
+                            logwrite("finished placing blocks")
+                            $breakBlockCycle = 1
+                        end_if
+
+                        $areaInfo_Width[$j] = -$areaInfo_Width[$j]
+                        $areaInfo_Height[$j] = -$areaInfo_Height[$j]
+
+                        $placedBlockOnLine = 1
+
+                    end_if
+
+                end_if
+
+                $j = $j - 1
+
+            end_cyc
+
+            if($foundBlock = 0)
+
+                //logwrite("couldnt place next block")
+                $quitBlockLineCycle = 1
+
+            end_if
+
+        end_cyc
+        
+        $curr_upper_edge = $curr_upper_edge + $this_line_max_height
+        $curr_right_edge = 0
+
+        if($placedBlockOnLine = 0)
+
+            logwrite("didnt place any block on line")
+            $breakBlockCycle = 1
+
+        end_if
+
+
+    end_cyc
+
+
+END_SUB
 
 
 
@@ -395,13 +496,8 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized)
 
 
 
-    $returned_width = $MAX_area_X - $MIN_area_X
-    $returned_height = $MAX_area_Y - $MIN_area_Y
-
-    logwrite($linear_progress_normalized, " w: ", $returned_width)
-    logwrite($linear_progress_normalized, " h: ", $returned_height)
-
-
+    $returned_width = $MAX_area_X - $MIN_area_X + 1
+    $returned_height = $MAX_area_Y - $MIN_area_Y + 1
 
 
 END_SUB
@@ -413,7 +509,7 @@ SUB(CaptchaInit)
     $drawallpaths = 1
     $drawpathFor = 0
 
-    $heronum = 2
+    $heronum = 8
 
     $color_array[1] = $color_RED
     $color_array[2] = $color_ORANGE
@@ -557,15 +653,21 @@ SUB(CaptchaInit)
     $thishero_width = 65
 
 
-    $getwidth_max = 17
+    $getwidth_max = 41
 
     for($i = 0, $i <= $getwidth_max)
+
         GetInfoOfCountedSection($i/$getwidth_max)
 
         $areaInfo_Width[$i] = $returned_width
         $areaInfo_Height[$i] = $returned_height
 
     end_cyc
+
+    PlaceBlocksOnScreen()
+
+    screenshot("gift")
+    halt
 
 
 

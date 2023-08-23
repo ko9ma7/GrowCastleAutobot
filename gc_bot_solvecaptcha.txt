@@ -73,8 +73,6 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
             end_if 
 
-            $screenpart_LR = int($frame_counter / 10)
-
             switch($heronum)
 
                 case(1)
@@ -85,9 +83,9 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
                     // \frac{\left(x-1\right)}{17}\cdot\left(-a\cdot\left(x-1\right)+\left(17\cdot a+1\right)\right)
 
                     if(($main_cycle_key < 2) | ($main_cycle_key > 5))
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125) //    \frac{\left(x-1\right)}{17}\cdot\left(-0.03125\cdot\left(x-1\right)+1.53125\right)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125) //    \frac{\left(x-1\right)}{17}\cdot\left(-0.03125\cdot\left(x-1\right)+1.53125\right)
                     else
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)//   \frac{\left(x-1\right)}{17}\cdot\left(-0.025\cdot\left(x-1\right)+1.425\right)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)//   \frac{\left(x-1\right)}{17}\cdot\left(-0.025\cdot\left(x-1\right)+1.425\right)
                     end_if
 
                 case(2)
@@ -95,9 +93,9 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
                     $add_to_Y = ROUND(60 * (pow((($frame_counter - 1) / 16), 1.1) - pow((($frame_counter - 1) / 16), 2)), 0)
 
                     if(($main_cycle_key < 3) | ($main_cycle_key > 6))
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
                     else
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
                     end_if
 
                 case(3)
@@ -105,9 +103,9 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
                     $add_to_Y = -ROUND(10 / (-($frame_counter - 1) + 20), 0)
 
                     if(($main_cycle_key < 4) | ($main_cycle_key > 7))
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
                     else
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.0125 * ($frame_counter - 1) + 1.2125)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.0125 * ($frame_counter - 1) + 1.2125)
                     end_if
 
                 case(4)
@@ -115,9 +113,9 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
                     $add_to_Y = 0
 
                     if(($main_cycle_key < 2) | ($main_cycle_key > 5))
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
                     else
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
                     end_if
 
                 case(5)
@@ -125,9 +123,9 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
                     $add_to_Y = -ROUND(60 * (pow((($frame_counter - 1) / 16), 1.1) - pow((($frame_counter - 1) / 16), 2)), 0)
 
                     if(($main_cycle_key < 3) | ($main_cycle_key > 6))
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
                     else
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.0125 * ($frame_counter - 1) + 1.2125)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.0125 * ($frame_counter - 1) + 1.2125)
                     end_if
 
                 case(6)
@@ -135,9 +133,9 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
                     $add_to_Y = 0
 
                     if(($main_cycle_key < 4) | ($main_cycle_key > 7))
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
                     else
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.025 * ($frame_counter - 1) + 1.425)
                     end_if
 
                 case(7)
@@ -145,23 +143,23 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
                     $add_to_Y = 0
 
                     if($main_cycle_key > 5)
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
                     else
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.01875 * ($frame_counter - 1) + 1.31875)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.01875 * ($frame_counter - 1) + 1.31875)
                     end_if
 
                 case(8)
 
                     $add_to_Y = 0
                     if(($main_cycle_key < 4) | ($main_cycle_key > 6))
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.03125 * ($frame_counter - 1) + 1.53125)
                     else
-                        $shift_position_X = ($frame_counter - 1) / 17 * (-0.01875 * ($frame_counter - 1) + 1.31875)
+                        $progress_normalized = ($frame_counter - 1) / 17 * (-0.01875 * ($frame_counter - 1) + 1.31875)
                     end_if
 
             END_SWITCH
 
-            $counting_square_LUX = ROUND($hero_path_cords_X + (844 + 99.3 * ($main_cycle_key - 1) - ($take_screen_rdx - $take_screen_lux + 1) - $hero_path_cords_X) * $shift_position_X + $screenpart_LR * ($take_screen_rdx + 1 - $take_screen_lux), 0)
+            $counting_square_LUX = ROUND($hero_path_cords_X + (844 + 99.3 * ($main_cycle_key - 1) - ($take_screen_rdx - $take_screen_lux + 1) - $hero_path_cords_X) * $progress_normalized + $screenpart_LR * ($take_screen_rdx + 1 - $take_screen_lux), 0)
             $counting_square_LUY = $hero_path_cords_Y + 115 * ($frame_counter - 1 - 9 * $screenpart_LR)
             $counting_square_RDX = $counting_square_LUX + $hero_width
             $counting_square_RDY = $counting_square_LUY + $hero_height
@@ -169,7 +167,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
             $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
             $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
 
-            $square_shape_changer = abs(SIN($start_angle - $start_angle * $shift_position_X)  * ($counting_square_h - $counting_square_w) / 2)
+            $square_shape_changer = abs(SIN($start_angle - $start_angle * $progress_normalized)  * ($counting_square_h - $counting_square_w) / 2)
 
             if($counting_square_h < $counting_square_w)
                 $square_shape_changer = -$square_shape_changer
@@ -309,12 +307,10 @@ sub(PlaceBlocksOnScreen)
 
     end_cyc
 
-    $block_coords_LUX[0] = 0
-    $block_coords_LUY[0] = 0
-
-    $block_size_X[0] = 0
-    $block_size_Y[0] = 0
-
+    for($tempIter = 0, $tempIter < $total_screens_to_make)
+        $block_coords_LUX[$tempIter] = 0
+        $block_coords_LUY[$tempIter] = 0
+    end_cyc
 
     $total_blocks = $total_screens_to_make
 
@@ -352,14 +348,14 @@ sub(PlaceBlocksOnScreen)
                         //logwrite("place block at ",$curr_left_edge, " ", $curr_upper_edge," ", $curr_left_edge + $areaInfo_Width[$j]," ", $curr_upper_edge + $areaInfo_Height[$j])
                         PXLREPLACE($curr_left_edge, $curr_upper_edge, $curr_left_edge + $areaInfo_Width[$j] - 1, $curr_upper_edge + $areaInfo_Height[$j] - 1, -1, $color_array[$placed_blocks_counter - int($placed_blocks_counter / 7) * 7 + 1])
                         
+                        $block_coords_LUX[$j-1] = $curr_left_edge
+                        $block_coords_LUY[$j-1] = $curr_upper_edge
+
                         $curr_left_edge = $curr_left_edge + $areaInfo_Width[$j]
 
                         if($areaInfo_Height[$j] > $this_line_max_height)
                             $this_line_max_height = $areaInfo_Height[$j]
                         end_if
-
-                        $block_coords_LUX[$placed_blocks_counter] = $curr_left_edge
-                        $block_coords_LUY[$placed_blocks_counter] = $curr_upper_edge
 
                         $placed_blocks_counter = $placed_blocks_counter + 1
 
@@ -383,7 +379,7 @@ sub(PlaceBlocksOnScreen)
 
             if($foundBlock = 0)
 
-                //logwrite("couldnt place next block")
+                logwrite("couldnt place next block")
                 $quitBlockLineCycle = 1
 
             end_if
@@ -396,6 +392,8 @@ sub(PlaceBlocksOnScreen)
         if($placedBlockOnLine = 0)
 
             logwrite("didnt place any block on line. block ", $placed_blocks_counter)
+                screenshot("gift")
+                halt
 
             $breakBlockCycle = 1
 
@@ -417,85 +415,114 @@ END_SUB
 
 
 
-sub(GetInfoOfCountedSection, $linear_progress_normalized)
+sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
 
-    $lerp_progress_normalized_left = 0
-    $lerp_progress_normalized_right = 0
+    $lerp_progress_normalized = 0
 
     $returned_width = 0
     $returned_height = 0
-
-    switch($heronum)
-
-        case(1)
-
-            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-            $lerp_progress_normalized_right = $lerp_progress_normalized_left
-
-        case(2)
-        
-            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-            $lerp_progress_normalized_right = $lerp_progress_normalized_left
-
-        case(3)
-
-            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-            $lerp_progress_normalized_right = $lerp_progress_normalized_left
-            
-        case(4)
-
-            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-            $lerp_progress_normalized_right = $lerp_progress_normalized_left
-
-        case(5)
-
-            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-            $lerp_progress_normalized_right = $lerp_progress_normalized_left
-
-        case(6)
-
-            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-            $lerp_progress_normalized_right = $lerp_progress_normalized_left
-
-        case(7)
-
-            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-            $lerp_progress_normalized_right = $lerp_progress_normalized_left
-
-        case(8)
-
-            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-            $lerp_progress_normalized_right = $lerp_progress_normalized_left
-
-    END_SWITCH
 
     $MIN_area_X = 999999
     $MIN_area_Y = 999999
     $MAX_area_X = -999999
     $MAX_area_Y = -999999
 
-
-
     for($j = 1, $j < 9)
 
-        $counting_square_LUX = ROUND($hero_path_cords_X + (844 + 99.3 * ($j - 1) - ($take_screen_rdx - $take_screen_lux + 1) - $hero_path_cords_X) * $lerp_progress_normalized_left + $screenpart_LR * ($take_screen_rdx + 1 - $take_screen_lux), 0)
-        $counting_square_LUY = $hero_path_cords_Y + 115 * ($frame_counter - 1 - 9 * $screenpart_LR)
+        switch($heronum)
+
+            case(1)
+
+                if(($j < 2) | ($j > 5))
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+                else
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
+                end_if
+
+            case(2)
+
+                if(($j < 3) | ($j > 6))
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+                else
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
+                end_if
+
+            case(3)
+
+                if(($j < 4) | ($j > 7))
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+                else
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.0215 * (17 * $linear_progress_normalized) + 1.2125)
+                end_if
+
+            case(4)
+
+                if(($j < 2) | ($j > 5))
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+                else
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
+                end_if
+
+            case(5)
+
+                if(($j < 3) | ($j > 6))
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+                else
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
+                end_if
+
+            case(6)
+
+                if(($j < 4) | ($j > 7))
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+                else
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
+                end_if
+
+            case(7)
+
+                if($j > 5)
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+                else
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.01875 * (17 * $linear_progress_normalized) + 1.31875)
+                end_if
+
+            case(8)
+
+                if(($j < 4) | ($j > 6))
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+                else
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.01875 * (17 * $linear_progress_normalized) + 1.31875)
+                end_if
+
+        END_SWITCH
+
+        $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 99.3 * ($j - 1) - $hero_path_cords_X) * $lerp_progress_normalized, 0)
+        $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized
+
         $counting_square_RDX = $counting_square_LUX + $hero_width
         $counting_square_RDY = $counting_square_LUY + $hero_height
 
         $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
         $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
 
-        $square_shape_changer = abs(SIN($start_angle - $start_angle * $lerp_progress_normalized_left)  * ($counting_square_h - $counting_square_w) / 2)
-
+        $square_shape_changer = abs(SIN($start_angle - $start_angle * $lerp_progress_normalized)  * ($counting_square_h - $counting_square_w) / 2)
         if($counting_square_h < $counting_square_w)
             $square_shape_changer = -$square_shape_changer
         end_if
 
         $counting_square_LUX = ROUND($counting_square_LUX - $square_shape_changer, 0)
-        $counting_square_LUY = ROUND($counting_square_LUY + $square_shape_changer, 0) + $add_to_Y
+        $counting_square_LUY = ROUND($counting_square_LUY + $square_shape_changer, 0)
         $counting_square_RDX = ROUND($counting_square_RDX + $square_shape_changer, 0)
-        $counting_square_RDY = ROUND($counting_square_RDY - $square_shape_changer, 0) + $add_to_Y
+        $counting_square_RDY = ROUND($counting_square_RDY - $square_shape_changer, 0)
+
+        //if($j = 8)
+        //DrawSquare($counting_square_LUX, $counting_square_LUY, $counting_square_RDX, $counting_square_RDY, $color_CYAN)
+        //end_if
+
+
+
+
 
         if($counting_square_LUX < $MIN_area_X)
             $MIN_area_X = $counting_square_LUX
@@ -512,53 +539,42 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized)
 
     end_cyc
 
+    $window_pos_static_X[$num_of_screen] = $MIN_area_X
+    $window_pos_static_Y[$num_of_screen] = $MIN_area_Y
+
     $returned_width = $MAX_area_X - $MIN_area_X + 1
     $returned_height = $MAX_area_Y - $MIN_area_Y + 1
+
+    //logwrite("progress: ", $lerp_progress_normalized, " w: ", $returned_width)
 
 END_SUB
 
 
 
-sub(Dynamic_wndpos_setup)
+sub(Dynamic_windowpos_setup)
 
     $window_pos_in_frame_X[0] = 0
     $window_pos_in_frame_Y[0] = 0
 
-    for($dwsi, $dwsi < $total_screens_to_make)
+    for($dwsi = 0, $dwsi < $total_screens_to_make)
 
+        $window_pos_in_frame_X[$dwsi] = $block_coords_LUX[$dwsi] - $window_pos_static_X[$dwsi]
+        $window_pos_in_frame_Y[$dwsi] = $block_coords_LUY[$dwsi] - $window_pos_static_Y[$dwsi]
 
-
+        logwrite("$block_coords_LUX[",$dwsi,"] = ", $block_coords_LUX[$dwsi])
+        logwrite("$block_coords_LUY[",$dwsi,"] = ", $block_coords_LUY[$dwsi])
+        logwrite("$block_size_X[",$dwsi,"] = ", $block_size_X[$dwsi])
+        logwrite("$block_size_Y[",$dwsi,"] = ", $block_size_Y[$dwsi])
+        logwrite("$window_pos_in_frame_X[",$dwsi,"] = ", $window_pos_in_frame_X[$dwsi])
+        logwrite("$window_pos_in_frame_Y[",$dwsi,"] = ", $window_pos_in_frame_Y[$dwsi])
+        logwrite(" ")
 
     end_cyc
 
+    halt
+
 
 END_SUB
-
-
-sub(Hardcode_wndpos_setup)
-
-    switch($heronum)
-
-        case(1)
-            
-        case(2)
-
-        case(3)
-
-        case(4)
-
-        case(5)
-
-        case(6)
-
-        case(7)
-
-        case(8)
-
-    END_SWITCH
-
-END_SUB
-
 
 
 
@@ -706,32 +722,28 @@ SUB(CaptchaInit)
     $hero_width = 65
 
 
+    for($i = 0, $i <= $total_screens_to_make)
 
-            $total_screens_to_make = 43
+        GetInfoOfCountedSection($i/$total_screens_to_make, $i)
 
-            for($i = 0, $i <= $total_screens_to_make)
+        $areaInfo_Width[$i] = $returned_width
+        $areaInfo_Height[$i] = $returned_height
 
-                GetInfoOfCountedSection($i/$total_screens_to_make)
+        $block_size_X[$i] = $returned_width
+        $block_size_Y[$i] = $returned_height
 
-                $areaInfo_Width[$i] = $returned_width
-                $areaInfo_Height[$i] = $returned_height
+    end_cyc
 
-                $block_size_X[$i] = $returned_width
-                $block_size_Y[$i] = $returned_height
 
-            end_cyc
-
-            PlaceBlocksOnScreen()
-
-            screenshot("gift")
-            halt
+    PlaceBlocksOnScreen()
+    screenshot("gift")
 
 
 
 
 
 
-    Dynamic_wndpos_setup()
+    Dynamic_windowpos_setup()
 
 
 END_SUB

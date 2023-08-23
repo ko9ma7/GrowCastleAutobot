@@ -256,10 +256,127 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
 END_SUB
 
+
+
+
+sub(GetInfoOfCountedSection, $linear_progress_normalized)
+
+    $lerp_progress_normalized_left = 0
+    $lerp_progress_normalized_right = 0
+
+    $returned_width = 0
+    $returned_height = 0
+
+    switch($heronum)
+
+        case(1)
+
+            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+            $lerp_progress_normalized_right = $lerp_progress_normalized_left
+
+        case(2)
+        
+            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+            $lerp_progress_normalized_right = $lerp_progress_normalized_left
+
+        case(3)
+
+            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+            $lerp_progress_normalized_right = $lerp_progress_normalized_left
+            
+        case(4)
+
+            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+            $lerp_progress_normalized_right = $lerp_progress_normalized_left
+
+        case(5)
+
+            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+            $lerp_progress_normalized_right = $lerp_progress_normalized_left
+
+        case(6)
+
+            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+            $lerp_progress_normalized_right = $lerp_progress_normalized_left
+
+        case(7)
+
+            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+            $lerp_progress_normalized_right = $lerp_progress_normalized_left
+
+        case(8)
+
+            $lerp_progress_normalized_left = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
+            $lerp_progress_normalized_right = $lerp_progress_normalized_left
+
+    END_SWITCH
+
+    $MIN_area_X = 999999
+    $MIN_area_Y = 999999
+    $MAX_area_X = -999999
+    $MAX_area_Y = -999999
+
+
+
+    for($j = 1, $j < 9)
+
+
+        $counting_square_LUX = ROUND($hero_path_cords_X + (844 + 99.3 * ($j - 1) - ($take_screen_rdx - $take_screen_lux + 1) - $hero_path_cords_X) * $lerp_progress_normalized_left + $screenpart_LR * ($take_screen_rdx + 1 - $take_screen_lux), 0)
+        $counting_square_LUY = $hero_path_cords_Y + 115 * ($frame_counter - 1 - 9 * $screenpart_LR)
+        $counting_square_RDX = $counting_square_LUX + $thishero_width
+        $counting_square_RDY = $counting_square_LUY + $thishero_height
+
+        $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
+        $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
+
+        $square_shape_changer = abs(SIN($start_angle - $start_angle * $lerp_progress_normalized_left)  * ($counting_square_h - $counting_square_w) / 2)
+
+        if($counting_square_h < $counting_square_w)
+            $square_shape_changer = -$square_shape_changer
+        end_if
+
+        $counting_square_LUX = ROUND($counting_square_LUX - $square_shape_changer, 0)
+        $counting_square_LUY = ROUND($counting_square_LUY + $square_shape_changer, 0) + $add_to_Y
+        $counting_square_RDX = ROUND($counting_square_RDX + $square_shape_changer, 0)
+        $counting_square_RDY = ROUND($counting_square_RDY - $square_shape_changer, 0) + $add_to_Y
+
+        
+        if($counting_square_LUX < $MIN_area_X)
+            $MIN_area_X = $counting_square_LUX
+        end_if
+        if($counting_square_RDX > $MAX_area_X)
+            $MAX_area_X = $counting_square_RDX
+        end_if
+        if($counting_square_LUY < $MIN_area_Y)
+            $MIN_area_Y = $counting_square_LUY
+        end_if
+        if($counting_square_RDY > $MAX_area_Y)
+            $MAX_area_Y = $counting_square_RDY
+        end_if
+
+    end_cyc
+
+
+
+    $returned_width = $MAX_area_X - $MIN_area_X
+    $returned_height = $MAX_area_Y - $MIN_area_Y
+
+    logwrite($linear_progress_normalized, " w: ", $returned_width)
+    logwrite($linear_progress_normalized, " h: ", $returned_height)
+
+
+
+
+END_SUB
+
+
+
 SUB(CaptchaInit)
 
     $drawallpaths = 1
     $drawpathFor = 0
+
+    $heronum = 2
 
     $color_array[1] = $color_RED
     $color_array[2] = $color_ORANGE
@@ -285,8 +402,8 @@ SUB(CaptchaInit)
 
     for($i = 0, $i < $total_screens_to_make-1)
         $wms[$i] = $i * $tilt / ($total_screens_to_make - 2) + $tilt
-        logwrite($wms[$i])
     end_cyc
+
     $wms[$total_screens_to_make-1] = 0
 
     $counting_square_LUX = 0
@@ -371,7 +488,7 @@ SUB(CaptchaInit)
             $take_screen_luy = 596
             $vertical_velocity = 5.5
             $start_angle = 135
-            
+
             $hero_path_cords_X = 280 - 8 + 180
             $hero_path_cords_Y = 7 + 5
 
@@ -401,6 +518,19 @@ SUB(CaptchaInit)
 
     $thishero_height = 92
     $thishero_width = 65
+
+
+    $getwidth_max = 17
+
+    for($i = 0, $i <= $getwidth_max)
+        GetInfoOfCountedSection($i/$getwidth_max)
+    end_cyc
+
+
+
+
+halt
+
 
 END_SUB
 

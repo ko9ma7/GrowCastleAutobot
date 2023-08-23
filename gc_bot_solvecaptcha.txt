@@ -277,24 +277,17 @@ SUB(CaptchaInit)
     $first_frame_pixels = 0
     $vertical_velocity = 0
 
-    $wms[1] = 0.04166
-    $wms[2] = 0.044266
-    $wms[3] = 0.04687
-    $wms[4] = 0.04947
-    $wms[5] = 0.05207
-    $wms[6] = 0.05468
-    $wms[7] = 0.05728
-    $wms[8] = 0.05988
-    $wms[9] = 0.06249
-    $wms[10] = 0.06509
-    $wms[11] = 0.0677
-    $wms[12] = 0.07030
-    $wms[13] = 0.07290
-    $wms[14] = 0.07551
-    $wms[15] = 0.07811
-    $wms[16] = 0.08072
-    $wms[17] = 0.083325
-    $wms[18] = 0
+    $whole_path_time = 1.062321
+
+    $total_screens_to_make = 18
+
+    $tilt = 2*$whole_path_time / (3 * ($total_screens_to_make - 1))
+
+    for($i = 0, $i < $total_screens_to_make-1)
+        $wms[$i] = $i * $tilt / ($total_screens_to_make - 2) + $tilt
+        logwrite($wms[$i])
+    end_cyc
+    $wms[$total_screens_to_make-1] = 0
 
     $counting_square_LUX = 0
     $counting_square_LUY = 0
@@ -558,12 +551,12 @@ SUB(SolveCaptcha)
 
                 wait(0.23166)
 
-                $screen_counter=2
+                $screen_counter=1
 
-                while($screen_counter < 10)
+                while($screen_counter < 9)
 
-                    wndpos($hwnd, -$take_screen_lux+85, round($vertical_velocity*($screen_counter-1),0)-$take_screen_luy + ($screen_counter-1)*($take_screen_rdy-$take_screen_luy)+($screen_counter+1))
-                    getscreen(0,($screen_counter-1)*($take_screen_rdy-$take_screen_luy)+($screen_counter-1), $take_screen_rdx-$take_screen_lux, ($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter-1))
+                    wndpos($hwnd, -$take_screen_lux+85, round($vertical_velocity*($screen_counter),0)-$take_screen_luy + ($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter+2))
+                    getscreen(0,($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter), $take_screen_rdx-$take_screen_lux, ($screen_counter+1)*($take_screen_rdy-$take_screen_luy)+($screen_counter))
 
                     wait($wms[$screen_counter])
 
@@ -571,16 +564,16 @@ SUB(SolveCaptcha)
 
                 end_cyc
 
-                $screen_counter=1
+                $screen_counter=0
 
-                while($screen_counter < 10)
+                while($screen_counter < 9)
 
-                    wndpos($hwnd, -$take_screen_lux+85 + ($take_screen_rdx-$take_screen_lux)+1,round($vertical_velocity*($screen_counter+9-1),0) -$take_screen_luy + ($screen_counter-1)*($take_screen_rdy-$take_screen_luy)+($screen_counter+1))
-                    getscreen($take_screen_rdx-$take_screen_lux+1,($screen_counter-1)*($take_screen_rdy-$take_screen_luy)+($screen_counter-1), ($take_screen_rdx-$take_screen_lux)*2+1, ($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter-1))
+                    wndpos($hwnd, -$take_screen_lux+85 + ($take_screen_rdx-$take_screen_lux)+1,round($vertical_velocity*($screen_counter+9),0) -$take_screen_luy + ($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter+2))
+                    getscreen($take_screen_rdx-$take_screen_lux+1,($screen_counter)*($take_screen_rdy-$take_screen_luy)+($screen_counter), ($take_screen_rdx-$take_screen_lux)*2+1, ($screen_counter+1)*($take_screen_rdy-$take_screen_luy)+($screen_counter))
 
                     wait($wms[9+$screen_counter])
 
-                    $screen_counter = $screen_counter+ 1
+                    $screen_counter = $screen_counter + 1
 
                 end_cyc
 

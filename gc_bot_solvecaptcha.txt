@@ -372,8 +372,6 @@ END_SUB
 
 sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
 
-    logwrite("get info for: ", $linear_progress_normalized, " num: ", $num_of_screen)
-
     $lerp_progress_normalized = 0
 
     $returned_width = 0
@@ -457,11 +455,6 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
         $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * ($j - 1) - $hero_path_cords_X) * $lerp_progress_normalized, 0)
         $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized
 
-        if($linear_progress_normalized = 1)
-            logwrite("key: ", $j)
-            logwrite("square: ", $counting_square_LUX, ", ", $counting_square_LUY)
-        end_if
-
         $counting_square_RDX = $counting_square_LUX + $hero_width
         $counting_square_RDY = $counting_square_LUY + $hero_height
 
@@ -516,11 +509,14 @@ sub(Dynamic_windowpos_setup)
 
     for($dwsi = 0, $dwsi < $total_screens_to_make)
 
+        $vertical_offsets[$dwsi] = ROUND(60 * (pow($dwsi / ($total_screens_to_make - 1), 1.1) - pow($dwsi / ($total_screens_to_make - 1), 2)), 0)
+
         $window_pos_in_frame_X[$dwsi] = $block_coords_LUX[$dwsi] - $window_pos_static_X[$dwsi]
         $window_pos_in_frame_Y[$dwsi] = $block_coords_LUY[$dwsi] - $window_pos_static_Y[$dwsi]
 
         //logwrite("wndposstatic: ", $window_pos_static_X[$dwsi], ", ", $window_pos_static_Y[$dwsi])
 
+        logwrite("$vertical_offsets[",$dwsi,"] = ", $vertical_offsets[$dwsi])
         logwrite("$block_coords_LUX[",$dwsi,"] = ", $block_coords_LUX[$dwsi])
         logwrite("$block_coords_LUY[",$dwsi,"] = ", $block_coords_LUY[$dwsi])
         logwrite("$block_size_X[",$dwsi,"] = ", $block_size_X[$dwsi])
@@ -856,7 +852,7 @@ SUB(SolveCaptcha)
 
                 while($screen_counter < $total_screens_to_make)
 
-                    wndpos($hwnd, $window_pos_in_frame_X[$screen_counter], $window_pos_in_frame_Y[$screen_counter])
+                    wndpos($hwnd, $window_pos_in_frame_X[$screen_counter], $window_pos_in_frame_Y[$screen_counter] - $vertical_offsets[$screen_counter])
                     getscreen($block_coords_LUX[$screen_counter], $block_coords_LUY[$screen_counter], $block_coords_LUX[$screen_counter] + $block_size_X[$screen_counter]-1, $block_coords_LUY[$screen_counter] + $block_size_Y[$screen_counter]-1)
 
                     wait($wms[$screen_counter])

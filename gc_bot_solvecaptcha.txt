@@ -68,71 +68,70 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
                 case(1)
 
                     if(($main_cycle_key < 2) | ($main_cycle_key > 5))
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.025 * (17 * $frame_counter / $total_screens_to_make) + 1.425)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.025 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.425)
                     end_if
 
                 case(2)
 
                     if(($main_cycle_key < 3) | ($main_cycle_key > 6))
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.025 * (17 * $frame_counter / $total_screens_to_make) + 1.425)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.025 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.425)
                     end_if
 
                 case(3)
 
                     if(($main_cycle_key < 4) | ($main_cycle_key > 7))
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.0215 * (17 * $frame_counter / $total_screens_to_make) + 1.2125)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.0215 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.2125)
                     end_if
 
                 case(4)
 
                     if(($main_cycle_key < 2) | ($main_cycle_key > 5))
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.025 * (17 * $frame_counter / $total_screens_to_make) + 1.425)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.025 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.425)
                     end_if
 
                 case(5)
 
                     if(($main_cycle_key < 3) | ($main_cycle_key > 6))
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.025 * (17 * $frame_counter / $total_screens_to_make) + 1.425)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.025 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.425)
                     end_if
 
                 case(6)
 
                     if(($main_cycle_key < 4) | ($main_cycle_key > 7))
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.025 * (17 * $frame_counter / $total_screens_to_make) + 1.425)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.025 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.425)
                     end_if
 
                 case(7)
 
                     if($main_cycle_key > 5)
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.01875 * (17 * $frame_counter / $total_screens_to_make) + 1.31875)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.01875 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.31875)
                     end_if
 
                 case(8)
 
                     if(($main_cycle_key < 4) | ($main_cycle_key > 6))
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.03125 * (17 * $frame_counter / $total_screens_to_make) + 1.53125)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
-                        $lerp_progress_normalized = (17 * $frame_counter / $total_screens_to_make) / 17 * (-0.01875 * (17 * $frame_counter / $total_screens_to_make) + 1.31875)
+                        $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.01875 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.31875)
                     end_if
-
 
             END_SWITCH
 
-            $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 99.3 * ($main_cycle_key - 1) - $hero_path_cords_X) * $lerp_progress_normalized, 0) + $window_pos_in_frame_X[$frame_counter]
+            $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * ($main_cycle_key - 1) - $hero_path_cords_X) * $lerp_progress_normalized, 0) + $window_pos_in_frame_X[$frame_counter]
             $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized + $window_pos_in_frame_Y[$frame_counter]
 
             $counting_square_RDX = $counting_square_LUX + $hero_width
@@ -141,7 +140,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
             $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
             $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
 
-            $square_shape_changer = abs(SIN($start_angle - $start_angle * $lerp_progress_normalized)  * ($counting_square_h - $counting_square_w) / 2)
+            $square_shape_changer = abs(SIN($start_angle - $start_angle * $lerp_progress_normalized) * ($counting_square_h - $counting_square_w) / 2)
 
             if($counting_square_h < $counting_square_w)
                 $square_shape_changer = -$square_shape_changer
@@ -288,14 +287,14 @@ sub(PlaceBlocksOnScreen)
 
         while(($quitBlockLineCycle = 0) & ($breakBlockCycle = 0))
 
-            $j = $total_blocks
+            $j = $total_blocks - 1
             $foundBlock = 0
 
-            while(($j > 0) & ($foundBlock = 0) & ($breakBlockCycle = 0))
+            while(($j >= 0) & ($foundBlock = 0) & ($breakBlockCycle = 0))
 
                 if($areaInfo_Width[$j] > -1)
 
-                    CanPlaceBlock($curr_left_edge, $curr_upper_edge, $curr_left_edge + $areaInfo_Width[$j], $curr_upper_edge + $areaInfo_Height[$j])
+                    CanPlaceBlock($curr_left_edge, $curr_upper_edge, $curr_left_edge + $areaInfo_Width[$j]-1, $curr_upper_edge + $areaInfo_Height[$j]-1)
 
                     if($CanPlaceBlock_return = 1)
 
@@ -303,9 +302,9 @@ sub(PlaceBlocksOnScreen)
 
                         //logwrite("place block at ",$curr_left_edge, " ", $curr_upper_edge," ", $curr_left_edge + $areaInfo_Width[$j]," ", $curr_upper_edge + $areaInfo_Height[$j])
                         PXLREPLACE($curr_left_edge, $curr_upper_edge, $curr_left_edge + $areaInfo_Width[$j] - 1, $curr_upper_edge + $areaInfo_Height[$j] - 1, -1, $color_array[$placed_blocks_counter - int($placed_blocks_counter / 7) * 7 + 1])
-                        
-                        $block_coords_LUX[$j-1] = $curr_left_edge
-                        $block_coords_LUY[$j-1] = $curr_upper_edge
+
+                        $block_coords_LUX[$j] = $curr_left_edge
+                        $block_coords_LUY[$j] = $curr_upper_edge
 
                         $curr_left_edge = $curr_left_edge + $areaInfo_Width[$j]
 
@@ -335,7 +334,6 @@ sub(PlaceBlocksOnScreen)
 
             if($foundBlock = 0)
 
-                logwrite("couldnt place next block")
                 $quitBlockLineCycle = 1
 
             end_if
@@ -348,6 +346,7 @@ sub(PlaceBlocksOnScreen)
         if($placedBlockOnLine = 0)
 
             logwrite("didnt place any block on line. block ", $placed_blocks_counter)
+
                 screenshot("gift")
                 halt
 
@@ -372,6 +371,8 @@ END_SUB
 
 
 sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
+
+    logwrite("get info for: ", $linear_progress_normalized, " num: ", $num_of_screen)
 
     $lerp_progress_normalized = 0
 
@@ -453,8 +454,13 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
 
         END_SWITCH
 
-        $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 99.3 * ($j - 1) - $hero_path_cords_X) * $lerp_progress_normalized, 0)
+        $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * ($j - 1) - $hero_path_cords_X) * $lerp_progress_normalized, 0)
         $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized
+
+        if($linear_progress_normalized = 1)
+            logwrite("key: ", $j)
+            logwrite("square: ", $counting_square_LUX, ", ", $counting_square_LUY)
+        end_if
 
         $counting_square_RDX = $counting_square_LUX + $hero_width
         $counting_square_RDY = $counting_square_LUY + $hero_height
@@ -475,10 +481,6 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
         //if($j = 8)
         //DrawSquare($counting_square_LUX, $counting_square_LUY, $counting_square_RDX, $counting_square_RDY, $color_CYAN)
         //end_if
-
-
-
-
 
         if($counting_square_LUX < $MIN_area_X)
             $MIN_area_X = $counting_square_LUX
@@ -517,13 +519,15 @@ sub(Dynamic_windowpos_setup)
         $window_pos_in_frame_X[$dwsi] = $block_coords_LUX[$dwsi] - $window_pos_static_X[$dwsi]
         $window_pos_in_frame_Y[$dwsi] = $block_coords_LUY[$dwsi] - $window_pos_static_Y[$dwsi]
 
-        //logwrite("$block_coords_LUX[",$dwsi,"] = ", $block_coords_LUX[$dwsi])
-        //logwrite("$block_coords_LUY[",$dwsi,"] = ", $block_coords_LUY[$dwsi])
-        //logwrite("$block_size_X[",$dwsi,"] = ", $block_size_X[$dwsi])
-        //logwrite("$block_size_Y[",$dwsi,"] = ", $block_size_Y[$dwsi])
-        //logwrite("$window_pos_in_frame_X[",$dwsi,"] = ", $window_pos_in_frame_X[$dwsi])
-        //logwrite("$window_pos_in_frame_Y[",$dwsi,"] = ", $window_pos_in_frame_Y[$dwsi])
-        //logwrite(" ")
+        //logwrite("wndposstatic: ", $window_pos_static_X[$dwsi], ", ", $window_pos_static_Y[$dwsi])
+
+        logwrite("$block_coords_LUX[",$dwsi,"] = ", $block_coords_LUX[$dwsi])
+        logwrite("$block_coords_LUY[",$dwsi,"] = ", $block_coords_LUY[$dwsi])
+        logwrite("$block_size_X[",$dwsi,"] = ", $block_size_X[$dwsi])
+        logwrite("$block_size_Y[",$dwsi,"] = ", $block_size_Y[$dwsi])
+        logwrite("$window_pos_in_frame_X[",$dwsi,"] = ", $window_pos_in_frame_X[$dwsi])
+        logwrite("$window_pos_in_frame_Y[",$dwsi,"] = ", $window_pos_in_frame_Y[$dwsi])
+        logwrite("")
 
     end_cyc
 
@@ -538,10 +542,12 @@ END_SUB
 
 SUB(CaptchaInit)
 
-    $drawallpaths = 0
+    $drawallpaths = 1
     $drawpathFor = 0
 
-    //$heronum = 1
+    $heronum = 1
+
+    //$total_screens_to_make = 43
 
     Hardcode_wndpos_setup()
 
@@ -567,8 +573,6 @@ SUB(CaptchaInit)
     $vertical_velocity = 0
 
     $whole_path_time = 1.062321
-
-    //$total_screens_to_make = 43
 
     $tilt = 2*$whole_path_time / (3 * ($total_screens_to_make - 1))
 
@@ -679,25 +683,24 @@ SUB(CaptchaInit)
     $hero_height = 92
     $hero_width = 65
 
-
-    for($i = 0, $i <= $total_screens_to_make)
-
-        GetInfoOfCountedSection($i/$total_screens_to_make, $i)
-
-        $areaInfo_Width[$i] = $returned_width
-        $areaInfo_Height[$i] = $returned_height
-
-        $block_size_X[$i] = $returned_width
-        $block_size_Y[$i] = $returned_height
-
-    end_cyc
-
-
-    PlaceBlocksOnScreen()
-    screenshot("gift")
-    halt
-
-    //Dynamic_windowpos_setup()
+//    for($i = 0, $i < $total_screens_to_make)
+//
+//        GetInfoOfCountedSection($i/($total_screens_to_make - 1), $i)
+//
+//        $areaInfo_Width[$i] = $returned_width
+//        $areaInfo_Height[$i] = $returned_height
+//
+//        $block_size_X[$i] = $returned_width
+//        $block_size_Y[$i] = $returned_height
+//
+//    end_cyc
+//
+//
+//    PlaceBlocksOnScreen()
+//    screenshot("gift")
+//
+//    Dynamic_windowpos_setup()
+//    halt
 
 
 END_SUB
@@ -845,7 +848,7 @@ SUB(SolveCaptcha)
                 wait(0.1)
 
                 wndpos($hwnd, $window_pos_in_frame_X[0], $window_pos_in_frame_Y[0])
-                getscreen($block_coords_LUX[0], $block_coords_LUY[0], $block_coords_LUX[0] + $block_size_X[0], $block_coords_LUY[0] + $block_size_Y[0])
+                getscreen($block_coords_LUX[0], $block_coords_LUY[0], $block_coords_LUX[0] + $block_size_X[0]-1, $block_coords_LUY[0] + $block_size_Y[0]-1)
 
                 wait(0.23166)
 

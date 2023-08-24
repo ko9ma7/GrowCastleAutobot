@@ -56,7 +56,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
         $frame_counter = 0
 
         if($main_cycle_drawpathMode = 0)
-            $main_cycle_key = $counter + 1
+            $main_cycle_key = $counter
         end_if
 
         $first_frame_pixels = 0
@@ -67,7 +67,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
                 case(1)
 
-                    if(($main_cycle_key < 2) | ($main_cycle_key > 5))
+                    if(($main_cycle_key < 1) | ($main_cycle_key > 4))
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.025 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.425)
@@ -75,7 +75,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
                 case(2)
 
-                    if(($main_cycle_key < 3) | ($main_cycle_key > 6))
+                    if(($main_cycle_key < 2) | ($main_cycle_key > 5))
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.025 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.425)
@@ -83,7 +83,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
                 case(3)
 
-                    if(($main_cycle_key < 4) | ($main_cycle_key > 7))
+                    if(($main_cycle_key < 3) | ($main_cycle_key > 6))
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.0215 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.2125)
@@ -91,7 +91,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
                 case(4)
 
-                    if(($main_cycle_key < 2) | ($main_cycle_key > 5))
+                    if(($main_cycle_key < 1) | ($main_cycle_key > 4))
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.025 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.425)
@@ -99,7 +99,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
                 case(5)
 
-                    if(($main_cycle_key < 3) | ($main_cycle_key > 6))
+                    if(($main_cycle_key < 2) | ($main_cycle_key > 5))
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.025 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.425)
@@ -107,7 +107,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
                 case(6)
 
-                    if(($main_cycle_key < 4) | ($main_cycle_key > 7))
+                    if(($main_cycle_key < 3) | ($main_cycle_key > 6))
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.025 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.425)
@@ -115,7 +115,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
                 case(7)
 
-                    if($main_cycle_key > 5)
+                    if($main_cycle_key > 4)
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.01875 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.31875)
@@ -123,7 +123,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
                 case(8)
 
-                    if(($main_cycle_key < 4) | ($main_cycle_key > 6))
+                    if(($main_cycle_key < 4) | ($main_cycle_key > 5))
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.03125 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.53125)
                     else
                         $lerp_progress_normalized = (17 * $frame_counter / ($total_screens_to_make-1)) / 17 * (-0.01875 * (17 * $frame_counter / ($total_screens_to_make-1)) + 1.31875)
@@ -131,7 +131,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
             END_SWITCH
 
-            $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * ($main_cycle_key - 1) - $hero_path_cords_X) * $lerp_progress_normalized, 0) + $window_pos_in_frame_X[$frame_counter]
+            $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * ($main_cycle_key) - $hero_path_cords_X) * $lerp_progress_normalized, 0) + $window_pos_in_frame_X[$frame_counter]
             $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized + $window_pos_in_frame_Y[$frame_counter]
 
             $counting_square_RDX = $counting_square_LUX + $hero_width
@@ -382,13 +382,13 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
     $MAX_area_X = -999999
     $MAX_area_Y = -999999
 
-    for($j = 1, $j < 9)
+    for($j = 0, $j < 8)
 
         switch($heronum)
 
             case(1)
 
-                if(($j < 2) | ($j > 5))
+                if(($j < 1) | ($j > 4))
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
                 else
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
@@ -396,7 +396,7 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
 
             case(2)
 
-                if(($j < 3) | ($j > 6))
+                if(($j < 2) | ($j > 5))
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
                 else
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
@@ -404,7 +404,7 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
 
             case(3)
 
-                if(($j < 4) | ($j > 7))
+                if(($j < 3) | ($j > 6))
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
                 else
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.0215 * (17 * $linear_progress_normalized) + 1.2125)
@@ -412,7 +412,7 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
 
             case(4)
 
-                if(($j < 2) | ($j > 5))
+                if(($j < 1) | ($j > 4))
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
                 else
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
@@ -420,7 +420,7 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
 
             case(5)
 
-                if(($j < 3) | ($j > 6))
+                if(($j < 2) | ($j > 5))
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
                 else
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
@@ -428,7 +428,7 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
 
             case(6)
 
-                if(($j < 4) | ($j > 7))
+                if(($j < 3) | ($j > 6))
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
                 else
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
@@ -436,7 +436,7 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
 
             case(7)
 
-                if($j > 5)
+                if($j > 4)
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
                 else
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.01875 * (17 * $linear_progress_normalized) + 1.31875)
@@ -444,7 +444,7 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
 
             case(8)
 
-                if(($j < 4) | ($j > 6))
+                if(($j < 3) | ($j > 5))
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
                 else
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.01875 * (17 * $linear_progress_normalized) + 1.31875)
@@ -452,7 +452,7 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
 
         END_SWITCH
 
-        $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * ($j - 1) - $hero_path_cords_X) * $lerp_progress_normalized, 0)
+        $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * $j - $hero_path_cords_X) * $lerp_progress_normalized, 0)
         $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized
 
         $counting_square_RDX = $counting_square_LUX + $hero_width
@@ -471,7 +471,7 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
         $counting_square_RDX = ROUND($counting_square_RDX + $square_shape_changer, 0)
         $counting_square_RDY = ROUND($counting_square_RDY - $square_shape_changer, 0)
 
-        //if($j = 8)
+        //if($j = 7)
         //DrawSquare($counting_square_LUX, $counting_square_LUY, $counting_square_RDX, $counting_square_RDY, $color_CYAN)
         //end_if
 
@@ -534,6 +534,27 @@ END_SUB
 
 
 
+sub(BezierCurveAt, $bezierValue)
+
+    $bezierCurve_SX = 0
+    $bezierCurve_SY = 0
+
+    $bezierCurve_FX = 1
+    $bezierCurve_FY = 1
+
+    $bezierCurve_RefX = 0.2
+    $bezierCurve_RefY = 0.8
+
+    $bezier_l1X = $bezierCurve_SX + ($bezierCurve_RefX - $bezierCurve_SX) * $bezierValue
+    $bezier_l1Y = $bezierCurve_SY + ($bezierCurve_RefY - $bezierCurve_SY) * $bezierValue
+
+    $bezier_l2X = $bezierCurve_RefX + ($bezierCurve_FX - $bezierCurve_RefX) * $bezierValue
+    $bezier_l2Y = $bezierCurve_RefY + ($bezierCurve_FY - $bezierCurve_RefY) * $bezierValue
+
+    $bezier_ResultX = $bezier_l1X + ($bezier_l2X - $bezier_l1X) * $bezierValue
+    $bezier_ResultY = $bezier_l1Y + ($bezier_l2Y - $bezier_l1Y) * $bezierValue
+
+END_SUB
 
 
 SUB(CaptchaInit)
@@ -568,13 +589,41 @@ SUB(CaptchaInit)
     $first_frame_pixels = 0
     $vertical_velocity = 0
 
-    $whole_path_time = 1.062321
+    $whole_path_time = 1.03
+    //$whole_path_time = 1.062321
 
-    $tilt = 2*$whole_path_time / (3 * ($total_screens_to_make - 1))
+    $currtimestamp = 0
+    $prevtimestamp = 0
 
-    for($i = 0, $i < $total_screens_to_make-1)
-        $wms[$i] = $i * $tilt / ($total_screens_to_make - 2) + $tilt
+    $tempsum = 0
+
+    for($setwaiti = 1, $setwaiti < $total_screens_to_make)
+
+        BezierCurveAt(1/($total_screens_to_make-1)*$setwaiti)
+
+        $wms[$setwaiti-1] = $bezier_ResultX - $prevtimestamp
+
+    //logwrite($wms[$setwaiti-1])
+        $prevtimestamp = $bezier_ResultX
+        $tempsum = $tempsum + $wms[$setwaiti - 1]
+
     end_cyc
+
+    //logwrite($tempsum)
+    
+
+
+
+
+
+
+//    //$tilt = 2*$whole_path_time / (3 * ($total_screens_to_make - 1))
+//    $tilt = 2*$whole_path_time / (3.5 * ($total_screens_to_make - 1))
+//
+//    for($i = 0, $i < $total_screens_to_make-1)
+//        //$wms[$i] = $i * $tilt / ($total_screens_to_make - 2) + $tilt
+//        $wms[$i] = $i * $tilt / ($total_screens_to_make - 2.5) + $tilt
+//    end_cyc
 
     $wms[$total_screens_to_make-1] = 0
 
@@ -846,7 +895,8 @@ SUB(SolveCaptcha)
                 wndpos($hwnd, $window_pos_in_frame_X[0], $window_pos_in_frame_Y[0])
                 getscreen($block_coords_LUX[0], $block_coords_LUY[0], $block_coords_LUX[0] + $block_size_X[0]-1, $block_coords_LUY[0] + $block_size_Y[0]-1)
 
-                wait(0.23166)
+                //wait(0.23166)
+                wait(0.18)
 
                 $screen_counter=1
 

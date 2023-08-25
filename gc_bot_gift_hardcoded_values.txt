@@ -5,352 +5,333 @@ sub(Hardcode_wndpos_setup)
 
         case(1)
         
-            $total_screens_to_make = 43
+            $total_screens_to_make = 40
 
-            $vertical_offsets[0] = 0
-            $block_coords_LUX[0] = 1593
-            $block_coords_LUY[0] = 915
-            $block_size_X[0] = 86
-            $block_size_Y[0] = 73
-            $window_pos_in_frame_X[0] = 1014
-            $window_pos_in_frame_Y[0] = 481
-            
-            $vertical_offsets[1] = 1
-            $block_coords_LUX[1] = 1480
-            $block_coords_LUY[1] = 915
-            $block_size_X[1] = 113
-            $block_size_Y[1] = 71
-            $window_pos_in_frame_X[1] = 911
-            $window_pos_in_frame_Y[1] = 477
-            
-            $vertical_offsets[2] = 2
-            $block_coords_LUX[2] = 1763
-            $block_coords_LUY[2] = 683
-            $block_size_X[2] = 141
-            $block_size_Y[2] = 68
-            $window_pos_in_frame_X[2] = 1205
-            $window_pos_in_frame_Y[2] = 240
-            
-            $vertical_offsets[3] = 3
-            $block_coords_LUX[3] = 1312
-            $block_coords_LUY[3] = 915
-            $block_size_X[3] = 168
-            $block_size_Y[3] = 68
-            $window_pos_in_frame_X[3] = 764
-            $window_pos_in_frame_Y[3] = 469
-            
-            $vertical_offsets[4] = 4
-            $block_coords_LUX[4] = 1540
-            $block_coords_LUY[4] = 0
-            $block_size_X[4] = 192
-            $block_size_Y[4] = 67
-            $window_pos_in_frame_X[4] = 1001
-            $window_pos_in_frame_Y[4] = -450
-            
-            $vertical_offsets[5] = 5
-            $block_coords_LUX[5] = 1514
-            $block_coords_LUY[5] = 93
-            $block_size_X[5] = 215
-            $block_size_Y[5] = 67
-            $window_pos_in_frame_X[5] = 983
-            $window_pos_in_frame_Y[5] = -360
-            
-            $vertical_offsets[6] = 6
-            $block_coords_LUX[6] = 1073
-            $block_coords_LUY[6] = 915
-            $block_size_X[6] = 239
-            $block_size_Y[6] = 69
-            $window_pos_in_frame_X[6] = 551
-            $window_pos_in_frame_Y[6] = 460
-            
-            $vertical_offsets[7] = 7
-            $block_coords_LUX[7] = 1485
-            $block_coords_LUY[7] = 183
-            $block_size_X[7] = 260
-            $block_size_Y[7] = 71
-            $window_pos_in_frame_X[7] = 970
-            $window_pos_in_frame_Y[7] = -274
-            
-            $vertical_offsets[8] = 8
-            $block_coords_LUX[8] = 1451
-            $block_coords_LUY[8] = 269
-            $block_size_X[8] = 279
-            $block_size_Y[8] = 73
-            $window_pos_in_frame_X[8] = 943
-            $window_pos_in_frame_Y[8] = -190
-            
-            $vertical_offsets[9] = 8
-            $block_coords_LUX[9] = 1613
-            $block_coords_LUY[9] = 753
-            $block_size_X[9] = 299
-            $block_size_Y[9] = 77
-            $window_pos_in_frame_X[9] = 1112
-            $window_pos_in_frame_Y[9] = 293
-            
-            $vertical_offsets[10] = 9
-            $block_coords_LUX[10] = 1415
-            $block_coords_LUY[10] = 351
-            $block_size_X[10] = 317
-            $block_size_Y[10] = 80
-            $window_pos_in_frame_X[10] = 920
-            $window_pos_in_frame_Y[10] = -110
-            
-            $vertical_offsets[11] = 10
-            $block_coords_LUX[11] = 740
-            $block_coords_LUY[11] = 915
-            $block_size_X[11] = 333
-            $block_size_Y[11] = 84
-            $window_pos_in_frame_X[11] = 250
-            $window_pos_in_frame_Y[11] = 453
-            
-            $vertical_offsets[12] = 10
-            $block_coords_LUX[12] = 389
-            $block_coords_LUY[12] = 915
-            $block_size_X[12] = 351
-            $block_size_Y[12] = 88
-            $window_pos_in_frame_X[12] = -95
-            $window_pos_in_frame_Y[12] = 452
-            
-            $vertical_offsets[13] = 11
-            $block_coords_LUX[13] = 1372
-            $block_coords_LUY[13] = 431
-            $block_size_X[13] = 366
-            $block_size_Y[13] = 93
-            $window_pos_in_frame_X[13] = 893
-            $window_pos_in_frame_Y[13] = -32
-            
-            $vertical_offsets[14] = 11
-            $block_coords_LUX[14] = 0
-            $block_coords_LUY[14] = 915
-            $block_size_X[14] = 389
-            $block_size_Y[14] = 93
-            $window_pos_in_frame_X[14] = -470
-            $window_pos_in_frame_Y[14] = 451
-            
-            $vertical_offsets[15] = 12
-            $block_coords_LUX[15] = 1328
-            $block_coords_LUY[15] = 524
-            $block_size_X[15] = 413
-            $block_size_Y[15] = 90
-            $window_pos_in_frame_X[15] = 867
-            $window_pos_in_frame_Y[15] = 56
-            
-            $vertical_offsets[16] = 12
-            $block_coords_LUX[16] = 1435
-            $block_coords_LUY[16] = 830
-            $block_size_X[16] = 436
-            $block_size_Y[16] = 85
-            $window_pos_in_frame_X[16] = 983
-            $window_pos_in_frame_Y[16] = 357
-            
-            $vertical_offsets[17] = 12
-            $block_coords_LUX[17] = 978
-            $block_coords_LUY[17] = 830
-            $block_size_X[17] = 457
-            $block_size_Y[17] = 82
-            $window_pos_in_frame_X[17] = 534
-            $window_pos_in_frame_Y[17] = 353
-            
-            $vertical_offsets[18] = 13
-            $block_coords_LUX[18] = 499
-            $block_coords_LUY[18] = 830
-            $block_size_X[18] = 479
-            $block_size_Y[18] = 79
-            $window_pos_in_frame_X[18] = 64
-            $window_pos_in_frame_Y[18] = 349
-            
-            $vertical_offsets[19] = 13
-            $block_coords_LUX[19] = 0
-            $block_coords_LUY[19] = 830
-            $block_size_X[19] = 499
-            $block_size_Y[19] = 76
-            $window_pos_in_frame_X[19] = -428
-            $window_pos_in_frame_Y[19] = 345
-            
-            $vertical_offsets[20] = 13
-            $block_coords_LUX[20] = 1094
-            $block_coords_LUY[20] = 753
-            $block_size_X[20] = 519
-            $block_size_Y[20] = 74
-            $window_pos_in_frame_X[20] = 674
-            $window_pos_in_frame_Y[20] = 265
-            
-            $vertical_offsets[21] = 13
-            $block_coords_LUX[21] = 556
-            $block_coords_LUY[21] = 753
-            $block_size_X[21] = 538
-            $block_size_Y[21] = 72
-            $window_pos_in_frame_X[21] = 143
-            $window_pos_in_frame_Y[21] = 261
-            
-            $vertical_offsets[22] = 13
-            $block_coords_LUX[22] = 0
-            $block_coords_LUY[22] = 753
-            $block_size_X[22] = 556
-            $block_size_Y[22] = 70
-            $window_pos_in_frame_X[22] = -406
-            $window_pos_in_frame_Y[22] = 258
-            
-            $vertical_offsets[23] = 13
-            $block_coords_LUX[23] = 1191
-            $block_coords_LUY[23] = 683
-            $block_size_X[23] = 572
-            $block_size_Y[23] = 70
-            $window_pos_in_frame_X[23] = 791
-            $window_pos_in_frame_Y[23] = 186
-            
-            $vertical_offsets[24] = 13
-            $block_coords_LUX[24] = 603
-            $block_coords_LUY[24] = 683
-            $block_size_X[24] = 588
-            $block_size_Y[24] = 69
-            $window_pos_in_frame_X[24] = 209
-            $window_pos_in_frame_Y[24] = 183
-            
-            $vertical_offsets[25] = 13
-            $block_coords_LUX[25] = 0
-            $block_coords_LUY[25] = 683
-            $block_size_X[25] = 603
-            $block_size_Y[25] = 69
-            $window_pos_in_frame_X[25] = -389
-            $window_pos_in_frame_Y[25] = 181
-            
-            $vertical_offsets[26] = 12
-            $block_coords_LUX[26] = 1280
-            $block_coords_LUY[26] = 614
-            $block_size_X[26] = 618
-            $block_size_Y[26] = 69
-            $window_pos_in_frame_X[26] = 897
-            $window_pos_in_frame_Y[26] = 110
-            
-            $vertical_offsets[27] = 12
-            $block_coords_LUX[27] = 647
-            $block_coords_LUY[27] = 614
-            $block_size_X[27] = 633
-            $block_size_Y[27] = 69
-            $window_pos_in_frame_X[27] = 269
-            $window_pos_in_frame_Y[27] = 108
-            
-            $vertical_offsets[28] = 12
-            $block_coords_LUX[28] = 0
-            $block_coords_LUY[28] = 614
-            $block_size_X[28] = 647
-            $block_size_Y[28] = 69
-            $window_pos_in_frame_X[28] = -373
-            $window_pos_in_frame_Y[28] = 106
-            
-            $vertical_offsets[29] = 11
-            $block_coords_LUX[29] = 670
-            $block_coords_LUY[29] = 524
-            $block_size_X[29] = 658
-            $block_size_Y[29] = 71
-            $window_pos_in_frame_X[29] = 301
-            $window_pos_in_frame_Y[29] = 15
-            
-            $vertical_offsets[30] = 11
-            $block_coords_LUX[30] = 0
-            $block_coords_LUY[30] = 524
-            $block_size_X[30] = 670
-            $block_size_Y[30] = 72
-            $window_pos_in_frame_X[30] = -365
-            $window_pos_in_frame_Y[30] = 14
-            
-            $vertical_offsets[31] = 10
-            $block_coords_LUX[31] = 691
-            $block_coords_LUY[31] = 431
-            $block_size_X[31] = 681
-            $block_size_Y[31] = 73
-            $window_pos_in_frame_X[31] = 330
-            $window_pos_in_frame_Y[31] = -81
-            
-            $vertical_offsets[32] = 10
-            $block_coords_LUX[32] = 0
-            $block_coords_LUY[32] = 431
-            $block_size_X[32] = 691
-            $block_size_Y[32] = 75
-            $window_pos_in_frame_X[32] = -358
-            $window_pos_in_frame_Y[32] = -81
-            
-            $vertical_offsets[33] = 9
-            $block_coords_LUX[33] = 712
-            $block_coords_LUY[33] = 351
-            $block_size_X[33] = 703
-            $block_size_Y[33] = 77
-            $window_pos_in_frame_X[33] = 359
-            $window_pos_in_frame_Y[33] = -162
-            
-            $vertical_offsets[34] = 8
-            $block_coords_LUX[34] = 0
-            $block_coords_LUY[34] = 351
-            $block_size_X[34] = 712
-            $block_size_Y[34] = 78
-            $window_pos_in_frame_X[34] = -350
-            $window_pos_in_frame_Y[34] = -163
-            
-            $vertical_offsets[35] = 7
-            $block_coords_LUX[35] = 730
-            $block_coords_LUY[35] = 269
-            $block_size_X[35] = 721
-            $block_size_Y[35] = 80
-            $window_pos_in_frame_X[35] = 383
-            $window_pos_in_frame_Y[35] = -246
-            
-            $vertical_offsets[36] = 7
-            $block_coords_LUX[36] = 0
-            $block_coords_LUY[36] = 269
-            $block_size_X[36] = 730
-            $block_size_Y[36] = 82
-            $window_pos_in_frame_X[36] = -344
-            $window_pos_in_frame_Y[36] = -246
-            
-            $vertical_offsets[37] = 6
-            $block_coords_LUX[37] = 746
-            $block_coords_LUY[37] = 183
-            $block_size_X[37] = 739
-            $block_size_Y[37] = 85
-            $window_pos_in_frame_X[37] = 405
-            $window_pos_in_frame_Y[37] = -332
-            
-            $vertical_offsets[38] = 5
-            $block_coords_LUX[38] = 0
-            $block_coords_LUY[38] = 183
-            $block_size_X[38] = 746
-            $block_size_Y[38] = 86
-            $window_pos_in_frame_X[38] = -339
-            $window_pos_in_frame_Y[38] = -333
-            
-            $vertical_offsets[39] = 4
-            $block_coords_LUX[39] = 760
-            $block_coords_LUY[39] = 93
-            $block_size_X[39] = 754
-            $block_size_Y[39] = 88
-            $window_pos_in_frame_X[39] = 424
-            $window_pos_in_frame_Y[39] = -423
-            
-            $vertical_offsets[40] = 2
-            $block_coords_LUX[40] = 0
-            $block_coords_LUY[40] = 93
-            $block_size_X[40] = 760
-            $block_size_Y[40] = 90
-            $window_pos_in_frame_X[40] = -334
-            $window_pos_in_frame_Y[40] = -423
-            
-            $vertical_offsets[41] = 1
-            $block_coords_LUX[41] = 773
-            $block_coords_LUY[41] = 0
-            $block_size_X[41] = 767
-            $block_size_Y[41] = 91
-            $window_pos_in_frame_X[41] = 441
-            $window_pos_in_frame_Y[41] = -517
-            
-            $vertical_offsets[42] = 0
-            $block_coords_LUX[42] = 0
-            $block_coords_LUY[42] = 0
-            $block_size_X[42] = 773
-            $block_size_Y[42] = 93
-            $window_pos_in_frame_X[42] = -330
-            $window_pos_in_frame_Y[42] = -517
-            
+$vertical_offsets[0] = 0
+$block_coords_LUX[0] = 1553
+$block_coords_LUY[0] = 909
+$block_size_X[0] = 86
+$block_size_Y[0] = 73
+$window_pos_in_frame_X[0] = 974
+$window_pos_in_frame_Y[0] = 475
+
+$vertical_offsets[1] = 0
+$block_coords_LUX[1] = 1739
+$block_coords_LUY[1] = 750
+$block_size_X[1] = 123
+$block_size_Y[1] = 70
+$window_pos_in_frame_X[1] = 1174
+$window_pos_in_frame_Y[1] = 310
+
+$vertical_offsets[2] = 1
+$block_coords_LUX[2] = 1532
+$block_coords_LUY[2] = 93
+$block_size_X[2] = 158
+$block_size_Y[2] = 67
+$window_pos_in_frame_X[2] = 980
+$window_pos_in_frame_Y[2] = -353
+
+$vertical_offsets[3] = 1
+$block_coords_LUX[3] = 1543
+$block_coords_LUY[3] = 0
+$block_size_X[3] = 190
+$block_size_Y[3] = 66
+$window_pos_in_frame_X[3] = 1003
+$window_pos_in_frame_Y[3] = -450
+
+$vertical_offsets[4] = 1
+$block_coords_LUX[4] = 1513
+$block_coords_LUY[4] = 184
+$block_size_X[4] = 220
+$block_size_Y[4] = 67
+$window_pos_in_frame_X[4] = 984
+$window_pos_in_frame_Y[4] = -270
+
+$vertical_offsets[5] = 1
+$block_coords_LUX[5] = 1492
+$block_coords_LUY[5] = 273
+$block_size_X[5] = 248
+$block_size_Y[5] = 69
+$window_pos_in_frame_X[5] = 973
+$window_pos_in_frame_Y[5] = -184
+
+$vertical_offsets[6] = 2
+$block_coords_LUX[6] = 1464
+$block_coords_LUY[6] = 360
+$block_size_X[6] = 275
+$block_size_Y[6] = 72
+$window_pos_in_frame_X[6] = 955
+$window_pos_in_frame_Y[6] = -99
+
+$vertical_offsets[7] = 2
+$block_coords_LUX[7] = 1433
+$block_coords_LUY[7] = 443
+$block_size_X[7] = 299
+$block_size_Y[7] = 76
+$window_pos_in_frame_X[7] = 932
+$window_pos_in_frame_Y[7] = -18
+
+$vertical_offsets[8] = 2
+$block_coords_LUX[8] = 1232
+$block_coords_LUY[8] = 909
+$block_size_X[8] = 321
+$block_size_Y[8] = 81
+$window_pos_in_frame_X[8] = 738
+$window_pos_in_frame_Y[8] = 447
+
+$vertical_offsets[9] = 2
+$block_coords_LUX[9] = 1392
+$block_coords_LUY[9] = 523
+$block_size_X[9] = 342
+$block_size_Y[9] = 86
+$window_pos_in_frame_X[9] = 905
+$window_pos_in_frame_Y[9] = 60
+
+$vertical_offsets[10] = 2
+$block_coords_LUX[10] = 869
+$block_coords_LUY[10] = 909
+$block_size_X[10] = 363
+$block_size_Y[10] = 91
+$window_pos_in_frame_X[10] = 389
+$window_pos_in_frame_Y[10] = 445
+
+$vertical_offsets[11] = 3
+$block_coords_LUX[11] = 1502
+$block_coords_LUY[11] = 820
+$block_size_X[11] = 391
+$block_size_Y[11] = 89
+$window_pos_in_frame_X[11] = 1033
+$window_pos_in_frame_Y[11] = 352
+
+$vertical_offsets[12] = 3
+$block_coords_LUX[12] = 449
+$block_coords_LUY[12] = 909
+$block_size_X[12] = 420
+$block_size_Y[12] = 84
+$window_pos_in_frame_X[12] = -9
+$window_pos_in_frame_Y[12] = 435
+
+$vertical_offsets[13] = 3
+$block_coords_LUX[13] = 0
+$block_coords_LUY[13] = 909
+$block_size_X[13] = 449
+$block_size_Y[13] = 80
+$window_pos_in_frame_X[13] = -447
+$window_pos_in_frame_Y[13] = 430
+
+$vertical_offsets[14] = 3
+$block_coords_LUX[14] = 1026
+$block_coords_LUY[14] = 820
+$block_size_X[14] = 476
+$block_size_Y[14] = 76
+$window_pos_in_frame_X[14] = 590
+$window_pos_in_frame_Y[14] = 336
+
+$vertical_offsets[15] = 3
+$block_coords_LUX[15] = 526
+$block_coords_LUY[15] = 820
+$block_size_X[15] = 500
+$block_size_Y[15] = 72
+$window_pos_in_frame_X[15] = 99
+$window_pos_in_frame_Y[15] = 331
+
+$vertical_offsets[16] = 3
+$block_coords_LUX[16] = 0
+$block_coords_LUY[16] = 820
+$block_size_X[16] = 526
+$block_size_Y[16] = 70
+$window_pos_in_frame_X[16] = -417
+$window_pos_in_frame_Y[16] = 327
+
+$vertical_offsets[17] = 3
+$block_coords_LUX[17] = 1191
+$block_coords_LUY[17] = 750
+$block_size_X[17] = 548
+$block_size_Y[17] = 67
+$window_pos_in_frame_X[17] = 782
+$window_pos_in_frame_Y[17] = 253
+
+$vertical_offsets[18] = 3
+$block_coords_LUX[18] = 1345
+$block_coords_LUY[18] = 609
+$block_size_X[18] = 567
+$block_size_Y[18] = 66
+$window_pos_in_frame_X[18] = 943
+$window_pos_in_frame_Y[18] = 109
+
+$vertical_offsets[19] = 3
+$block_coords_LUX[19] = 605
+$block_coords_LUY[19] = 750
+$block_size_X[19] = 586
+$block_size_Y[19] = 66
+$window_pos_in_frame_X[19] = 210
+$window_pos_in_frame_Y[19] = 247
+
+$vertical_offsets[20] = 3
+$block_coords_LUX[20] = 0
+$block_coords_LUY[20] = 750
+$block_size_X[20] = 605
+$block_size_Y[20] = 66
+$window_pos_in_frame_X[20] = -388
+$window_pos_in_frame_Y[20] = 245
+
+$vertical_offsets[21] = 3
+$block_coords_LUX[21] = 1290
+$block_coords_LUY[21] = 681
+$block_size_X[21] = 622
+$block_size_Y[21] = 66
+$window_pos_in_frame_X[21] = 908
+$window_pos_in_frame_Y[21] = 174
+
+$vertical_offsets[22] = 3
+$block_coords_LUX[22] = 652
+$block_coords_LUY[22] = 681
+$block_size_X[22] = 638
+$block_size_Y[22] = 67
+$window_pos_in_frame_X[22] = 276
+$window_pos_in_frame_Y[22] = 172
+
+$vertical_offsets[23] = 3
+$block_coords_LUX[23] = 0
+$block_coords_LUY[23] = 681
+$block_size_X[23] = 652
+$block_size_Y[23] = 69
+$window_pos_in_frame_X[23] = -371
+$window_pos_in_frame_Y[23] = 171
+
+$vertical_offsets[24] = 3
+$block_coords_LUX[24] = 680
+$block_coords_LUY[24] = 609
+$block_size_X[24] = 665
+$block_size_Y[24] = 71
+$window_pos_in_frame_X[24] = 313
+$window_pos_in_frame_Y[24] = 98
+
+$vertical_offsets[25] = 3
+$block_coords_LUX[25] = 0
+$block_coords_LUY[25] = 609
+$block_size_X[25] = 680
+$block_size_Y[25] = 72
+$window_pos_in_frame_X[25] = -361
+$window_pos_in_frame_Y[25] = 97
+
+$vertical_offsets[26] = 3
+$block_coords_LUX[26] = 701
+$block_coords_LUY[26] = 523
+$block_size_X[26] = 691
+$block_size_Y[26] = 74
+$window_pos_in_frame_X[26] = 344
+$window_pos_in_frame_Y[26] = 10
+
+$vertical_offsets[27] = 3
+$block_coords_LUX[27] = 0
+$block_coords_LUY[27] = 523
+$block_size_X[27] = 701
+$block_size_Y[27] = 76
+$window_pos_in_frame_X[27] = -354
+$window_pos_in_frame_Y[27] = 9
+
+$vertical_offsets[28] = 3
+$block_coords_LUX[28] = 721
+$block_coords_LUY[28] = 443
+$block_size_X[28] = 712
+$block_size_Y[28] = 78
+$window_pos_in_frame_X[28] = 371
+$window_pos_in_frame_Y[28] = -71
+
+$vertical_offsets[29] = 3
+$block_coords_LUX[29] = 0
+$block_coords_LUY[29] = 443
+$block_size_X[29] = 721
+$block_size_Y[29] = 80
+$window_pos_in_frame_X[29] = -347
+$window_pos_in_frame_Y[29] = -72
+
+$vertical_offsets[30] = 2
+$block_coords_LUX[30] = 736
+$block_coords_LUY[30] = 360
+$block_size_X[30] = 728
+$block_size_Y[30] = 82
+$window_pos_in_frame_X[30] = 391
+$window_pos_in_frame_Y[30] = -155
+
+$vertical_offsets[31] = 2
+$block_coords_LUX[31] = 0
+$block_coords_LUY[31] = 360
+$block_size_X[31] = 736
+$block_size_Y[31] = 83
+$window_pos_in_frame_X[31] = -342
+$window_pos_in_frame_Y[31] = -156
+
+$vertical_offsets[32] = 2
+$block_coords_LUX[32] = 749
+$block_coords_LUY[32] = 273
+$block_size_X[32] = 743
+$block_size_Y[32] = 85
+$window_pos_in_frame_X[32] = 409
+$window_pos_in_frame_Y[32] = -243
+
+$vertical_offsets[33] = 2
+$block_coords_LUX[33] = 0
+$block_coords_LUY[33] = 273
+$block_size_X[33] = 749
+$block_size_Y[33] = 87
+$window_pos_in_frame_X[33] = -338
+$window_pos_in_frame_Y[33] = -243
+
+$vertical_offsets[34] = 1
+$block_coords_LUX[34] = 760
+$block_coords_LUY[34] = 184
+$block_size_X[34] = 753
+$block_size_Y[34] = 88
+$window_pos_in_frame_X[34] = 423
+$window_pos_in_frame_Y[34] = -332
+
+$vertical_offsets[35] = 1
+$block_coords_LUX[35] = 0
+$block_coords_LUY[35] = 184
+$block_size_X[35] = 760
+$block_size_Y[35] = 89
+$window_pos_in_frame_X[35] = -334
+$window_pos_in_frame_Y[35] = -333
+
+$vertical_offsets[36] = 1
+$block_coords_LUX[36] = 768
+$block_coords_LUY[36] = 93
+$block_size_X[36] = 764
+$block_size_Y[36] = 90
+$window_pos_in_frame_X[36] = 435
+$window_pos_in_frame_Y[36] = -424
+
+$vertical_offsets[37] = 1
+$block_coords_LUX[37] = 0
+$block_coords_LUY[37] = 93
+$block_size_X[37] = 768
+$block_size_Y[37] = 91
+$window_pos_in_frame_X[37] = -332
+$window_pos_in_frame_Y[37] = -424
+
+$vertical_offsets[38] = 0
+$block_coords_LUX[38] = 773
+$block_coords_LUY[38] = 0
+$block_size_X[38] = 770
+$block_size_Y[38] = 92
+$window_pos_in_frame_X[38] = 442
+$window_pos_in_frame_Y[38] = -517
+
+$vertical_offsets[39] = 0
+$block_coords_LUX[39] = 0
+$block_coords_LUY[39] = 0
+$block_size_X[39] = 773
+$block_size_Y[39] = 93
+$window_pos_in_frame_X[39] = -330
+$window_pos_in_frame_Y[39] = -517
+
+
+
+
+
+
 
         case(2)
         

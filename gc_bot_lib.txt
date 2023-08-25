@@ -63,8 +63,6 @@ END_SUB
 
 SUB(CheckNoxState)
 
-    logwrite($_date_str, " CheckNoxState")
-
     wndgetinfo($hwnd,$v1,$v2,$v3,$v4)
 
     if(($v1 = -32000) & ($v2 = -32000))
@@ -90,9 +88,17 @@ SUB(CheckMimic)
 
             IF_PIXEL_IN(522-85,768,1424-85,855,1600698)
 
-                logwrite($_date_str, " mimic detected. collecting")
-                
-                message_click($_return1+ rnd(-10,10),$_return2+ rnd(-10,10))
+                $mimic_randomizer = rnd(1,100)
+                if($mimic_randomizer <= $mimic_collect_percent)
+
+                    logwrite($_date_str, " collect mimic")
+                    message_click($_return1+ rnd(-10,10),$_return2+ rnd(-10,10))
+
+                else
+
+                    logwrite($_date_str, " ignore mimic")
+
+                end_if
 
             END_IF
 
@@ -120,7 +126,7 @@ SUB(CheckGCMenu)
 
     GETSCREEN
 
-    IF(PXL(1388,201) = 13864504)
+    IF(PXL(1407,159) = $castle_upgrade_color)
         $gc_menu_open = 1
     else
         $gc_menu_open = 0
@@ -1677,6 +1683,12 @@ SUB(Replay)
 
         END_IF
 
+        if((pxl(933,795) = 1551083) & (pxl(1114,794) = 1551083) & (pxl(1293,796) = 1551083))
+
+            message_click(1442,672)  // 4806498
+            wait(0.3)
+
+        END_IF
 
         IF($makereplays = 1)
 
@@ -2731,7 +2743,7 @@ SUB(ActivateHeroesDun)
         ChronoClick()
 
 
-        IF(($this_deck_1 = 1) & ((PXL(445-85,88) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_1 = 1) & ((PXL(445-85,88) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
 
             message_click(RND(407-85,448-85),RND(110,165))
             
@@ -2742,85 +2754,85 @@ SUB(ActivateHeroesDun)
         END_IF
 
         
-        IF(($this_deck_2 = 1) & ((PXL(541-85,92) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_2 = 1) & ((PXL(541-85,92) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(503-85,540-85),RND(110,165))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_3 = 1) & ((PXL(632-85,91) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_3 = 1) & ((PXL(632-85,91) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(583-85,631-85),RND(110,165))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_4 = 1) & ((PXL(449-85,202) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_4 = 1) & ((PXL(449-85,202) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(407-85,448-85),RND(203,276))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_5 = 1) & ((PXL(540-85,202) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_5 = 1) & ((PXL(540-85,202) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(503-85,540-85),RND(203,276))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_6 = 1) & ((PXL(634-85,201) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_6 = 1) & ((PXL(634-85,201) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(583-85,631-85),RND(203,276))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_7 = 1) & ((PXL(447-85,311) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_7 = 1) & ((PXL(447-85,311) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(407-85,448-85),RND(311,387))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_8 = 1) & ((PXL(540-85,310) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_8 = 1) & ((PXL(540-85,310) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(503-85,540-85),RND(311,387))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_9 = 1) & ((PXL(632-85,311) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_9 = 1) & ((PXL(632-85,311) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(583-85,631-85),RND(311,387))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_10 = 1) & ((PXL(447-85,414) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_10 = 1) & ((PXL(447-85,414) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(407-85,448-85),RND(414,492))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_11 = 1) & ((PXL(541-85,414) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_11 = 1) & ((PXL(541-85,414) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(503-85,540-85),RND(414,492))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_12 = 1) & ((PXL(633-85,415) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_12 = 1) & ((PXL(633-85,415) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(583-85,631-85),RND(414,492))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_13 = 1) & ((PXL(356-85,203) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_13 = 1) & ((PXL(356-85,203) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(303-85,352-85),RND(197,266))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_14 = 1) & ((PXL(268-85,452) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_14 = 1) & ((PXL(268-85,452) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(181-85,320-85),RND(476,546))
             wait($hero_click_pause)
             getscreen
         END_IF
 
-        IF(($this_deck_15 = 1) & ((PXL(267-85,587) = 16759892)) & (pxl(1477-85,205) ! 13864504))
+        IF(($this_deck_15 = 1) & ((PXL(267-85,587) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(175-85,317-85),RND(597,667))
             wait($hero_click_pause)
             getscreen
@@ -2830,7 +2842,7 @@ SUB(ActivateHeroesDun)
 
             IF(PXL(949-85,54) ! 5066216)
             
-                IF(($this_smith_pos ! 0) & (PXL($this_smithpxl_X, $this_smithpxl_Y) = 16759892) & (pxl(1477-85,205) ! 13864504))
+                IF(($this_smith_pos ! 0) & (PXL($this_smithpxl_X, $this_smithpxl_Y) = 16759892) & (pxl(1407,159) ! $castle_upgrade_color))
 
                     
                     message_click($this_smithpxl_X - RND(0,60), $this_smithpxl_Y+RND(0,60))
@@ -2859,9 +2871,9 @@ SUB(ActivateHeroesDun)
 
         END_IF
 
-        IF(($this_pure_pos ! 0) & (PXL($this_purepxl_X,$this_purepxl_Y) = 16759892) & (pxl(1477-85,205) ! 13864504) & (($this_deck_1 = 0) | (PXL(450-85,88) ! 5066239)) & (($this_deck_2 = 0) | (PXL(543-85,92) ! 5066239)) & (($this_deck_3 = 0) | (PXL(636-85,91) ! 5066239)) & (($this_deck_4 = 0) | (PXL(450-85,202) ! 5066239)) & (($this_deck_5 = 0) | (PXL(543-85,202) ! 5066239)) & (($this_deck_6 = 0) | (PXL(636-85,201) ! 5066239)) & (($this_deck_7 = 0) | (PXL(450-85,311) ! 5066239)) & (($this_deck_8 = 0) | (PXL(543-85,310) ! 5066239)) & (($this_deck_9 = 0) | (PXL(636-85,311) ! 5066239)) & (($this_deck_10 = 0) | (PXL(450-85,414) ! 5066239)) & (($this_deck_11 = 0) | (PXL(543-85,414) ! 5066239)) & (($this_deck_12 = 0) | (PXL(636-85,415) ! 5066239)) & (($this_deck_13 = 0) | (PXL(358-85,203) ! 5066239)))
+        IF(($this_pure_pos ! 0) & (PXL($this_purepxl_X,$this_purepxl_Y) = 16759892) & (pxl(1407,159) ! $castle_upgrade_color) & (($this_deck_1 = 0) | (PXL(450-85,88) ! 5066239)) & (($this_deck_2 = 0) | (PXL(543-85,92) ! 5066239)) & (($this_deck_3 = 0) | (PXL(636-85,91) ! 5066239)) & (($this_deck_4 = 0) | (PXL(450-85,202) ! 5066239)) & (($this_deck_5 = 0) | (PXL(543-85,202) ! 5066239)) & (($this_deck_6 = 0) | (PXL(636-85,201) ! 5066239)) & (($this_deck_7 = 0) | (PXL(450-85,311) ! 5066239)) & (($this_deck_8 = 0) | (PXL(543-85,310) ! 5066239)) & (($this_deck_9 = 0) | (PXL(636-85,311) ! 5066239)) & (($this_deck_10 = 0) | (PXL(450-85,414) ! 5066239)) & (($this_deck_11 = 0) | (PXL(543-85,414) ! 5066239)) & (($this_deck_12 = 0) | (PXL(636-85,415) ! 5066239)) & (($this_deck_13 = 0) | (PXL(358-85,203) ! 5066239)))
 
-            IF(pxl(1477-85,205) ! 13864504)
+            IF(pxl(1407,159) ! $castle_upgrade_color)
 
                 message_click($this_purepxl_X-RND(0,60),$this_purepxl_Y+RND(0,60))
                 wait($hero_click_pause)

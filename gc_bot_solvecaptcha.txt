@@ -1,6 +1,6 @@
 
 
-    $DYNAMIC_MODE =2
+    $DYNAMIC_MODE =1
 
 
 
@@ -49,6 +49,20 @@ SUB(BlackBackgroundGift11)
 
 END_SUB
 
+sub(CubicBezierAt, $bezierCurve_RefSX, $bezierCurve_RefSY, $bezierCurve_RefFX, $bezierCurve_RefFY, $bezierValue)
+
+    $bezierCurve_SX = 0
+    $bezierCurve_SY = 0
+
+    $bezierCurve_FX = 1
+    $bezierCurve_FY = 1
+
+    $bezier_ResultX = pow(1-$bezierValue, 3) * $bezierCurve_SX + 3 * $bezierValue * pow(1 - $bezierValue, 2) * $bezierCurve_RefSX + 3 * pow($bezierValue, 2) * (1 - $bezierValue) * $bezierCurve_RefFX + pow($bezierValue, 3) * $bezierCurve_FX
+    $bezier_ResultY = pow(1-$bezierValue, 3) * $bezierCurve_SY + 3 * $bezierValue * pow(1 - $bezierValue, 2) * $bezierCurve_RefSY + 3 * pow($bezierValue, 2) * (1 - $bezierValue) * $bezierCurve_RefFY + pow($bezierValue, 3) * $bezierCurve_FY
+
+END_SUB
+
+
 SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
     $counter = 0
@@ -56,6 +70,11 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
     if($main_cycle_drawpathMode = 1)
         $counter = 7
     end_if
+
+    $BezRef1X = 0
+    $BezRef1Y = 0
+    $BezRef2X = 0
+    $BezRef2Y = 0
 
     while($counter < 8)
 
@@ -77,10 +96,30 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
             case(1)
 
-                if(($main_cycle_key < 1) | ($main_cycle_key > 4))
-                    $lerp_multiplier = 0.05
+                if(($main_cycle_key < 1))
+                    $BezRef1X = 0.023
+                    $BezRef1Y = 0.61
+                    $BezRef2X = 0.403
+                    $BezRef2Y = 0.823
                 else
-                    $lerp_multiplier = 0.05
+                    if(($main_cycle_key > 0) & ($main_cycle_key < 3))
+                        $BezRef1X = 0.018
+                        $BezRef1Y = 0.48
+                        $BezRef2X = 0.427
+                        $BezRef2Y = 0.86
+                    else
+                        if(($main_cycle_key > 2) & ($main_cycle_key < 5))
+                            $BezRef1X = 0.018
+                            $BezRef1Y = 0.48
+                            $BezRef2X = 0.488
+                            $BezRef2Y = 0.878
+                        else
+                            $BezRef1X = 0.059
+                            $BezRef1Y = 0.603
+                            $BezRef2X = 0.403
+                            $BezRef2Y = 0.91
+                        end_if
+                    end_if
                 end_if
 
             case(2)
@@ -141,7 +180,10 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
         END_SWITCH
 
-            $lerp_progress_normalized = $linear_progress_normalized * (-$lerp_multiplier * (17 * $linear_progress_normalized) + 17 * $lerp_multiplier + 1)
+            //$lerp_progress_normalized = $linear_progress_normalized * (-$lerp_multiplier * (17 * $linear_progress_normalized) + 17 * $lerp_multiplier + 1)
+
+            CubicBezierAt($BezRef1X, $BezRef1Y, $BezRef2X, $BezRef2Y, $linear_progress_normalized)
+            $lerp_progress_normalized = $bezier_ResultY
 
             $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * ($main_cycle_key) - $hero_path_cords_X) * $lerp_progress_normalized, 0) + $window_pos_in_frame_X[$frame_counter]
             $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized + $window_pos_in_frame_Y[$frame_counter]
@@ -394,17 +436,41 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
     $MAX_area_X = -999999
     $MAX_area_Y = -999999
 
+    $BezRef1X = 0
+    $BezRef1Y = 0
+    $BezRef2X = 0
+    $BezRef2Y = 0
+
     for($j = 0, $j < 8)
 
         switch($heronum)
 
             case(1)
 
-                if(($j < 1) | ($j > 4))
-                    $lerp_multiplier = 0.05
+                if(($j < 1))
+                    $BezRef1X = 0.023
+                    $BezRef1Y = 0.61
+                    $BezRef2X = 0.403
+                    $BezRef2Y = 0.823
                 else
-                    $lerp_add_value = 0
-                    $lerp_multiplier = 0.05
+                    if(($j > 0) & ($j < 3))
+                        $BezRef1X = 0.018
+                        $BezRef1Y = 0.48
+                        $BezRef2X = 0.427
+                        $BezRef2Y = 0.86
+                    else
+                        if(($j > 2) & ($j < 5))
+                            $BezRef1X = 0.018
+                            $BezRef1Y = 0.48
+                            $BezRef2X = 0.488
+                            $BezRef2Y = 0.878
+                        else
+                            $BezRef1X = 0.006
+                            $BezRef1Y = 0.649
+                            $BezRef2X = 0.406
+                            $BezRef2Y = 0.9
+                        end_if
+                    end_if
                 end_if
 
             case(2)
@@ -466,7 +532,10 @@ sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
         END_SWITCH
 
         //$lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-        $lerp_progress_normalized = $linear_progress_normalized * (-$lerp_multiplier * (17 * $linear_progress_normalized) + 17 * $lerp_multiplier + 1)
+        //$lerp_progress_normalized = $linear_progress_normalized * (-$lerp_multiplier * (17 * $linear_progress_normalized) + 17 * $lerp_multiplier + 1)
+
+        CubicBezierAt($BezRef1X, $BezRef1Y, $BezRef2X, $BezRef2Y, $linear_progress_normalized)
+        $lerp_progress_normalized = $bezier_ResultY
 
         $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * $j - $hero_path_cords_X) * $lerp_progress_normalized, 0)
         $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized
@@ -532,43 +601,16 @@ sub(Dynamic_windowpos_setup)
 
         //logwrite("wndposstatic: ", $window_pos_static_X[$dwsi], ", ", $window_pos_static_Y[$dwsi])
 
-        logwrite("$vertical_offsets[",$dwsi,"] = ", $vertical_offsets[$dwsi])
-        logwrite("$block_coords_LUX[",$dwsi,"] = ", $block_coords_LUX[$dwsi])
-        logwrite("$block_coords_LUY[",$dwsi,"] = ", $block_coords_LUY[$dwsi])
-        logwrite("$block_size_X[",$dwsi,"] = ", $block_size_X[$dwsi])
-        logwrite("$block_size_Y[",$dwsi,"] = ", $block_size_Y[$dwsi])
-        logwrite("$window_pos_in_frame_X[",$dwsi,"] = ", $window_pos_in_frame_X[$dwsi])
-        logwrite("$window_pos_in_frame_Y[",$dwsi,"] = ", $window_pos_in_frame_Y[$dwsi])
-        logwrite("")
+        //logwrite("$vertical_offsets[",$dwsi,"] = ", $vertical_offsets[$dwsi])
+        //logwrite("$block_coords_LUX[",$dwsi,"] = ", $block_coords_LUX[$dwsi])
+        //logwrite("$block_coords_LUY[",$dwsi,"] = ", $block_coords_LUY[$dwsi])
+        //logwrite("$block_size_X[",$dwsi,"] = ", $block_size_X[$dwsi])
+        //logwrite("$block_size_Y[",$dwsi,"] = ", $block_size_Y[$dwsi])
+        //logwrite("$window_pos_in_frame_X[",$dwsi,"] = ", $window_pos_in_frame_X[$dwsi])
+        //logwrite("$window_pos_in_frame_Y[",$dwsi,"] = ", $window_pos_in_frame_Y[$dwsi])
+        //logwrite("")
 
     end_cyc
-
-    halt
-
-
-END_SUB
-
-
-
-sub(BezierCurveAt, $bezierValue)
-
-    $bezierCurve_SX = 0
-    $bezierCurve_SY = 0
-
-    $bezierCurve_FX = 1
-    $bezierCurve_FY = 1
-
-    $bezierCurve_RefX = 0.4
-    $bezierCurve_RefY = 0.725
-
-    $bezier_l1X = $bezierCurve_SX + ($bezierCurve_RefX - $bezierCurve_SX) * $bezierValue
-    $bezier_l1Y = $bezierCurve_SY + ($bezierCurve_RefY - $bezierCurve_SY) * $bezierValue
-
-    $bezier_l2X = $bezierCurve_RefX + ($bezierCurve_FX - $bezierCurve_RefX) * $bezierValue
-    $bezier_l2Y = $bezierCurve_RefY + ($bezierCurve_FY - $bezierCurve_RefY) * $bezierValue
-
-    $bezier_ResultX = $bezier_l1X + ($bezier_l2X - $bezier_l1X) * $bezierValue
-    $bezier_ResultY = $bezier_l1Y + ($bezier_l2Y - $bezier_l1Y) * $bezierValue
 
 END_SUB
 
@@ -620,10 +662,11 @@ SUB(CaptchaInit)
     $prevtimestamp = 0
 
     $tempsum = 0
+    logwrite("total_screens_to_make: ", $total_screens_to_make)
 
     for($setwaiti = 1, $setwaiti < $total_screens_to_make)
 
-        BezierCurveAt(1/($total_screens_to_make-1)*$setwaiti)
+        CubicBezierAt(0.4, 0.725, 0.4, 0.725, 1/($total_screens_to_make-1)*$setwaiti)
 
         $wms[$setwaiti-1] = $bezier_ResultX - $prevtimestamp
 
@@ -754,24 +797,24 @@ SUB(CaptchaInit)
 
     if($DYNAMIC_MODE = 1)
 
-    for($i = 0, $i < $total_screens_to_make)
+        for($i = 0, $i < $total_screens_to_make)
 
-        GetInfoOfCountedSection($i/($total_screens_to_make - 1), $i)
+            GetInfoOfCountedSection($i/($total_screens_to_make - 1), $i)
 
-        $areaInfo_Width[$i] = $returned_width
-        $areaInfo_Height[$i] = $returned_height
+            $areaInfo_Width[$i] = $returned_width
+            $areaInfo_Height[$i] = $returned_height
 
-        $block_size_X[$i] = $returned_width
-        $block_size_Y[$i] = $returned_height
+            $block_size_X[$i] = $returned_width
+            $block_size_Y[$i] = $returned_height
 
-    end_cyc
+        end_cyc
 
 
-    PlaceBlocksOnScreen()
-    screenshot("gift")
+        PlaceBlocksOnScreen()
+        screenshot("gift")
 
-    Dynamic_windowpos_setup()
-    halt
+        Dynamic_windowpos_setup()
+        //halt
 
     end_if
 
@@ -975,14 +1018,14 @@ SUB(SolveCaptcha)
 
                 for($foriterator = 0, $foriterator < 8, 1)
 
-                    logwrite("pos ", $all_pos_scores_top[$foriterator], " score: ", $all_pos_scores[$foriterator])
+                    logwrite("pos ", $all_pos_scores_top[$foriterator] + 1, " score: ", $all_pos_scores[$foriterator])
 
                 end_cyc
 
                 $counter = 0
 
                 $chance_of_fail = pow(($all_pos_scores[1]/$all_pos_scores[0]), 10)*100
-                logwrite("pos ", $all_pos_scores_top[0], " chance of fail: ", $chance_of_fail, "%")
+                logwrite("pos ", $all_pos_scores_top[0]+1, " chance of fail: ", $chance_of_fail, "%")
 
                 $this_square_color = $color_LIMEGREEN
 
@@ -1007,7 +1050,7 @@ SUB(SolveCaptcha)
 
                 $captcha_answer = $all_pos_scores_top[0]
 
-                logwrite("answer: ", $captcha_answer)
+                logwrite("answer: ", $captcha_answer+1)
                 
                 if($gift_screen_after = 1)
                     screenshot("gift")
@@ -1043,7 +1086,7 @@ SUB(SolveCaptcha)
 
                 IF($captcha_clickpass = 1)
 
-                    move(rnd(($captcha_answer - 1) * 101 + 349,($captcha_answer - 1) * 101 + 373),rnd(560,591))
+                    move(rnd(($captcha_answer) * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
                     //message_click(rnd(($captcha_answer - 1) * 101 + 349,($captcha_answer - 1) * 101 + 373),rnd(560,591))
 
                     WAIT(0.5)

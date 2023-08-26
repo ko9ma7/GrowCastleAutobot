@@ -1660,7 +1660,6 @@ SUB(Replay)
                 getscreen
 
                 if(pxl(444-85,808) ! 2839928)
-                    
 
                     if($make_hints_cant_fight_dungeon = 1)
 
@@ -1680,13 +1679,11 @@ SUB(Replay)
 
                 else
 
-
                     logwrite($_date_str, " captcha detected[dungeon]")
 
                 END_IF
 
             else
-                
 
                 logwrite($_date_str, " dungeon started")
 
@@ -1699,6 +1696,35 @@ SUB(Replay)
 
                     $death_altar_used_bool = 1
 
+                else
+
+                    if(($dungeon_number > 6) & ($dungeon_start_cast_on_boss = 1))
+
+                        $stopwatch = 0
+                        while((pxl(834,94) ! 5066216) & ($stopwatch < 100))
+
+                            wait(0.1)
+                            $stopwatch = $stopwatch + 1
+                            getscreen
+
+                        end_cyc
+
+                        if($stopwatch < 100)
+
+                            if($death_altar = 1)
+
+                                message_click(229-85,264)  // 7570304
+                                wait($hero_click_pause)
+                                $death_altar_used_bool = 1
+
+                            end_if
+
+                            waitms($dungeon_start_cast_delay_ms)
+
+                        end_if
+
+                    end_if
+
                 END_IF
 
             END_IF
@@ -1708,7 +1734,6 @@ SUB(Replay)
         $stopwatch = 0
 
     ELSE
-
 
         if((pxl(1038,796) = 1551083) & (pxl(1038,728) = 2342642) & (pxl(1320,730) = 2342642) & (pxl(1320,796) = 1551083))
 
@@ -2914,10 +2939,7 @@ SUB(ActivateHeroesDun)
 
         if($death_altar = 1)
 
-
             if(($death_altar_used_bool = 0) & (pxl(919-85,94) = 5066216))
-                
-                    
 
                 message_click(229-85,264)  // 7570304
                 wait($hero_click_pause)

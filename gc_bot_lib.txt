@@ -255,6 +255,29 @@ SUB(CheckSkipWindow)
 
 END_SUB
 
+SUB(CheckLoseABWindow)
+
+    if(pxl(508,297) = 16777215)
+    if(pxl(612,275) = 16777215)
+    if(pxl(755,297) = 16777215)
+    if(pxl(814,275) = 16777215)
+    if(pxl(663,370) = 14342874)
+    if(pxl(471,384) = 4806498)
+
+        Rmessage_click(1157,466)
+        logwrite($_date_str, " ab lost window exit")
+        wait(0.05)
+        GETSCREEN
+
+    END_IF
+    END_IF
+    END_IF
+    END_IF
+    END_IF
+    END_IF
+
+END_SUB
+
 SUB(CheckHeroWindow)
 
     if(pxl(852,576) = 47615)
@@ -1382,7 +1405,6 @@ SUB(AB_WAIT, $seconds_to_wait)
 
         IF($stopwatch>239)
 
-
             $stopwatch = 0
 
             logwrite($_date_str, " 2min wave. restart gc")
@@ -1409,16 +1431,31 @@ SUB(AB_WAIT, $seconds_to_wait)
 
         IF($stopwatch>199)
 
-            
             $stopwatch = 0
-            logwrite($_date_str, " 10s closed sky. restart gc")
+
+            logwrite($_date_str, " 10s closed sky")
+            logwrite($_date_str, " check if lost during ab")
 
             if($screenshot_on_esc = 1)
                 screenshot("AB_error")
             end_if
 
+            CheckLoseABWindow()
+
+            wait(0.2)
+
+            getscreen
+
+            CheckSky()
+
+            if($sky_clear = 0)
+                logwrite($_date_str, " unknown ab error")
+                Restart()
+            else
+                logwrite($_date_str, " lost during ab")
+            end_if
+
             $seconds_to_wait = -1
-            Restart()
 
         end_if
 
@@ -1447,7 +1484,6 @@ SUB(AB_WAIT, $seconds_to_wait)
 
         if($stopwatch > 49)
 
-
             logwrite("? ? ?")
             Restart()
 
@@ -1457,7 +1493,7 @@ SUB(AB_WAIT, $seconds_to_wait)
 
             $stopwatch = 0
 
-            while((pxl(659,561) = 3879896) & ($stopwatch < 600))
+            while((pxl(659,561) ! 3879896) & ($stopwatch < 600))
 
                 wait(0.2)
                 getscreen
@@ -1468,12 +1504,10 @@ SUB(AB_WAIT, $seconds_to_wait)
 
             if($stopwatch > 599)
 
-
                 logwrite("? ? ? ?")
                 Restart()
 
             else
-
                 
                 wait(0.3)
                 logwrite($_date_str, " cancel button detected. ", $manuals_between_skips + 1, " manual battles will be called")
@@ -1732,9 +1766,7 @@ SUB(Replay)
 
                     END_IF
 
-
                 else
-
 
                     $ms_of_last_replay_call = $_ms
                     logwrite($_date_str, " sky clear[replays]")
@@ -1744,7 +1776,6 @@ SUB(Replay)
             END_IF
 
         ELSE
-
 
             logwrite($_date_str, " battle click")
 
@@ -1772,7 +1803,6 @@ SUB(Replay)
 
             getscreen
 
-
             CheckSky()
             IF($sky_clear = 0)
 
@@ -1788,9 +1818,7 @@ SUB(Replay)
 
                 END_IF
 
-
             else
-
                 
                 logwrite($_date_str, " no captcha[battle]")
 
@@ -1818,10 +1846,11 @@ SUB(Replay)
 
                     AB_WAIT($seconds_between_skips)
 
+                    $ms_of_last_replay_call = $_ms
+
                     $ab_skip_num = $manuals_between_skips + 1
 
                 ELSE
-
 
                     IF((($skipWithOranges = 1) | (($replaysforskip20>5) | ($fivewavespauseskip = 0))) & ($skipwaves = 1))
                         
@@ -2497,6 +2526,7 @@ SUB(TryOpenSky)
         CheckPauseWindow()
         CheckSkipWindow()
         CheckHeroWindow()
+        CheckRuneWindow()
         CheckRuneWindow()
 
     END_IF

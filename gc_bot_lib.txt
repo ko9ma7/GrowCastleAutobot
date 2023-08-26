@@ -2527,7 +2527,6 @@ SUB(TryOpenSky)
         CheckSkipWindow()
         CheckHeroWindow()
         CheckRuneWindow()
-        CheckRuneWindow()
 
     END_IF
 

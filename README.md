@@ -1,6 +1,4 @@
-# Grow castle autobot
-
-Script / macro / bot for game [Grow castle](https://play.google.com/store/apps/details?id=com.raongames.growcastle)
+# [Grow castle](https://play.google.com/store/apps/details?id=com.raongames.growcastle) autobot
 
 Requirements:
 - Nox android emulator

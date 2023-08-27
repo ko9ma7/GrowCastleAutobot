@@ -1571,9 +1571,13 @@ SUB(Replay)
 
         IF($stopwatch > 499)
 
-            $dungeonfarm = 0
-            $makereplays = 1
+            logwrite($_date_str, " dungeon didnt load")
 
+            if($replays_if_dungeon_dont_load = 1)
+                logwrite($_date_str, " replays will be called")
+                $dungeonfarm = 0
+                $makereplays = 1
+            end_if
 
             if($make_hints_cant_fight_dungeon = 1)
                 hintpopup("cant fight dungeon")
@@ -1581,11 +1585,9 @@ SUB(Replay)
 
             message_click(1498-85,120)  // 1974563
             wait(0.3)
-            logwrite($_date_str, " 15s waited. replays will be called")
             $stopwatch = 0
 
         ELSE
-
 
             logwrite($_date_str, " dungeon button detected. click on dungeon")
 
@@ -1786,7 +1788,6 @@ SUB(Replay)
                     CheckIfCaptcha()
                     if($captcha_on_screen = 1)
 
-
                         logwrite($_date_str, " captcha detected[replays]")
 
                     END_IF
@@ -1914,6 +1915,8 @@ SUB(Replay)
                             $Is_skip = 0
                             logwrite($_date_str, " <30 crystals. rclick")
                             Rmessage_click(1157,466)
+                            wait(0.05)
+                            ChronoClick()
                             wait(0.3)
 
                         END_IF
@@ -1923,7 +1926,9 @@ SUB(Replay)
                         $Is_skip = 0
                         logwrite($_date_str, " no skip. esc click")
                         Rmessage_click(1157,466)
-                        wait(0.7)
+                        wait(0.05)
+                        ChronoClick()
+                        wait(0.5)
 
                     END_IF
 
@@ -1952,8 +1957,6 @@ SUB(Replay)
                     $ms_of_last_replay_call = $_ms
                     wait(0.05)
                     getscreen
-
-                    ChronoClick()
 
                 END_IF
                 

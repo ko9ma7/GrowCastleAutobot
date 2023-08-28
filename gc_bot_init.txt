@@ -95,29 +95,11 @@ DEFINE($prev_frame_game_status, 0)
 DEFINE($dungeon_timer_start_ms, 0)
 DEFINE($item_correct_b, 0)
 
-
-$last_click_ms_1 = 0
-$last_click_ms_2 = 0
-$last_click_ms_3 = 0
-$last_click_ms_4 = 0
-$last_click_ms_5 = 0
-$last_click_ms_6 = 0
-$last_click_ms_7 = 0
-$last_click_ms_8 = 0
-$last_click_ms_9 = 0
-$last_click_ms_10 = 0
-$last_click_ms_11 = 0
-$last_click_ms_12 = 0
-$last_click_ms_13 = 0
-$last_click_ms_14 = 0
-$last_click_ms_15 = 0
-
-
 $last_addspeed = 0
 $quit_activating = 0
 
 
-
+$castle_upgrade_color = 15379789
 
 
 DEFINE($drawline_dx, 0)

@@ -621,7 +621,7 @@ SUB(SolveCaptcha)
 
                         inc($failcounter, 1)
                         logwrite($_date_str, " Fail ", $failcounter)
-                        TFWRITE("informgift.txt", STRCONCAT( " -   ", "h", $heronum, "p", $captcha_answer , ", ", $_date_str, " ", $_time_str, ", fc ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts"))
+                        TFWRITE("informgift.txt", STRCONCAT( " -   ", "h", $heronum, "p", $captcha_answer , ", ", $_date_str, " ", $_time_str, ", FC ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts"))
                         message_click(790,714)  // 1974563
                         wait(0.5)
 
@@ -629,7 +629,7 @@ SUB(SolveCaptcha)
 
                         $captcha_solving_bool = 0
                         logwrite($_date_str, " Gift solved in ", $hoursnum,":", $minsnum,":", $secsnum)
-                        TFWRITE("informgift.txt", STRCONCAT( " +   ", "h", $heronum, "p", $captcha_answer , ", ", $_date_str, " ", $_time_str, ", fc ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts, ", $hoursnum, ":", $minsnum, ":", $secsnum))
+                        TFWRITE("informgift.txt", STRCONCAT( " +   ", "h", $heronum, "p", $captcha_answer , ", ", $_date_str, " ", $_time_str, ", FC ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts, ", $hoursnum, ":", $minsnum, ":", $secsnum))
 
                         $failcounter =0
                         $finished =1

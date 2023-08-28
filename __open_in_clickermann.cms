@@ -5,7 +5,7 @@
 #include "gc_bot_lib.txt"
 #include "gc_bot_settings.txt"
 #include "gc_bot_compiling.txt"
-#include "gc_bot_gift_hardcoded_values.txt"
+#include "gc_bot_hardcoded_values.txt"
 #include "gc_bot_solvecaptcha.txt"
 #include "gc_bot_init.txt"
 #include "gc_bot_main.txt"

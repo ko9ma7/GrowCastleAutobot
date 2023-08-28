@@ -1,4 +1,3 @@
-
 SUB(BlackLine, $_scrtoblackUp, $_scrtoblackDn)
 
     WHILE($_scrtoblackUp < $_scrtoblackDn)
@@ -42,20 +41,6 @@ SUB(BlackBackgroundGift11)
 
 END_SUB
 
-sub(CubicBezierAt, $bezierCurve_RefSX, $bezierCurve_RefSY, $bezierCurve_RefFX, $bezierCurve_RefFY, $bezierValue)
-
-    $bezierCurve_SX = 0
-    $bezierCurve_SY = 0
-
-    $bezierCurve_FX = 1
-    $bezierCurve_FY = 1
-
-    $bezier_ResultX = pow(1-$bezierValue, 3) * $bezierCurve_SX + 3 * $bezierValue * pow(1 - $bezierValue, 2) * $bezierCurve_RefSX + 3 * pow($bezierValue, 2) * (1 - $bezierValue) * $bezierCurve_RefFX + pow($bezierValue, 3) * $bezierCurve_FX
-    $bezier_ResultY = pow(1-$bezierValue, 3) * $bezierCurve_SY + 3 * $bezierValue * pow(1 - $bezierValue, 2) * $bezierCurve_RefSY + 3 * pow($bezierValue, 2) * (1 - $bezierValue) * $bezierCurve_RefFY + pow($bezierValue, 3) * $bezierCurve_FY
-
-END_SUB
-
-
 SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
     $counter = 0
@@ -83,80 +68,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
         while($frame_counter < 18)
 
-        $linear_progress_normalized = $frame_counter / (18-1)
-
-        switch($heronum)
-
-            case(1)
-
-                if(($main_cycle_key < 1) | ($main_cycle_key > 4))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
-                end_if
-
-            case(2)
-
-                if(($main_cycle_key < 2) | ($main_cycle_key > 5))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
-                end_if
-
-            case(3)
-
-                if(($main_cycle_key < 3) | ($main_cycle_key > 6))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.0215 * (17 * $linear_progress_normalized) + 1.3655)
-                end_if
-
-            case(4)
-
-                if(($main_cycle_key < 1) | ($main_cycle_key > 4))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
-                end_if
-
-            case(5)
-
-                if(($main_cycle_key < 2) | ($main_cycle_key > 5))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
-                end_if
-
-            case(6)
-
-                if(($main_cycle_key < 3) | ($main_cycle_key > 6))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
-                end_if
-
-            case(7)
-
-                if($main_cycle_key > 4)
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.01875 * (17 * $linear_progress_normalized) + 1.31875)
-                end_if
-
-            case(8)
-
-                if(($main_cycle_key < 3) | ($main_cycle_key > 5))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.01875 * (17 * $linear_progress_normalized) + 1.31875)
-                end_if
-
-        END_SWITCH
-
-            //$lerp_progress_normalized = $linear_progress_normalized * (-$lerp_multiplier * (17 * $linear_progress_normalized) + 17 * $lerp_multiplier + 1)
-
-            //CubicBezierAt($BezRef1X, $BezRef1Y, $BezRef2X, $BezRef2Y, $linear_progress_normalized)
-            //$lerp_progress_normalized = $bezier_ResultY
+            $lerp_progress_normalized = $progress_on_frame[$main_cycle_key * 18 + $frame_counter]
 
             $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * ($main_cycle_key) - $hero_path_cords_X) * $lerp_progress_normalized, 0) + $window_pos_in_frame_X[$frame_counter]
             $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized + $window_pos_in_frame_Y[$frame_counter]
@@ -236,7 +148,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
 END_SUB
 
-sub(Dynamic_windowpos_setup)
+sub(Windowpos_setup)
 
     for($dwsi = 0, $dwsi < 18)
 
@@ -261,7 +173,7 @@ sub(Dynamic_windowpos_setup)
 
         END_SWITCH
 
-        logwrite($dwsi, " offset: ", $vertical_offsets[$dwsi])
+        //logwrite($dwsi, " offset: ", $vertical_offsets[$dwsi])
 
         $window_pos_in_frame_X[$dwsi] = -310 + int($dwsi / 9) * 823
         $window_pos_in_frame_Y[$dwsi] = -508 + ($dwsi - 9 * int($dwsi/9)) * 115 + int($vertical_length * (1 - $dwsi/17))
@@ -300,13 +212,13 @@ SUB(CaptchaInit)
     //$whole_path_time = 1.062321
     $whole_path_time = 1.12
 
-    $tilt = $whole_path_time / (2 * (18 - 1))
+    $tilt = $whole_path_time / 34
 
-    for($i = 0, $i < 18-1)
-        $wms[$i] = $i * 2 * $tilt / (18 - 2) + $tilt
+    for($i = 0, $i < 17)
+        $wms[$i] = $i * $tilt / 8 + $tilt
     end_cyc
 
-    $wms[18-1] = 0
+    $wms[17] = 0
 
     $counting_square_LUX = 0
     $counting_square_LUY = 0
@@ -409,8 +321,8 @@ SUB(CaptchaInit)
     $hero_height = 92
     $hero_width = 65
 
-    Dynamic_windowpos_setup()
-
+    Windowpos_setup()
+    Hardcodeded_setup()
 
 END_SUB
 
@@ -512,7 +424,6 @@ SUB(SolveCaptcha)
 
                         $restarts = $restarts + 1
                         logwrite($_date_str, " ", $restarts, " restarts")
-
                         Restart()
                         $ab_skip_num = $ab_skip_num + 1
                         Replay()
@@ -581,7 +492,7 @@ SUB(SolveCaptcha)
                 getscreen(1783,871,1783+496-393,871+634-492)
 
                 if($gift_screen_before = 1)
-                    screenshot(STRCONCAT("hero", $heronum))
+                    screenshot("gift")
                 end_if
 
                 wndpos($hwnd, 0,0)
@@ -649,7 +560,7 @@ SUB(SolveCaptcha)
                 logwrite("answer: ", $captcha_answer+1)
                 
                 if($gift_screen_after = 1)
-                    screenshot(STRCONCAT("hero", $heronum))
+                    screenshot("gift")
                 end_if
 
                 switch($failcounter)
@@ -682,8 +593,8 @@ SUB(SolveCaptcha)
 
                 IF($captcha_clickpass = 1)
 
-                    move(rnd(($captcha_answer) * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
-                    //message_click(rnd(($captcha_answer - 1) * 101 + 349,($captcha_answer - 1) * 101 + 373),rnd(560,591))
+                    //move(rnd(($captcha_answer) * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
+                    message_click(rnd(($captcha_answer - 1) * 101 + 349,($captcha_answer - 1) * 101 + 373),rnd(560,591))
 
                     WAIT(0.5)
                     GETSCREEN

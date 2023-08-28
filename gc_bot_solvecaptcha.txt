@@ -1,11 +1,4 @@
 
-
-    $DYNAMIC_MODE =1
-
-
-
-
-
 SUB(BlackLine, $_scrtoblackUp, $_scrtoblackDn)
 
     WHILE($_scrtoblackUp < $_scrtoblackDn)
@@ -88,38 +81,18 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
         $first_frame_pixels = 0
 
-        while($frame_counter < $total_screens_to_make)
+        while($frame_counter < 18)
 
-        $linear_progress_normalized = $frame_counter / ($total_screens_to_make-1)
+        $linear_progress_normalized = $frame_counter / (18-1)
 
         switch($heronum)
 
             case(1)
 
-                if(($main_cycle_key < 1))
-                    $BezRef1X = 0.023
-                    $BezRef1Y = 0.61
-                    $BezRef2X = 0.403
-                    $BezRef2Y = 0.823
+                if(($main_cycle_key < 1) | ($main_cycle_key > 4))
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
                 else
-                    if(($main_cycle_key > 0) & ($main_cycle_key < 3))
-                        $BezRef1X = 0.018
-                        $BezRef1Y = 0.48
-                        $BezRef2X = 0.427
-                        $BezRef2Y = 0.86
-                    else
-                        if(($main_cycle_key > 2) & ($main_cycle_key < 5))
-                            $BezRef1X = 0.018
-                            $BezRef1Y = 0.48
-                            $BezRef2X = 0.488
-                            $BezRef2Y = 0.878
-                        else
-                            $BezRef1X = 0.059
-                            $BezRef1Y = 0.603
-                            $BezRef2X = 0.403
-                            $BezRef2Y = 0.91
-                        end_if
-                    end_if
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
                 end_if
 
             case(2)
@@ -135,7 +108,7 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
                 if(($main_cycle_key < 3) | ($main_cycle_key > 6))
                     $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
                 else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.0215 * (17 * $linear_progress_normalized) + 1.2125)
+                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.0215 * (17 * $linear_progress_normalized) + 1.3655)
                 end_if
 
             case(4)
@@ -182,8 +155,8 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
             //$lerp_progress_normalized = $linear_progress_normalized * (-$lerp_multiplier * (17 * $linear_progress_normalized) + 17 * $lerp_multiplier + 1)
 
-            CubicBezierAt($BezRef1X, $BezRef1Y, $BezRef2X, $BezRef2Y, $linear_progress_normalized)
-            $lerp_progress_normalized = $bezier_ResultY
+            //CubicBezierAt($BezRef1X, $BezRef1Y, $BezRef2X, $BezRef2Y, $linear_progress_normalized)
+            //$lerp_progress_normalized = $bezier_ResultY
 
             $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * ($main_cycle_key) - $hero_path_cords_X) * $lerp_progress_normalized, 0) + $window_pos_in_frame_X[$frame_counter]
             $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized + $window_pos_in_frame_Y[$frame_counter]
@@ -263,376 +236,44 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
 END_SUB
 
-sub(Intersects_ancillary_area, $m_arlux, $m_arluy, $m_arrdx, $m_arrdy)
+sub(Dynamic_windowpos_setup)
 
-    $intersect_return = 0
-
-    if(($m_arlux <= $ancillary_area_FX) & ($m_arrdx >= $ancillary_area_SX) & ($m_arluy <= $ancillary_area_FY) & ($m_arrdy >= $ancillary_area_SY))
-        $intersect_return = 1
-    end_if
-
-END_SUB
-
-sub(OutOfBounds, $m_arlux, $m_arluy, $m_arrdx, $m_arrdy)
-
-    $outOfBounds_return = 0
-
-    if(($m_arlux < 0) | ($m_arrdx > 1919) | ($m_arluy < 0) | ($m_arrdy > 1039) | ($m_arrdx < 0) | ($m_arlux > 1919) | ($m_arrdy < 0) | ($m_arluy > 1039))
-        $outOfBounds_return = 1
-    end_if
-
-END_SUB
-
-
-sub(CanPlaceBlock, $arlux, $arluy, $arrdx, $arrdy)
-
-    $CanPlaceBlock_return = 0
-
-    Intersects_ancillary_area($arlux, $arluy, $arrdx, $arrdy)
-    OutOfBounds($arlux, $arluy, $arrdx, $arrdy)
-
-    //logwrite("intersect: ", $intersect_return, " OutOfBounds: ", $outOfBounds_return)
-
-    if(($intersect_return = 0) & ($outOfBounds_return = 0))
-        $CanPlaceBlock_return = 1
-    end_if
-
-END_SUB
-
-
-sub(PlaceBlocksOnScreen)
-
-    PXLREPLACE($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY, -1, 0)
-
-    $scrtoblack = 0
-    $scrtoblackMax = 530
-
-    $BBGX = 1745
-
-    while($BBGX <= $ancillary_area_FX)
-
-        PXLREPLACE($BBGX,$scrtoblack, $BBGX,$scrtoblackMax, -1, 16777215)
-        inc($BBGX, 3)
-
-    end_cyc
-
-    for($tempIter = 0, $tempIter < $total_screens_to_make)
-        $block_coords_LUX[$tempIter] = 0
-        $block_coords_LUY[$tempIter] = 0
-    end_cyc
-
-    $total_blocks = $total_screens_to_make
-
-    $curr_upper_edge = 0
-    $curr_left_edge = 0
-
-    $this_line_max_height = 0
-
-    $breakBlockCycle = 0
-
-    $placed_blocks_counter = 0
-
-    while($breakBlockCycle = 0)
-
-        $quitBlockLineCycle = 0
-        $placedBlockOnLine = 0
-
-        $this_line_max_height = 0
-
-        while(($quitBlockLineCycle = 0) & ($breakBlockCycle = 0))
-
-            $j = $total_blocks - 1
-            $foundBlock = 0
-
-            while(($j >= 0) & ($foundBlock = 0) & ($breakBlockCycle = 0))
-
-                if($areaInfo_Width[$j] > -1)
-
-                    CanPlaceBlock($curr_left_edge, $curr_upper_edge, $curr_left_edge + $areaInfo_Width[$j]-1, $curr_upper_edge + $areaInfo_Height[$j]-1)
-
-                    if($CanPlaceBlock_return = 1)
-
-                        $foundBlock = 1
-
-                        //logwrite("place block at ",$curr_left_edge, " ", $curr_upper_edge," ", $curr_left_edge + $areaInfo_Width[$j]," ", $curr_upper_edge + $areaInfo_Height[$j])
-                        PXLREPLACE($curr_left_edge, $curr_upper_edge, $curr_left_edge + $areaInfo_Width[$j] - 1, $curr_upper_edge + $areaInfo_Height[$j] - 1, -1, $color_array[$placed_blocks_counter - int($placed_blocks_counter / 7) * 7 + 1])
-
-                        $block_coords_LUX[$j] = $curr_left_edge
-                        $block_coords_LUY[$j] = $curr_upper_edge
-
-                        $curr_left_edge = $curr_left_edge + $areaInfo_Width[$j]
-
-                        if($areaInfo_Height[$j] > $this_line_max_height)
-                            $this_line_max_height = $areaInfo_Height[$j]
-                        end_if
-
-                        $placed_blocks_counter = $placed_blocks_counter + 1
-
-                        if($placed_blocks_counter = $total_blocks)
-                            logwrite("finished placing blocks")
-                            $breakBlockCycle = 1
-                        end_if
-
-                        $areaInfo_Width[$j] = -$areaInfo_Width[$j]
-                        $areaInfo_Height[$j] = -$areaInfo_Height[$j]
-
-                        $placedBlockOnLine = 1
-
-                    end_if
-
-                end_if
-
-                $j = $j - 1
-
-            end_cyc
-
-            if($foundBlock = 0)
-
-                $quitBlockLineCycle = 1
-
-            end_if
-
-        end_cyc
-        
-        $curr_upper_edge = $curr_upper_edge + $this_line_max_height
-        $curr_left_edge = 0
-
-        if($placedBlockOnLine = 0)
-
-            logwrite("didnt place any block on line. block ", $placed_blocks_counter)
-
-                screenshot("gift")
-                halt
-
-            $breakBlockCycle = 1
-
-        end_if
-
-
-    end_cyc
-
-
-END_SUB
-
-
-
-
-
-
-
-
-
-
-
-sub(GetInfoOfCountedSection, $linear_progress_normalized, $num_of_screen)
-
-    $lerp_progress_normalized = 0
-
-    $returned_width = 0
-    $returned_height = 0
-
-    $MIN_area_X = 999999
-    $MIN_area_Y = 999999
-    $MAX_area_X = -999999
-    $MAX_area_Y = -999999
-
-    $BezRef1X = 0
-    $BezRef1Y = 0
-    $BezRef2X = 0
-    $BezRef2Y = 0
-
-    for($j = 0, $j < 8)
+    for($dwsi = 0, $dwsi < 18)
 
         switch($heronum)
 
             case(1)
-
-                if(($j < 1))
-                    $BezRef1X = 0.023
-                    $BezRef1Y = 0.61
-                    $BezRef2X = 0.403
-                    $BezRef2Y = 0.823
-                else
-                    if(($j > 0) & ($j < 3))
-                        $BezRef1X = 0.018
-                        $BezRef1Y = 0.48
-                        $BezRef2X = 0.427
-                        $BezRef2Y = 0.86
-                    else
-                        if(($j > 2) & ($j < 5))
-                            $BezRef1X = 0.018
-                            $BezRef1Y = 0.48
-                            $BezRef2X = 0.488
-                            $BezRef2Y = 0.878
-                        else
-                            $BezRef1X = 0.006
-                            $BezRef1Y = 0.649
-                            $BezRef2X = 0.406
-                            $BezRef2Y = 0.9
-                        end_if
-                    end_if
-                end_if
-
+                $vertical_offsets[$dwsi] = 0
             case(2)
-
-                if(($j < 2) | ($j > 5))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
-                end_if
-
+                $vertical_offsets[$dwsi] = 0
             case(3)
-
-                if(($j < 3) | ($j > 6))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.0215 * (17 * $linear_progress_normalized) + 1.2125)
-                end_if
-
+                $vertical_offsets[$dwsi] = 0
             case(4)
-
-                if(($j < 1) | ($j > 4))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
-                end_if
-
+                $vertical_offsets[$dwsi] = -ROUND(30 * (pow($dwsi / 17, 1.1) - pow($dwsi / 17, 2)), 0)
             case(5)
-
-                if(($j < 2) | ($j > 5))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
-                end_if
-
+                $vertical_offsets[$dwsi] = 0
             case(6)
-
-                if(($j < 3) | ($j > 6))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.025 * (17 * $linear_progress_normalized) + 1.425)
-                end_if
-
+                $vertical_offsets[$dwsi] = 0
             case(7)
-
-                if($j > 4)
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.01875 * (17 * $linear_progress_normalized) + 1.31875)
-                end_if
-
+                $vertical_offsets[$dwsi] = 0
             case(8)
-
-                if(($j < 3) | ($j > 5))
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-                else
-                    $lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.01875 * (17 * $linear_progress_normalized) + 1.31875)
-                end_if
+                $vertical_offsets[$dwsi] = 0
 
         END_SWITCH
 
-        //$lerp_progress_normalized = (17 * $linear_progress_normalized) / 17 * (-0.03125 * (17 * $linear_progress_normalized) + 1.53125)
-        //$lerp_progress_normalized = $linear_progress_normalized * (-$lerp_multiplier * (17 * $linear_progress_normalized) + 17 * $lerp_multiplier + 1)
+        logwrite($dwsi, " offset: ", $vertical_offsets[$dwsi])
 
-        CubicBezierAt($BezRef1X, $BezRef1Y, $BezRef2X, $BezRef2Y, $linear_progress_normalized)
-        $lerp_progress_normalized = $bezier_ResultY
-
-        $counting_square_LUX = ROUND($hero_path_cords_X + (330 + 101 * $j - $hero_path_cords_X) * $lerp_progress_normalized, 0)
-        $counting_square_LUY = $hero_path_cords_Y + $vertical_length * $lerp_progress_normalized
-
-        $counting_square_RDX = $counting_square_LUX + $hero_width
-        $counting_square_RDY = $counting_square_LUY + $hero_height
-
-        $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
-        $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
-
-        $square_shape_changer = abs(SIN($start_angle - $start_angle * $lerp_progress_normalized)  * ($counting_square_h - $counting_square_w) / 2)
-        if($counting_square_h < $counting_square_w)
-            $square_shape_changer = -$square_shape_changer
-        end_if
-
-        $counting_square_LUX = ROUND($counting_square_LUX - $square_shape_changer, 0)
-        $counting_square_LUY = ROUND($counting_square_LUY + $square_shape_changer, 0)
-        $counting_square_RDX = ROUND($counting_square_RDX + $square_shape_changer, 0)
-        $counting_square_RDY = ROUND($counting_square_RDY - $square_shape_changer, 0)
-
-        //if($j = 7)
-        //DrawSquare($counting_square_LUX, $counting_square_LUY, $counting_square_RDX, $counting_square_RDY, $color_CYAN)
-        //end_if
-
-        if($counting_square_LUX < $MIN_area_X)
-            $MIN_area_X = $counting_square_LUX
-        end_if
-        if($counting_square_RDX > $MAX_area_X)
-            $MAX_area_X = $counting_square_RDX
-        end_if
-        if($counting_square_LUY < $MIN_area_Y)
-            $MIN_area_Y = $counting_square_LUY
-        end_if
-        if($counting_square_RDY > $MAX_area_Y)
-            $MAX_area_Y = $counting_square_RDY
-        end_if
+        $window_pos_in_frame_X[$dwsi] = -310 + int($dwsi / 9) * 823
+        $window_pos_in_frame_Y[$dwsi] = -508 + ($dwsi - 9 * int($dwsi/9)) * 115 + int($vertical_length * (1 - $dwsi/17))
 
     end_cyc
-
-    $window_pos_static_X[$num_of_screen] = $MIN_area_X
-    $window_pos_static_Y[$num_of_screen] = $MIN_area_Y
-
-    $returned_width = $MAX_area_X - $MIN_area_X + 1
-    $returned_height = $MAX_area_Y - $MIN_area_Y + 1
-
-    //logwrite("progress: ", $lerp_progress_normalized, " w: ", $returned_width)
-
+    
 END_SUB
-
-
-
-sub(Dynamic_windowpos_setup)
-
-    $window_pos_in_frame_X[0] = 0
-    $window_pos_in_frame_Y[0] = 0
-
-    for($dwsi = 0, $dwsi < $total_screens_to_make)
-
-        $vertical_offsets[$dwsi] = ROUND(15 * (pow($dwsi / ($total_screens_to_make - 1), 1.1) - pow($dwsi / ($total_screens_to_make - 1), 2)), 0)
-
-        $window_pos_in_frame_X[$dwsi] = $block_coords_LUX[$dwsi] - $window_pos_static_X[$dwsi]
-        $window_pos_in_frame_Y[$dwsi] = $block_coords_LUY[$dwsi] - $window_pos_static_Y[$dwsi]
-
-        //logwrite("wndposstatic: ", $window_pos_static_X[$dwsi], ", ", $window_pos_static_Y[$dwsi])
-
-        //logwrite("$vertical_offsets[",$dwsi,"] = ", $vertical_offsets[$dwsi])
-        //logwrite("$block_coords_LUX[",$dwsi,"] = ", $block_coords_LUX[$dwsi])
-        //logwrite("$block_coords_LUY[",$dwsi,"] = ", $block_coords_LUY[$dwsi])
-        //logwrite("$block_size_X[",$dwsi,"] = ", $block_size_X[$dwsi])
-        //logwrite("$block_size_Y[",$dwsi,"] = ", $block_size_Y[$dwsi])
-        //logwrite("$window_pos_in_frame_X[",$dwsi,"] = ", $window_pos_in_frame_X[$dwsi])
-        //logwrite("$window_pos_in_frame_Y[",$dwsi,"] = ", $window_pos_in_frame_Y[$dwsi])
-        //logwrite("")
-
-    end_cyc
-
-END_SUB
-
 
 SUB(CaptchaInit)
 
     $drawallpaths = 0
     $drawpathFor = 0
-
-
-    $heronum = 1
-
-    if($DYNAMIC_MODE = 1)
-
-        $total_screens_to_make = 40
-
-    else
-        Hardcode_wndpos_setup()
-
-    end_if
-
-
 
     $ancillary_area_SX = 1745
     $ancillary_area_SY = 0
@@ -655,44 +296,17 @@ SUB(CaptchaInit)
     $first_frame_pixels = 0
     $vertical_velocity = 0
 
-    $whole_path_time = 1.03
+    //$whole_path_time = 1.03
     //$whole_path_time = 1.062321
+    $whole_path_time = 1.12
 
-    $currtimestamp = 0
-    $prevtimestamp = 0
+    $tilt = $whole_path_time / (2 * (18 - 1))
 
-    $tempsum = 0
-    logwrite("total_screens_to_make: ", $total_screens_to_make)
-
-    for($setwaiti = 1, $setwaiti < $total_screens_to_make)
-
-        CubicBezierAt(0.4, 0.725, 0.4, 0.725, 1/($total_screens_to_make-1)*$setwaiti)
-
-        $wms[$setwaiti-1] = $bezier_ResultX - $prevtimestamp
-
-    //logwrite($wms[$setwaiti-1])
-        $prevtimestamp = $bezier_ResultX
-        $tempsum = $tempsum + $wms[$setwaiti - 1]
-
+    for($i = 0, $i < 18-1)
+        $wms[$i] = $i * 2 * $tilt / (18 - 2) + $tilt
     end_cyc
 
-    //logwrite($tempsum)
-    
-
-
-
-
-
-
-//    $tilt = 2*$whole_path_time / (3 * ($total_screens_to_make - 1))
-//    //$tilt = 2*$whole_path_time / (3.5 * ($total_screens_to_make - 1))
-//
-//    for($i = 0, $i < $total_screens_to_make-1)
-//        //$wms[$i] = $i * $tilt / ($total_screens_to_make - 2) + $tilt
-//        $wms[$i] = $i * $tilt / ($total_screens_to_make - 2.5) + $tilt
-//    end_cyc
-
-    $wms[$total_screens_to_make-1] = 0
+    $wms[18-1] = 0
 
     $counting_square_LUX = 0
     $counting_square_LUY = 0
@@ -728,7 +342,7 @@ SUB(CaptchaInit)
 
         case(1)
 
-            $vertical_length = 93
+            $vertical_length = 89
             $start_angle = 315
 
             $hero_path_cords_X = 589
@@ -736,7 +350,7 @@ SUB(CaptchaInit)
             
         case(2)
 
-            $vertical_length = 119
+            $vertical_length = 115
             $start_angle = 360
 
             $hero_path_cords_X = 672
@@ -744,7 +358,7 @@ SUB(CaptchaInit)
 
         case(3)
 
-            $vertical_length = 93
+            $vertical_length = 84
             $start_angle = 45
 
             $hero_path_cords_X = 763
@@ -752,7 +366,7 @@ SUB(CaptchaInit)
 
         case(4)
 
-            $vertical_length = -93
+            $vertical_length = -90
             $start_angle = 225
 
             $hero_path_cords_X = 581
@@ -760,7 +374,7 @@ SUB(CaptchaInit)
 
         case(5)
 
-            $vertical_length = -119
+            $vertical_length = -123
             $start_angle = 180
 
             $hero_path_cords_X = 667
@@ -768,7 +382,7 @@ SUB(CaptchaInit)
 
         case(6)
 
-            $vertical_length = -93
+            $vertical_length = -95
             $start_angle = 135
 
             $hero_path_cords_X = 761
@@ -780,7 +394,7 @@ SUB(CaptchaInit)
             $start_angle = 270
 
             $hero_path_cords_X = 548
-            $hero_path_cords_Y = 516
+            $hero_path_cords_Y = 513
 
         case(8)
 
@@ -788,35 +402,14 @@ SUB(CaptchaInit)
             $start_angle = 90
 
             $hero_path_cords_X = 797
-            $hero_path_cords_Y = 514
+            $hero_path_cords_Y = 513
 
     END_SWITCH
 
     $hero_height = 92
     $hero_width = 65
 
-    if($DYNAMIC_MODE = 1)
-
-        for($i = 0, $i < $total_screens_to_make)
-
-            GetInfoOfCountedSection($i/($total_screens_to_make - 1), $i)
-
-            $areaInfo_Width[$i] = $returned_width
-            $areaInfo_Height[$i] = $returned_height
-
-            $block_size_X[$i] = $returned_width
-            $block_size_Y[$i] = $returned_height
-
-        end_cyc
-
-
-        PlaceBlocksOnScreen()
-        screenshot("gift")
-
-        Dynamic_windowpos_setup()
-        //halt
-
-    end_if
+    Dynamic_windowpos_setup()
 
 
 END_SUB
@@ -964,17 +557,17 @@ SUB(SolveCaptcha)
                 wait(0.1)
 
                 wndpos($hwnd, $window_pos_in_frame_X[0], $window_pos_in_frame_Y[0])
-                getscreen($block_coords_LUX[0], $block_coords_LUY[0], $block_coords_LUX[0] + $block_size_X[0]-1, $block_coords_LUY[0] + $block_size_Y[0]-1)
+                getscreen($block_coords_LUX[0], $block_coords_LUY[0], $block_coords_LUX[0] + 822, $block_coords_LUY[0] + 114)
 
-                //wait(0.23166)
-                wait(0.2)
+                wait(0.23166)
+                //wait(0.2)
 
                 $screen_counter=1
 
-                while($screen_counter < $total_screens_to_make)
+                while($screen_counter < 18)
 
-                    wndpos($hwnd, $window_pos_in_frame_X[$screen_counter], $window_pos_in_frame_Y[$screen_counter] - $vertical_offsets[$screen_counter])
-                    getscreen($block_coords_LUX[$screen_counter], $block_coords_LUY[$screen_counter], $block_coords_LUX[$screen_counter] + $block_size_X[$screen_counter]-1, $block_coords_LUY[$screen_counter] + $block_size_Y[$screen_counter]-1)
+                    wndpos($hwnd, $window_pos_in_frame_X[$screen_counter], $window_pos_in_frame_Y[$screen_counter] + $vertical_offsets[$screen_counter])
+                    getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
 
                     wait($wms[$screen_counter])
 
@@ -982,8 +575,13 @@ SUB(SolveCaptcha)
 
                 end_cyc
 
+                wndpos($hwnd, 1783-393+85, 871-492)
+                wait(0.5)
+
+                getscreen(1783,871,1783+496-393,871+634-492)
+
                 if($gift_screen_before = 1)
-                    screenshot("gift")
+                    screenshot(STRCONCAT("hero", $heronum))
                 end_if
 
                 wndpos($hwnd, 0,0)
@@ -1016,11 +614,9 @@ SUB(SolveCaptcha)
 
                 end_cyc
 
-                for($foriterator = 0, $foriterator < 8, 1)
-
-                    logwrite("pos ", $all_pos_scores_top[$foriterator] + 1, " score: ", $all_pos_scores[$foriterator])
-
-                end_cyc
+                //for($foriterator = 0, $foriterator < 8, 1)
+                //    logwrite("pos ", $all_pos_scores_top[$foriterator] + 1, " score: ", $all_pos_scores[$foriterator])
+                //end_cyc
 
                 $counter = 0
 
@@ -1033,9 +629,9 @@ SUB(SolveCaptcha)
                     MainGiftCycle($all_pos_scores_top[0], 1)
                 end_if
 
-                for($foriterator = 0, $foriterator < 8, 1)
-                    logwrite($foriterator + 1, ": minimum: ", $minimum_pixels[$foriterator])
-                end_cyc
+                //for($foriterator = 0, $foriterator < 8, 1)
+                //    logwrite($foriterator + 1, ": minimum: ", $minimum_pixels[$foriterator])
+                //end_cyc
 
                 if($chance_of_fail > 70)
 
@@ -1053,7 +649,7 @@ SUB(SolveCaptcha)
                 logwrite("answer: ", $captcha_answer+1)
                 
                 if($gift_screen_after = 1)
-                    screenshot("gift")
+                    screenshot(STRCONCAT("hero", $heronum))
                 end_if
 
                 switch($failcounter)

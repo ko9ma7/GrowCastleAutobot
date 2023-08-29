@@ -1387,6 +1387,8 @@ END_SUB
 
 SUB(AB_WAIT, $seconds_to_wait)
 
+    $AB_START = $_ms
+
     while($_ms - $AB_START < $seconds_to_wait * 1000)
 
         $stopwatch = 0
@@ -1422,6 +1424,29 @@ SUB(AB_WAIT, $seconds_to_wait)
 
         CheckSky()
         WHILE(($sky_clear = 0) & ($stopwatch < 200) & ($seconds_to_wait ! -1) & ($_ms - $AB_START < $seconds_to_wait * 1000))
+
+            if(pxl(508,297) = 16777215)
+            if(pxl(612,275) = 16777215)
+            if(pxl(755,297) = 16777215)
+            if(pxl(814,275) = 16777215)
+            if(pxl(663,370) = 14342874)
+            if(pxl(471,384) = 4806498)
+
+                Rmessage_click(1157,466)
+                logwrite($_date_str, " ab lost window exit")
+                wait(0.05)
+                GETSCREEN
+                $seconds_to_wait = -1
+
+            END_IF
+            END_IF
+            END_IF
+            END_IF
+            END_IF
+            END_IF
+
+            CheckPauseWindow()
+            CheckExitWindow()
 
             $stopwatch = $stopwatch + 1
             WAIT(0.05)
@@ -1865,8 +1890,6 @@ SUB(Replay)
                     wait(0.5)
 
                     logwrite("AB ",$seconds_between_skips, " seconds")
-
-                    $AB_START = $_ms
 
                     AB_WAIT($seconds_between_skips)
 

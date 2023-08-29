@@ -1,4 +1,21 @@
 
+//    
+//$hero_path_cords_X = 763-310
+//$stx = $hero_path_cords_X + int(65/2)
+//
+//$key = 1
+//
+//$fnx = 20+101*($key) + int(65/2)
+//
+//if($_xmouse < 823)
+//    logwrite(($_xmouse - $stx) / ($fnx - $stx))       
+//else
+//    logwrite(($_xmouse-822 - $stx) / ($fnx - $stx))  
+//end_if
+//halt
+//
+//
+
 SUB(RotateVertor, $pointX, $pointY, $aroundX, $aroundY, $on_angle)
 
     $return_rotatedX = ($pointX - $aroundX) * COS($on_angle) - ($pointY - $aroundY) * SIN($on_angle) + $aroundX

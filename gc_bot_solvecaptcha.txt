@@ -486,11 +486,6 @@ SUB(SolveCaptcha)
 
                 end_cyc
 
-                wndpos($hwnd, 1783-393+85, 871-492)
-                wait(0.5)
-
-                getscreen(1783,871,1783+496-393,871+634-492)
-
                 if($gift_screen_before = 1)
                     screenshot("gift")
                 end_if
@@ -594,7 +589,7 @@ SUB(SolveCaptcha)
                 IF($captcha_clickpass = 1)
 
                     //move(rnd(($captcha_answer) * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
-                    message_click(rnd($captcha_answer * 101 + 349,($captcha_answer - 1) * 101 + 373),rnd(560,591))
+                    message_click(rnd($captcha_answer * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
 
                     WAIT(0.5)
                     GETSCREEN

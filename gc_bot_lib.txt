@@ -1753,8 +1753,6 @@ SUB(Replay)
 
         IF($makereplays = 1)
 
-
-
             wait(0.05)
             logwrite($_date_str, " replay click 1")
             message_click(rnd(1209-85,1328-85),rnd(744,814))
@@ -1880,9 +1878,9 @@ SUB(Replay)
 
                     IF((($skipWithOranges = 1) | (($replaysforskip20>5) | ($fivewavespauseskip = 0))) & ($skipwaves = 1))
                         
-                        logwrite($_date_str, " skip: oranges: ",$skipWithOranges)
-                        
-                        CountCrystals(1)
+                        if($skipWithOranges = 0)
+                            CountCrystals(1)
+                        end_if
 
                         IF(($crystals_count_result > 29) | ($skipWithOranges = 1))
 
@@ -1906,7 +1904,32 @@ SUB(Replay)
 
                                 $replaysforskip20 = 0
 
-                                wait(0.3)
+                                wait(0.1)
+
+                                getscreen
+
+                                CheckSky()
+
+                                if($sky_clear = 0)
+
+                                    wait(0.35)
+                                    getscreen
+                                    
+                                    if(($skipWithOranges = 1) & (pxl(83,182) = 4806498) & (pxl(1390,195) = 4806498) & (pxl(97,424) = 3293262) & (pxl(652,420) = 3293262) & (pxl(926,421) = 3293262))
+                                        
+                                        Rmessage_click(1157,466)
+                                        wait(0.1)
+                                        Rmessage_click(1157,466)
+                                        logwrite($_date_str, " oranges are over")
+                                        $skipWithOranges = 0
+                                        wait(0.1)
+                                        $Is_skip = 0
+                                    
+                                    end_if
+
+                                end_if
+
+                                ChronoClick()
 
                             END_IF
 

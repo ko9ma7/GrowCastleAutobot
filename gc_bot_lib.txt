@@ -1777,7 +1777,6 @@ SUB(Replay)
             CheckSky()
             IF($sky_clear = 0)
 
-
                 logwrite($_date_str, " sky not clear[dungeon]")
 
                 wait(0.3)
@@ -2103,9 +2102,13 @@ SUB(Replay)
                     getscreen
 
                 END_IF
-
-                if($wait_for_cancel_AB_button_b = 1)
-                    Wait_for_cancel_ab_button()
+                
+                getscreen
+                CheckIfCaptcha()
+                if($captcha_on_screen = 0)
+                    if($wait_for_cancel_AB_button_b = 1)
+                        Wait_for_cancel_ab_button()
+                    end_if
                 end_if
                 
             END_IF

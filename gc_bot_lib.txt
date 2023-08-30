@@ -1385,6 +1385,135 @@ SUB(GetItem)
 
 END_SUB
 
+
+SUB(CHECK_ON_HINT)
+
+    IF_PIXEL_IN(3,34,1476,82, 65352)
+
+        logwrite($_date_str, " ___Hint detected___")
+        wait(3)
+        logwrite($_date_str, " 2 mins screenshotting")
+
+        for($i = 0, $i < 36)
+
+            screenshot("___unknownHint___")
+            logwrite($_date_str, " ___Screenshot ", $i, "___")
+            wait(5)
+            getscreen
+
+        end_cyc
+
+        screenshot("___unknownHint___")
+
+        logwrite($_date_str, " ___RESTART___")
+
+        Restart()
+
+        logwrite($_date_str, " ___RESTARTED___")
+        logwrite($_date_str, " 1 min screenshotting")
+
+        for($i = 0, $i < 24)
+
+            screenshot("__unknownHint__")
+            logwrite($_date_str, " __Screen ", $i, "__")
+            wait(5)
+            getscreen
+
+        end_cyc
+        
+        screenshot("__unknownHint__")
+
+    end_if
+
+END_SUB
+
+sub(Wait_for_cancel_ab_button)
+
+    logwrite($_date_str, " wait for cancel ab button")
+    getscreen
+
+    $stopwatch = 0
+
+    while((pxl(659,561) = 3879896) & ($stopwatch < 50))
+
+        wait(0.2)
+        getscreen
+        inc($stopwatch, 1)
+
+    END_CYC
+
+    if($stopwatch > 49)
+
+        logwrite("? o_O ?")
+        Restart()
+
+    else
+
+        wait(0.2)
+
+        $stopwatch = 0
+        $AB_LOST_WINDOW = 0
+
+        while((pxl(659,561) ! 3879896) & ($stopwatch < 600) & ($AB_LOST_WINDOW = 0))
+
+            AddSpeed()
+            CheckSky()
+            if($sky_clear = 0)
+
+                CheckPauseWindow()
+                CheckExitWindow()
+
+                if(pxl(508,297) = 16777215)
+                if(pxl(612,275) = 16777215)
+                if(pxl(755,297) = 16777215)
+                if(pxl(814,275) = 16777215)
+                if(pxl(663,370) = 14342874)
+                if(pxl(471,384) = 4806498)
+
+                    Rmessage_click(1157,466)
+                    logwrite($_date_str, " ab lost window exit")
+                    wait(0.05)
+                    GETSCREEN
+                    $AB_LOST_WINDOW = 1
+
+                END_IF
+                END_IF
+                END_IF
+                END_IF
+                END_IF
+                END_IF
+
+            end_if
+
+            wait(0.2)
+            getscreen
+
+            inc($stopwatch, 1)
+
+        END_CYC
+
+        if($stopwatch > 599)
+
+            logwrite("? ? ? ?")
+            Restart()
+
+        else
+            
+            if($AB_LOST_WINDOW = 0)
+                
+                wait(0.05)
+                logwrite($_date_str, " cancel button detected")
+                Rmessage_click(515,404)  // 4806498
+                wait(0.05)
+
+            end_if
+
+        end_if
+
+    end_if
+
+END_SUB
+
 SUB(AB_WAIT, $seconds_to_wait)
 
     $AB_START = $_ms
@@ -1467,7 +1596,7 @@ SUB(AB_WAIT, $seconds_to_wait)
 
             CheckLoseABWindow()
 
-            wait(0.2)
+            wait(0.3)
 
             getscreen
 
@@ -1486,68 +1615,34 @@ SUB(AB_WAIT, $seconds_to_wait)
 
         $stopwatch = 0
 
-
     end_cyc
 
-
-
     if($seconds_to_wait ! -1)
-
-
-        logwrite($_date_str, " wait for cancel ab button")
-        getscreen
-
-        $stopwatch = 0
-
-        while((pxl(659,561) = 3879896) & ($stopwatch < 50))
-
-            wait(0.2)
-            getscreen
-            inc($stopwatch, 1)
-
-        END_CYC
-
-        if($stopwatch > 49)
-
-            logwrite("? ? ?")
-            Restart()
-
-        else
-
-            wait(0.2)
-
-            $stopwatch = 0
-
-            while((pxl(659,561) ! 3879896) & ($stopwatch < 600))
-
-                wait(0.2)
-                getscreen
-
-                inc($stopwatch, 1)
-
-            END_CYC
-
-            if($stopwatch > 599)
-
-                logwrite("? ? ? ?")
-                Restart()
-
-            else
-                
-                wait(0.3)
-                logwrite($_date_str, " cancel button detected. ", $manuals_between_skips + 1, " manual battles will be called")
-
-                Rmessage_click(603-85,404)  // 4806498
-                wait(0.5)
-
-            end_if
-
-        end_if
-
+        Wait_for_cancel_ab_button()
+        logwrite($_date_str," ", $manuals_between_skips, " battles with skips")
     end_if
 
 END_SUB
 
+sub(Put_on_AB)
+
+    logwrite($_date_str, " ab open")
+    wait(0.05)
+
+    message_click(1343-85,796)  // 10657679
+    wait(0.05)
+    
+    if($ab_tab = 1)
+
+        message_click(592-85,528)  // 2143978
+        wait(0.05)
+
+    END_IF
+
+    message_click(rnd(738-85,910-85),rnd(504,561))  // 6869487
+    wait(0.5)
+
+END_SUB
 
 SUB(Replay)
 
@@ -1567,6 +1662,8 @@ SUB(Replay)
     $heal_altar_used = 0
 
     $death_altar_used_bool = 0
+
+    $wait_for_cancel_AB_button_b = 0
 
     logwrite($_date_str, " replay")
 
@@ -1873,21 +1970,7 @@ SUB(Replay)
 
                 if(($autobattlemode = 1) & ($ab_skip_num < 1))
 
-                    logwrite($_date_str, " ab open")
-                    wait(0.2)
-
-                    message_click(1343-85,796)  // 10657679
-                    wait(0.4)
-                    
-                    if($ab_tab = 1)
-
-                        message_click(592-85,528)  // 2143978
-                        wait(0.2)
-
-                    END_IF
-
-                    message_click(rnd(738-85,910-85),rnd(504,561))  // 6869487
-                    wait(0.5)
+                    Put_on_AB()
 
                     logwrite("AB ",$seconds_between_skips, " seconds")
 
@@ -1939,7 +2022,7 @@ SUB(Replay)
                                     getscreen
                                     
                                     if(($skipWithOranges = 1) & (pxl(83,182) = 4806498) & (pxl(1390,195) = 4806498) & (pxl(97,424) = 3293262) & (pxl(652,420) = 3293262) & (pxl(926,421) = 3293262))
-                                        
+
                                         Rmessage_click(1157,466)
                                         wait(0.1)
                                         Rmessage_click(1157,466)
@@ -1967,6 +2050,14 @@ SUB(Replay)
 
                         END_IF
 
+                        if(($autobattlemode = 1) & ($always_manual_skips_in_ab_mode = 0))
+
+                            logwrite($_date_str, " put on ab, bc always manual skips is 0")
+                            Put_on_AB()
+                            $wait_for_cancel_AB_button_b = 1
+
+                        end_if
+
                     ELSE
 
                         $Is_skip = 0
@@ -1978,6 +2069,13 @@ SUB(Replay)
 
                     END_IF
 
+                    if(($wave_canceling = 1) & (($always_manual_skips_in_ab_mode ! 0 | ($autobattlemode ! 1))))
+
+                        logwrite($_date_str, " put on ab, wave_canceling is 1")
+                        Put_on_AB()
+                        $wait_for_cancel_AB_button_b = 1
+
+                    end_if
 
                     CheckIfCaptcha()
                     if(($captcha_on_screen = 0) & (($orc_and_military_on_skip_only = 0) | ($Is_skip = 1)))
@@ -2005,6 +2103,10 @@ SUB(Replay)
                     getscreen
 
                 END_IF
+
+                if($wait_for_cancel_AB_button_b = 1)
+                    Wait_for_cancel_ab_button()
+                end_if
                 
             END_IF
 
@@ -2370,50 +2472,6 @@ SUB(EscClickStart)
     
 END_SUB
 
-SUB(CHECK_ON_HINT)
-
-    IF_PIXEL_IN(3,34,1476,82, 65352)
-
-
-
-        logwrite($_date_str, " ___Hint detected___")
-        logwrite($_date_str, " 2 mins screenshotting")
-
-        for($i = 0, $i < 36)
-
-            screenshot("___unknownHint___")
-            logwrite($_date_str, " ___Screenshot ", $i, "___")
-            wait(5)
-            getscreen
-
-        end_cyc
-
-        screenshot("___unknownHint___")
-
-        logwrite($_date_str, " ___RESTART___")
-
-
-        Restart()
-
-        logwrite($_date_str, " ___RESTARTED___")
-        logwrite($_date_str, " 1 min screenshotting")
-
-        for($i = 0, $i < 24)
-
-            screenshot("__unknownHint__")
-            logwrite($_date_str, " __Screen ", $i, "__")
-            wait(5)
-            getscreen
-
-        end_cyc
-        
-        screenshot("__unknownHint__")
-        
-
-
-    end_if
-
-END_SUB
 
 //===================================================================================================================================================================
 //===================================================================================================================================================================

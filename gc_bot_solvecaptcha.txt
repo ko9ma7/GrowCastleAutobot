@@ -632,7 +632,7 @@ SUB(SolveCaptcha)
 
                         $ms_of_last_replay_call = $_ms
 
-                        IF(($ab_skip_num < 1) & ($autobattlemode = 1))
+                        IF($autobattlemode = 1)
 
                             $quitcycle = 0
                             while(($quitcycle < 5) & ((pxl(605,364) ! 4806498) | (pxl(867,364) ! 4806498) | (pxl(509,470) ! 3896999) | (pxl(690,470) ! 3896999) | (pxl(1022,476) ! 2342642) | (pxl(867,526) ! 1551083)))

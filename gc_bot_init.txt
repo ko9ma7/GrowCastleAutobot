@@ -94,6 +94,7 @@ DEFINE($ms_of_last_replay_call, $_ms)
 DEFINE($prev_frame_game_status, 0)
 DEFINE($dungeon_timer_start_ms, 0)
 DEFINE($item_correct_b, 0)
+DEFINE($wait_for_cancel_AB_button_b, 0)
 
 $last_addspeed = 0
 $quit_activating = 0

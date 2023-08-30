@@ -23,6 +23,8 @@ $mimic_collect_percent = 100 // 0 to 100
 
 $replays_if_dungeon_dont_load = 0
 
+$always_manual_skips_in_ab_mode = 0
+$wave_canceling = 0
 
 $wait_on_first_gift_frame = 0.23166
 

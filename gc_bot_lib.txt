@@ -913,7 +913,7 @@ SUB(Restart)
                 WAIT(0.03)
                 GETSCREEN
 
-                IF_PIXEL_IN(1070-85,91,1186-85,131,16777215)
+                IF_PIXEL_IN(985,91,1101,131,16777215)
 
                     logwrite($_date_str, " clear all button detected")
 

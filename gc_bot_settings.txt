@@ -24,7 +24,7 @@ $mimic_collect_percent = 100 // 0 to 100
 $replays_if_dungeon_dont_load = 0
 
 
-
+$wait_on_first_gift_frame = 0.23166
 
 
 

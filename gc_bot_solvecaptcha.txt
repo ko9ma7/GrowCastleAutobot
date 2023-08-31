@@ -467,22 +467,19 @@ SUB(SolveCaptcha)
 
                 $ms_of_last_wndpos = $_ms
                 wndpos($hwnd, $ancillary_area_SX-322 , $ancillary_area_SY-302)
-                $curr_frame_wait = $_ms - $ms_of_last_wndpos
 
                 wait(0.1)
 
-                $ms_of_last_wndpos = $_ms
                 getscreen($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY)
-                $curr_frame_wait = $curr_frame_wait + $_ms - $ms_of_last_wndpos
 
                 wait(0.1)
 
-                $ms_of_last_wndpos = $_ms
                 wndpos($hwnd, $window_pos_in_frame_X[0], $window_pos_in_frame_Y[0])
                 getscreen($block_coords_LUX[0], $block_coords_LUY[0], $block_coords_LUX[0] + 822, $block_coords_LUY[0] + 114)
-                $curr_frame_wait = $curr_frame_wait + $_ms - $ms_of_last_wndpos
 
-                $curr_frame_wait = 232 + 20 - $curr_frame_wait
+                $curr_frame_wait = $_ms - $ms_of_last_wndpos
+
+                $curr_frame_wait = 232 + 215 - $curr_frame_wait
                 logwrite("first frame wait: ", $curr_frame_wait)
 
                 if($curr_frame_wait > 0)

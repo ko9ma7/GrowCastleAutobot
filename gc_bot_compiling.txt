@@ -28,6 +28,13 @@ if(($background_mode = 1) & ($solve_capcha = 1))
 
 end_if
 
+if(($autobattlemode = 1) & ($wave_canceling = 1))
+
+    $dialog = DIALOGBOX("cannot use autobattle mode and wave cancelling at once", 1, 1)
+    halt
+
+end_if
+
 if($background_mode = 1)
 
     hset($hwnd,1)

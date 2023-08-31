@@ -5,10 +5,18 @@ $SKY_COLOR = 16182759
 
 
 $hero_click_pause = 0.05
-$battle_click_wait_ms = 40
-$wait_after_battle_click_AB = 0.2
+$battle_click_wait_ms = 80
+
+$wait_before_AB_open = 0.05
+$wait_after_AB_open = 0.05
+$wait_after_gab_open = 0.05
+
 
 $orc_and_military_on_skip_only = 1
+
+
+
+
 
 
 
@@ -16,15 +24,9 @@ $max_battle_length_ms = 180000
 
 $max_restarts_in_row_for_reset = 5
 
-$dungeon_start_cast_on_boss = 1
-$dungeon_start_cast_delay_ms = 100
 
 $mimic_collect_percent = 100 // 0 to 100
 
-$replays_if_dungeon_dont_load = 0
-
-$always_manual_skips_in_ab_mode = 0
-$wave_canceling = 1
 
 $wait_on_first_gift_frame = 0.23166
 
@@ -48,15 +50,6 @@ $make_hints_noxmainmenuloadfail = 0
 $make_hints_reset = 0
 
 //==========================================
-
-
-
-
-
-
-
-
-
 
 
 
@@ -133,7 +126,17 @@ $captcha_fail1_maxchance = strfilter( TFREAD("_main_settings.txt", 44),"12345678
 $captcha_fail2_maxchance = strfilter( TFREAD("_main_settings.txt", 45),"1234567890." , 1 )// 10 to 100
 $captcha_fail3_maxchance = strfilter( TFREAD("_main_settings.txt", 46),"1234567890." , 1 )// 10 to 100
 
-$b1start = 47
+
+
+$dungeon_start_cast_on_boss = strfilter( TFREAD("_main_settings.txt", 47),"1234567890." , 1 )// 0 or 1
+$dungeon_start_cast_delay_ms = strfilter( TFREAD("_main_settings.txt", 48),"1234567890." , 1 )// num
+
+$replays_if_dungeon_dont_load = strfilter( TFREAD("_main_settings.txt", 49),"1234567890." , 1 )// 0 or 1
+
+$always_manual_skips_in_ab_mode = strfilter( TFREAD("_main_settings.txt", 50),"1234567890." , 1 )// 0 or 1
+$wave_canceling = strfilter( TFREAD("_main_settings.txt", 51),"1234567890." , 1 )// 0 or 1
+
+$b1start = 69
 $diff = 20
 
 $this_deck_1 = strfilter( TFREAD("_main_settings.txt", $b1start + $diff*($decktoplay-1)), "1234567890." , 1 )   // 0 or 1

@@ -402,7 +402,7 @@ SUB(CountCrystals, $lightmode)
 
         END_IF
 
-        if($foundmax-$foundmin > 20)
+        if($foundmax-$foundmin > 18)
 
             $crystals_count_result = 10
 
@@ -1627,15 +1627,15 @@ END_SUB
 sub(Put_on_AB)
 
     logwrite($_date_str, " ab open")
-    wait(0.05)
+    wait($wait_before_AB_open)
 
     message_click(1343-85,796)  // 10657679
-    wait(0.05)
+    wait($wait_after_AB_open)
     
     if($ab_tab = 1)
 
         message_click(592-85,528)  // 2143978
-        wait(0.05)
+        wait($wait_after_gab_open)
 
     END_IF
 
@@ -1663,8 +1663,6 @@ SUB(Replay)
 
     $death_altar_used_bool = 0
 
-    $wait_for_cancel_AB_button_b = 0
-
     logwrite($_date_str, " replay")
 
 
@@ -1689,6 +1687,11 @@ SUB(Replay)
             $stopwatch = $stopwatch + 1
             GETSCREEN
 
+            CheckSky()
+            if(($sky_clear = 1) & ($stopwatch > 100))
+                $stopwatch = 99999
+            end_if
+
         END_CYC
 
         IF($stopwatch > 499)
@@ -1705,8 +1708,8 @@ SUB(Replay)
                 hintpopup("cant fight dungeon")
             END_IF
 
-            message_click(1498-85,120)  // 1974563
-            wait(0.3)
+            //message_click(1498-85,120)  // 1974563
+            wait(0.1)
             $stopwatch = 0
 
         ELSE
@@ -1754,7 +1757,6 @@ SUB(Replay)
 
                 END_SWITCH
 
-
                 wait(0.15)
                 message_click(rnd(1124-85,1226-85),rnd(728,770))  // 2700867
 
@@ -1790,6 +1792,7 @@ SUB(Replay)
 
                     END_IF
 
+                    logwrite($_date_str, " probably inventory is full")
                     logwrite($_date_str, " couldnt figth dungeon. captcha wasnt detected. replays will be called")
 
                     $dungeonfarm = 0
@@ -1922,62 +1925,43 @@ SUB(Replay)
 
         ELSE
 
+            $wait_for_cancel_AB_button_b = 0
+
             logwrite($_date_str, " battle click")
 
             message_click(rnd(1404,1471)-85,rnd(754,785))  // 4806498
 
-            if($autobattlemode = 1)
+            waitms($battle_click_wait_ms)
 
-                wait($wait_after_battle_click_AB)
+            if($captcha_solving_bool = 1)
 
-            else
-
-                waitms($battle_click_wait_ms)
-
-                if($captcha_solving_bool = 1)
-
-                    WAIT(0.4)
-
-                else
-
-                    message_click(rnd(324-85,376-85),rnd(95,162)) //close top
-
-                END_IF
-
-            END_IF
-
-            getscreen
-
-            CheckSky()
-            IF($sky_clear = 0)
-
-                logwrite($_date_str, " sky not clear[battle]")
-                
-                wait(0.4)
-                getscreen
-
-                CheckIfCaptcha()
-                if($captcha_on_screen = 1)
-
-                    logwrite($_date_str, " captcha detected[battle]")
-
-                END_IF
+                WAIT(0.5)
 
             else
-                
-                logwrite($_date_str, " no captcha[battle]")
+
+                message_click(rnd(324-85,376-85),rnd(95,162)) //close top
 
                 if(($autobattlemode = 1) & ($ab_skip_num < 1))
 
-                    Put_on_AB()
+                    wait(0.45)
+                    CheckIfCaptcha()
+                    if($captcha_on_screen = 0)
 
-                    logwrite("AB ",$seconds_between_skips, " seconds")
+                        Put_on_AB()
 
-                    AB_WAIT($seconds_between_skips)
+                        logwrite("AB ",$seconds_between_skips, " seconds")
 
-                    $ms_of_last_replay_call = $_ms
+                        AB_WAIT($seconds_between_skips)
 
-                    $ab_skip_num = $manuals_between_skips + 1
+                        $ms_of_last_replay_call = $_ms
+
+                        $ab_skip_num = $manuals_between_skips + 1
+
+                    else
+
+                        logwrite($_date_str, " captcha detected[2]")
+
+                    end_if
 
                 ELSE
 
@@ -1993,11 +1977,11 @@ SUB(Replay)
 
                             getscreen
 
-                            CheckIfCaptcha()
+                            CheckSky()
 
-                            if($captcha_on_screen = 1)
+                            if($sky_clear = 0)
                                 
-                                logwrite($_date_str, " captcha detected[2]")
+                                logwrite($_date_str, " sky not clear[]")
 
                             else
 
@@ -2068,7 +2052,7 @@ SUB(Replay)
 
                     END_IF
 
-                    if(($wave_canceling = 1) & (($always_manual_skips_in_ab_mode ! 0 | ($autobattlemode ! 1))))
+                    if($wave_canceling = 1)
 
                         logwrite($_date_str, " put on ab, wave_canceling is 1")
                         Put_on_AB()
@@ -2103,14 +2087,13 @@ SUB(Replay)
 
                 END_IF
                 
-                getscreen
                 CheckIfCaptcha()
                 if($captcha_on_screen = 0)
                     if($wait_for_cancel_AB_button_b = 1)
                         Wait_for_cancel_ab_button()
                     end_if
                 end_if
-                
+            
             END_IF
 
         END_IF
@@ -3098,7 +3081,6 @@ SUB(OutputCurrentSettings)
 
     logwrite("[SETTINGS_LOG]")
     logwrite("[SETTINGS_LOG] hero_click_pause: ", $hero_click_pause)
-    logwrite("[SETTINGS_LOG] wait_after_battle_click_AB: ", $wait_after_battle_click_AB)
     logwrite("[SETTINGS_LOG] settings_log: ", $settings_log)
     logwrite("[SETTINGS_LOG] max_battle_length_ms: ", $max_battle_length_ms)
     logwrite("[SETTINGS_LOG] log_CurrentBattleLength: ", $log_CurrentBattleLength)

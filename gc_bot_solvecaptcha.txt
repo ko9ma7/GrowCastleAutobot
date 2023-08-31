@@ -455,6 +455,22 @@ SUB(SolveCaptcha)
 
                 CaptchaInit()
 
+
+
+                $window_pos_delay[0] = 0
+                $ms_of_last_wndpos = 0
+                for($iter = 0, $iter < 17)
+                    $window_pos_delay[$iter] = 0
+                end_cyc
+
+
+
+
+
+
+
+
+
                 logwrite($_date_str, " start click") // v11
                 message_click(rnd(300, 435),rnd(747, 805))
 
@@ -466,9 +482,11 @@ SUB(SolveCaptcha)
                 getscreen($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY)
 
                 wait(0.1)
-
+                
+                $ms_of_last_wndpos = $_ms
                 wndpos($hwnd, $window_pos_in_frame_X[0], $window_pos_in_frame_Y[0])
                 getscreen($block_coords_LUX[0], $block_coords_LUY[0], $block_coords_LUX[0] + 822, $block_coords_LUY[0] + 114)
+                $window_pos_delay[0] = $_ms - $ms_of_last_wndpos
 
                 wait($wait_on_first_gift_frame)
                 //wait(0.23166)
@@ -478,14 +496,24 @@ SUB(SolveCaptcha)
 
                 while($screen_counter < 18)
 
+                    $ms_of_last_wndpos = $_ms
                     wndpos($hwnd, $window_pos_in_frame_X[$screen_counter], $window_pos_in_frame_Y[$screen_counter] + $vertical_offsets[$screen_counter])
                     getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
+                    $window_pos_delay[$screen_counter] = $_ms - $ms_of_last_wndpos
 
                     wait($wms[$screen_counter])
 
                     $screen_counter = $screen_counter+ 1
 
                 end_cyc
+
+                $wndpos_delay_sum = 0
+                for($iter = 0, $iter < 18)
+                    logwrite("WNDPOS DELAY[", $iter, "] = ", $window_pos_delay[$iter])
+                    $wndpos_delay_sum = $wndpos_delay_sum + $window_pos_delay[$iter]
+                end_cyc
+
+                logwrite("WNDPOS DELAY SUM = ", $wndpos_delay_sum)
 
                 if($gift_screen_before = 1)
                     screenshot("gift")

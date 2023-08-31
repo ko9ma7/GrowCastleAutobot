@@ -220,8 +220,8 @@ SUB(CaptchaInit)
         $wms[$i] = round(($i * $tilt / 8 + $tilt)*1000, 0)
     end_cyc
 
-    $wms[17] = 0
     $ms_of_last_wndpos = 0
+    $curr_frame_wait = 0
 
     $total_delay = 0
 
@@ -476,12 +476,10 @@ SUB(SolveCaptcha)
                 getscreen($block_coords_LUX[0], $block_coords_LUY[0], $block_coords_LUX[0] + 822, $block_coords_LUY[0] + 114)
 
                 wait($wait_on_first_gift_frame)
-                //wait(0.23166)
-                //wait(0.2)
 
                 $screen_counter=1
 
-                while($screen_counter < 18)
+                while($screen_counter < 17)
 
                     $ms_of_last_wndpos = $_ms
 
@@ -489,11 +487,18 @@ SUB(SolveCaptcha)
                     getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
 
                     $total_delay = $total_delay + ($_ms - $ms_of_last_wndpos)
-                    waitms($wms[$screen_counter] - $_ms + $ms_of_last_wndpos + 11)
+                    $curr_frame_wait = $wms[$screen_counter] - $_ms + $ms_of_last_wndpos + 11
+
+                    if($curr_frame_wait > 0)
+                        waitms($curr_frame_wait)
+                    end_if
 
                     $screen_counter = $screen_counter+ 1
 
                 end_cyc
+
+                wndpos($hwnd, $window_pos_in_frame_X[$screen_counter], $window_pos_in_frame_Y[$screen_counter] + $vertical_offsets[$screen_counter])
+                getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
 
                 logwrite("total delay: ", $total_delay)
 

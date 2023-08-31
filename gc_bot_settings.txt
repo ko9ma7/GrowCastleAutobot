@@ -28,10 +28,6 @@ $max_restarts_in_row_for_reset = 5
 $mimic_collect_percent = 100 // 0 to 100
 
 
-$wait_on_first_gift_frame = 0.23166
-
-
-
 // 0 or 1
 
 $log_CurrentBattleLength = 0

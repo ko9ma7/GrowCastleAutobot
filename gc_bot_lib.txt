@@ -2029,7 +2029,7 @@ SUB(Replay)
                             Rmessage_click(1157,466)
                             wait(0.05)
                             ChronoClick()
-                            wait(0.3)
+                            wait(0.1)
 
                         END_IF
 
@@ -2048,7 +2048,7 @@ SUB(Replay)
                         Rmessage_click(1157,466)
                         wait(0.05)
                         ChronoClick()
-                        wait(0.5)
+                        wait(0.1)
 
                     END_IF
 

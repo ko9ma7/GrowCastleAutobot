@@ -5,6 +5,7 @@ $SKY_COLOR = 16182759
 
 
 $hero_click_pause = 0.05
+
 $battle_click_wait_ms = 80
 
 $wait_before_AB_open = 0.05

@@ -191,7 +191,7 @@ SUB(CaptchaInit)
 
     $ancillary_area_SX = 1745
     $ancillary_area_SY = 0
-    $ancillary_area_FX = 1920
+    $ancillary_area_FX = 1919
     $ancillary_area_FY = 530
 
     $color_array[0] = $color_RED

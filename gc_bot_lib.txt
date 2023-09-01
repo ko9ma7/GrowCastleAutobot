@@ -89,10 +89,11 @@ SUB(CheckMimic)
             IF_PIXEL_IN(522-85,768,1424-85,855,1600698)
 
                 $mimic_randomizer = rnd(1,100)
+                logwrite("mimic return: ", $_return1, ", ", $_return2)
                 if($mimic_randomizer <= $mimic_collect_percent)
 
                     logwrite($_date_str, " collect mimic")
-                    message_click($_return1+ rnd(-10,10),$_return2+ rnd(-10,10))
+                    message_click($_return1+20+ rnd(-10,10),$_return2+ rnd(-10,10))
 
                 else
 
@@ -362,31 +363,55 @@ SUB(CountCrystals, $lightmode)
     $foundmin = 0
     $foundmax = 0
 
+    $crystalsWidth1 = 5 // 1
+    $crystalsWidth2 = 12 // 9
+    $crystalsWidth3 = 18 // 11
+    $crystalsWidth4 = 25 // 10
+    $crystalsWidth5 = 33 // 20
+    $crystals_2_width = 13
+
     WHILE(($counterx > $upgxmin) & ($foundmax=0))
 
-        if_pixel_in($counterx-2, $upgymin, $counterx, $upgymax, $crystalwhitepxl)
+        if_pixel_in($counterx, $upgymin, $counterx, $upgymax, $crystalwhitepxl)
 
-            $foundmax = $counterx - 1
+            $foundmax = $counterx
 
         ELSE
 
-            $counterx = $counterx - 3
+            $counterx = $counterx - 1
 
         END_IF
     
     END_CYC
 
-    $counterx = $foundmax - 45
+    if(($foundmax ! 0) & ($foundmax > 432))
+
+        $crystalsWidth1 = 5 // 1
+        $crystalsWidth2 = 15 // 9
+        $crystalsWidth3 = 21 // 11
+        $crystalsWidth4 = 32 // 10
+        $crystalsWidth5 = 38 // 20
+        $crystals_2_width = 15
+        $counterx = $foundmax - 50
+        //logwrite("no oranges")
+        
+    else
+
+        //logwrite("has oranges")
+        $counterx = $foundmax - 45
+
+    end_if
+
 
     WHILE(($counterx < $upgxmax) & ($foundmin=0))
 
-        if_pixel_in($counterx,$upgymin,$counterx + 2, $upgymax, $crystalwhitepxl)
+        if_pixel_in($counterx,$upgymin,$counterx, $upgymax, $crystalwhitepxl)
 
-            $foundmin = $counterx + 1
+            $foundmin = $counterx
             
         ELSE
 
-            $counterx = $counterx + 3
+            $counterx = $counterx + 1
 
         END_IF
 
@@ -394,21 +419,23 @@ SUB(CountCrystals, $lightmode)
 
     $crystals_count_result = 0
 
+    //logwrite("diff: ", $foundmax-$foundmin)
+
     if(($foundmax ! 0) & ($foundmin ! 0))
 
-        if($foundmax-$foundmin > 12)
+        if($foundmax-$foundmin > $crystalsWidth2)
 
             $crystals_count_result = 0
 
         END_IF
 
-        if($foundmax-$foundmin > 18)
+        if($foundmax-$foundmin > $crystalsWidth3)
 
             $crystals_count_result = 10
 
         END_IF
 
-        if($foundmax-$foundmin > 33)
+        if($foundmax-$foundmin > $crystalsWidth5)
 
             $crystals_count_result = 20
 
@@ -444,7 +471,7 @@ SUB(CountCrystals, $lightmode)
 
                 end_cyc
 
-                if(($foundmax ! 0) & ($foundmin ! 0) & ($foundmax - $foundmin < 13))
+                if(($foundmax ! 0) & ($foundmin ! 0) & ($foundmax - $foundmin < $crystals_2_width))
                     $crystals_count_result = 30
                 end_if
 

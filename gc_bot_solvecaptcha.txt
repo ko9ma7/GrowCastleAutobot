@@ -187,7 +187,7 @@ SUB(CaptchaInit)
     $drawallpaths = 0
     $drawpathFor = 0
 
-    //$heronum = 5
+    //$heronum = 8
 
     $ancillary_area_SX = 1745
     $ancillary_area_SY = 0
@@ -212,7 +212,7 @@ SUB(CaptchaInit)
 
     //$whole_path_time = 1.03
     //$whole_path_time = 1.062321
-    $whole_path_time = 1.12
+    $whole_path_time = 1.3
 
     $tilt = $whole_path_time / 34
 
@@ -222,8 +222,6 @@ SUB(CaptchaInit)
 
     $ms_of_last_wndpos = 0
     $curr_frame_wait = 0
-
-    $total_delay = 0
 
     $counting_square_LUX = 0
     $counting_square_LUY = 0
@@ -445,6 +443,7 @@ SUB(SolveCaptcha)
 
             if($crystalrightpos = 1)
 
+                getscreen
                 WHILE(PXL(376-85,564) = 3687243)
 
                     logwrite($_date_str, " wait for gift timer")
@@ -453,7 +452,7 @@ SUB(SolveCaptcha)
 
                 END_CYC
 
-                waitms(rnd(500, 1000))
+                wait(0.05)
 
                 $crystalrightpos = 0
                 $captcha_clickpass = 1
@@ -477,10 +476,7 @@ SUB(SolveCaptcha)
                 wndpos($hwnd, $window_pos_in_frame_X[0], $window_pos_in_frame_Y[0])
                 getscreen($block_coords_LUX[0], $block_coords_LUY[0], $block_coords_LUX[0] + 822, $block_coords_LUY[0] + 114)
 
-                $curr_frame_wait = $_ms - $ms_of_last_wndpos
-
-                $curr_frame_wait = 232 + 215 - $curr_frame_wait
-                logwrite("first frame wait: ", $curr_frame_wait)
+                $curr_frame_wait = 232 + 215 - ($_ms - $ms_of_last_wndpos)
 
                 if($curr_frame_wait > 0)
                     waitms($curr_frame_wait)
@@ -494,9 +490,8 @@ SUB(SolveCaptcha)
 
                     wndpos($hwnd, $window_pos_in_frame_X[$screen_counter], $window_pos_in_frame_Y[$screen_counter] + $vertical_offsets[$screen_counter])
                     getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
-
-                    $total_delay = $total_delay + ($_ms - $ms_of_last_wndpos)
-                    $curr_frame_wait = $wms[$screen_counter] - $_ms + $ms_of_last_wndpos + 11
+                    
+                    $curr_frame_wait = $wms[$screen_counter] - $_ms + $ms_of_last_wndpos
 
                     if($curr_frame_wait > 0)
                         waitms($curr_frame_wait)
@@ -508,8 +503,6 @@ SUB(SolveCaptcha)
 
                 wndpos($hwnd, $window_pos_in_frame_X[$screen_counter], $window_pos_in_frame_Y[$screen_counter] + $vertical_offsets[$screen_counter])
                 getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
-
-                logwrite("total delay: ", $total_delay)
 
                 if($gift_screen_before = 1)
                     screenshot("gift")

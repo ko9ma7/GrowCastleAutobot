@@ -1,19 +1,19 @@
 
-//    
-//$hero_path_cords_X = 763-310
+//
+//$hero_path_cords_X = 667-310
 //$stx = $hero_path_cords_X + int(65/2)
 //
-//$key = 1
+//$key = 7
 //
 //$fnx = 20+101*($key) + int(65/2)
 //
 //if($_xmouse < 823)
-//    logwrite(($_xmouse - $stx) / ($fnx - $stx))       
+//
+//    logwrite("$progress_on_frame[", $key*18, "] = ", ($_xmouse - $stx) / ($fnx - $stx))       
 //else
-//    logwrite(($_xmouse-822 - $stx) / ($fnx - $stx))  
+//    logwrite("$progress_on_frame[", $key*18, "] = ", ($_xmouse-822 - $stx) / ($fnx - $stx))  
 //end_if
 //halt
-//
 //
 
 SUB(RotateVertor, $pointX, $pointY, $aroundX, $aroundY, $on_angle)

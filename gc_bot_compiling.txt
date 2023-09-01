@@ -92,8 +92,141 @@ IF(strlen($error_string) > 1)
 
 END_IF
 
+if(($dungeonfarm = 1) & ($makereplays = 1))
+
+    $dialog = DIALOGBOX("cannot farm dungeon and replays", 1, 1)
+    HALT
+
+end_if
+
+
+if(($dungeonfarm = 1) & ($skipwaves = 1))
+
+    $dialog = DIALOGBOX("cannot farm dungeon and skips", 1, 1)
+    HALT
+
+end_if
+
+if(($makereplays = 1) & ($skipwaves = 1))
+
+    $dialog = DIALOGBOX("cannot farm replays and skips", 1, 1)
+    HALT
+
+end_if
+
+
+
+if(($dungeonfarm = 1) & ($autobattlemode = 1))
+
+    $dialog = DIALOGBOX("cannot farm dengeons and ab mode", 1, 1)
+    HALT
+
+end_if
+
+if(($makereplays = 1) & ($autobattlemode = 1))
+
+    $dialog = DIALOGBOX("cannot farm replays and ab mode", 1, 1)
+    HALT
+
+end_if
+
+if(($makereplays = 1) & ($wave_canceling = 1))
+
+    $dialog = DIALOGBOX("cannot farm replays and wave canceling", 1, 1)
+    HALT
+
+end_if
+
+
+if(($dungeonfarm = 1) & ($wave_canceling = 1))
+
+    $dialog = DIALOGBOX("cannot farm dungeons and wave canceling", 1, 1)
+    HALT
+
+end_if
+
+if(($autobattlemode = 1) & ($adforcoins = 1))
+
+    $dialog = DIALOGBOX("cannot ab mode and ad for coins", 1, 1)
+    HALT
+
+end_if
+
+
+
+
+IF(($adforcoins = 1) & ($skipwaves = 0) & ($adafterskip20 = 1))
+
+    $adafterskip20 = 0
+
+end_if
+
+IF($dungeonfarm = 1)
+
+    $adforcoins = 0
+    $use_pw_on_boss = 0
+
+END_IF
+
+IF($autoupgrade = 1)
+
+    IF(($floor_to_upgrade < 1) | ($floor_to_upgrade > 4))
+
+        $dialog = DIALOGBOX("wrong floor to upgrade", 1, 1)
+        halt
+        
+    end_if
+
+end_if
+
+
+if(($autobattlemode = 1) & ($skipwaves = 0))
+
+    $dialog = DIALOGBOX("cannot autobattlemode without skipwaves", 1, 1)
+    halt
+
+end_if
+
+if(($autobattlemode = 1) & ($fivewavespauseskip = 1))
+
+    $dialog = DIALOGBOX("cannot autobattlemode with five waves between skips", 1, 1)
+    halt
+
+end_if
+
+if($autobattlemode = 1)
+
+    $skipwaves = 1
+    $makereplays = 0
+    $fivewavespauseskip = 0
+
+end_if
+
+
+
+
+
+
+
+
+
 if(($decktoplay<1) | ($decktoplay > 5))
     $error_string = STRCONCAT($error_string, "wrond deck to play. 1...5",char(10))
+end_if
+
+IF((($_xmax < 1919) | ($_ymax < 1079)) & ($solve_capcha = 1) & ($background_mode = 0))
+
+    $dialog = DIALOGBOX("small screen size", 1, 1)
+    halt
+
+end_if
+
+//LCLICK(1519,864)  // max
+IF((($_xmax < 1519) | ($_ymax < 864+40)) & ($background_mode = 0))
+
+    $dialog = DIALOGBOX("small screen size.", 1, 1)
+    halt
+
 end_if
 
 IF(strlen($error_string) > 3)
@@ -450,66 +583,6 @@ IF(strlen($error_string) > 1)
     $dialog = DIALOGBOX($error_string, 1, 1)
     HALT
 END_IF
-
-if($makereplays = 1)
-
-    $skipwaves = 0
-
-end_if
-
-IF(($adforcoins = 1) & ($skipwaves = 0) & ($adafterskip20 = 1))
-
-    $adafterskip20 = 0
-
-end_if
-
-IF($skipwaves = 1)
-
-    $autoupgrade = 0
-
-END_IF
-
-IF($dungeonfarm = 1)
-
-    $adforcoins = 0
-    $use_pw_on_boss = 0
-
-END_IF
-
-IF($autoupgrade = 1)
-
-    IF(($floor_to_upgrade < 1) | ($floor_to_upgrade > 4))
-
-        $dialog = DIALOGBOX("wrong floor to upgrade", 1, 1)
-        halt
-        
-    end_if
-
-end_if
-
-
-IF((($_xmax < 1919) | ($_ymax < 1079)) & ($solve_capcha = 1) & ($background_mode = 0))
-
-    $dialog = DIALOGBOX("small screen size", 1, 1)
-    halt
-
-end_if
-
-//LCLICK(1519,864)  // max
-IF((($_xmax < 1519) | ($_ymax < 864)) & ($background_mode = 0))
-
-    $dialog = DIALOGBOX("small screen size.", 1, 1)
-    halt
-
-end_if
-
-if($autobattlemode = 1)
-
-    $skipwaves = 1
-    $makereplays = 0
-    $fivewavespauseskip = 0
-
-end_if
 
 if($background_mode = 0)
 

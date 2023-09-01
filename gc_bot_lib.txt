@@ -1135,19 +1135,29 @@ SUB(UpgradeTower)
 
         $upgradecounter = 0
 
+        wait(0.2)
+        getscreen
+
+        if((pxl(788,698) = 4806498) & (pxl(748,758) = 4806498))
+            logwrite($_date_str, " reached max tower level")
+            message_click(788,712)
+            wait(0.3)
+        end_if
+
         Rmessage_click(1157,466)
-        WAIT(0.1)
+        WAIT(0.2)
         Rmessage_click(1157,466)
-        WAIT(0.1)
+        WAIT(0.2)
         Rmessage_click(1157,466)
-        WAIT(0.1)
+        WAIT(0.2)
 
     else
-
 
         logwrite($_date_str, " no upgrading [tower upgrade]")
 
     END_IF
+
+    GETSCREEN
 
 END_SUB
 
@@ -2384,7 +2394,6 @@ SUB(TryUpgradeTower)
     
     if($autoupgrade = 1)
 
-
         if($first_tower_upgrade = 1)
 
             $first_tower_upgrade = 0
@@ -2397,9 +2406,7 @@ SUB(TryUpgradeTower)
 
         else
 
-
-            IF($replaysforupg > 10)
-
+            IF($replaysforupg > 9)
 
                 $replaysforupg=0
 

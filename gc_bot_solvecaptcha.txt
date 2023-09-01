@@ -656,6 +656,10 @@ SUB(SolveCaptcha)
 
                         $ms_of_last_replay_call = $_ms
 
+                        if($autobattlemode = 1)
+                            $ab_skip_num = $ab_skip_num + 1
+                        end_if
+
                         IF(($autobattlemode = 1) | ($wave_canceling = 1))
 
                             $quitcycle = 0

@@ -1491,7 +1491,7 @@ sub(Wait_for_cancel_ab_button)
         $stopwatch = 0
         $AB_LOST_WINDOW = 0
 
-        while((pxl(659,561) ! 3879896) & ($stopwatch < 600) & ($AB_LOST_WINDOW = 0))
+        while((pxl(659,561) ! 3879896) & ($stopwatch < 2400) & ($AB_LOST_WINDOW = 0))
 
             AddSpeed()
             CheckSky()
@@ -1522,7 +1522,7 @@ sub(Wait_for_cancel_ab_button)
 
             end_if
 
-            wait(0.2)
+            wait(0.05)
             getscreen
 
             inc($stopwatch, 1)

@@ -1958,8 +1958,8 @@ END_SUB
 
 sub(Perform_skip)
 
-    IF((($skipWithOranges = 1) & (($replaysforskip20>5) | ($fivewavespauseskip = 0))) & ($skipwaves = 1))
-        
+    IF((($replaysforskip20>5) | ($fivewavespauseskip = 0)) & ($skipwaves = 1))
+
         if($skipWithOranges = 0)
             CountCrystals(1)
         end_if

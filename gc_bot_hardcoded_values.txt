@@ -273,7 +273,7 @@ sub(Hardcodeded_setup)
                 $progress_on_frame[106] = 0.94478527607
                 $progress_on_frame[107] = 0.96319018405
 
-                $progress_on_frame[108] = 0.00757575758
+                $progress_on_frame[108] = 0
                 $progress_on_frame[109] = 0.07196969697
                 $progress_on_frame[110] = 0.14015151515
                 $progress_on_frame[111] = 0.18560606061

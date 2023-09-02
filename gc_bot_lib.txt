@@ -86,14 +86,14 @@ SUB(CheckMimic)
 
             logwrite($_date_str, " mimic check")
 
-            IF_PIXEL_IN(522-85,768,1424-85,855,1600698)
+            IF_PIXEL_IN(437,768,1339,855,2857416)
 
                 $mimic_randomizer = rnd(1,100)
-                logwrite("mimic return: ", $_return1, ", ", $_return2)
+                //logwrite("mimic return: ", $_return1, ", ", $_return2)
                 if($mimic_randomizer <= $mimic_collect_percent)
 
                     logwrite($_date_str, " collect mimic")
-                    message_click($_return1+20+ rnd(-10,10),$_return2+ rnd(-10,10))
+                    message_click($_return1+46+ rnd(-10,10),$_return2+ rnd(-10,10))
 
                 else
 

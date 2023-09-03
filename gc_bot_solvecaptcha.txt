@@ -2,17 +2,17 @@ SUB(BlackLine, $_scrtoblackUp, $_scrtoblackDn)
 
     WHILE($_scrtoblackUp < $_scrtoblackDn)
 
-        IF((PXL($BBGX,$_scrtoblackUp) ! 0) & (PXL($BBGX,$_scrtoblackUp) ! 16777215))
+        $currPxl = PXL($BBGX,$_scrtoblackUp)
+
+        if($currPxl ! 0)
+        if($currPxl ! 16777215)
 
             PXLREPLACE(0, 0, 1920, 1080, PXL($BBGX, $_scrtoblackUp), 0)
 
-            if(pxlcount($BBGX, $_scrtoblackUp, $BBGX, $_scrtoblackDn, 0) = $_scrtoblackDn - $_scrtoblackUp + 1)
-                $_scrtoblackUp = $_scrtoblackDn
-            end_if
-
+        END_IF
         END_IF
 
-        inc($_scrtoblackUp, 3)
+        $_scrtoblackUp = $_scrtoblackUp + 3
 
     END_CYC
 
@@ -22,18 +22,38 @@ SUB(BlackBackgroundGift11)
 
     logwrite($_date_str, " -bbg")
 
-    $scrtoblack = 0
-    $scrtoblackMax = 530
+    PXLREPLACE(0, 0, 1920, 1080, 5201775, 0)
+    PXLREPLACE(1745, 14, 1769, 28, -1, 0)
 
-    $BBGX = 1745
+    $maxPxlcount = ($ancillary_area_FX - $ancillary_area_SX + 1) * 16 - 30
+    $scrtoblack = $ancillary_area_SY
 
-    while($BBGX <= $ancillary_area_FX)
+    while($scrtoblack + 15 <= $ancillary_area_FY)
 
-        if(pxlcount($BBGX, $scrtoblack, $BBGX, $scrtoblackMax, 0) < $scrtoblackMax - $scrtoblack + 1)
-            BlackLine($scrtoblack, $scrtoblackMax)
+        if(pxlcount($ancillary_area_SX, $scrtoblack, $ancillary_area_FX, $scrtoblack + 15, 0) < $maxPxlcount)
+
+            $scrtoblackMax = $scrtoblack + 50
+            if($scrtoblackMax > $ancillary_area_FY)
+                $scrtoblackMax = $ancillary_area_FY
+            end_if
+
+            $BBGX = $ancillary_area_SX
+
+            while($BBGX <= $ancillary_area_FX)
+
+                if(pxlcount($BBGX, $scrtoblack, $BBGX, $scrtoblackMax, 0) < $scrtoblackMax - $scrtoblack + 1)
+                    BlackLine($scrtoblack, $scrtoblackMax)
+                end_if
+
+                inc($BBGX, 3)
+
+            end_cyc
+
+            $scrtoblack = $scrtoblack + 35
+
         end_if
 
-        inc($BBGX, 3)
+        $scrtoblack = $scrtoblack + 16
 
     end_cyc
 
@@ -227,6 +247,8 @@ SUB(CaptchaInit)
     $counting_square_LUY = 0
     $counting_square_RDX = 0
     $counting_square_RDY = 0
+    
+    $maxPxlcount = 0
 
     $counting_square_h = 0
     $counting_square_w = 0

@@ -2230,7 +2230,7 @@ SUB(WaitIfDragonTimer)
                     wait(0.1)
                     Random_click_in(50,781,95,825)
 
-                    if($_time_t - $x3timer < 1200)
+                    if(($_time_t - $x3timer < 1200) | ($I_have_3x = 1))
 
                         wait(0.1)
                         Random_click_in(50,781,95,825)
@@ -2251,7 +2251,6 @@ SUB(WaitIfDragonTimer)
 
                     END_CYC
 
-
                     ShowBattleLength()
 
                 end_if
@@ -2266,7 +2265,6 @@ SUB(WaitIfDragonTimer)
 
         IF((pxl(1488-85,799) ! 1881240) & (pxl(1488-85,799) ! 13750211))
 
-            
             GetItem()
 
         END_IF

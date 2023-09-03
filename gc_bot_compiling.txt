@@ -202,9 +202,12 @@ if($autobattlemode = 1)
 
 end_if
 
+if(($adforx3 = 1) & ($I_have_3x = 1))
 
+    $dialog = DIALOGBOX("cannot watch ads for 3x when you have 3x ($I_have_3x is set to 1 in gc_bot_settings.txt)", 1, 1)
+    halt
 
-
+end_if
 
 
 

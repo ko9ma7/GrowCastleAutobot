@@ -19,7 +19,7 @@ $orc_and_military_on_skip_only = 1
 
 
 
-$I_have_3x = 1
+$I_have_3x = 0
 
 $max_battle_length_ms = 180000
 

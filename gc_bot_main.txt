@@ -1,5 +1,7 @@
 logwrite($_date_str, " Clicker started")
 
+$last_cleanup_time = $_time_t
+
 WHILE(true)
 
     GETSCREEN
@@ -31,17 +33,25 @@ WHILE(true)
 
             logwrite($_date_str, " GC main menu detected.")
 
-            if(($prev_frame_game_status = 1) & ($dungeon_number > 6))
-                ShowBattleLength()
+            if($_time_t - $last_cleanup_time >= $cleanup_interval)
+
+                MakeCleanup()
+
+            else
+
+                if(($prev_frame_game_status = 1) & ($dungeon_number > 6))
+                    ShowBattleLength()
+                end_if
+
+                CheckAdForX3()
+
+                WaitForAdAndWatch() // ?
+                TryUpgradeTower()
+                Replay()
+
+                $prev_frame_game_status = 2
+
             end_if
-
-            CheckAdForX3()
-
-            WaitForAdAndWatch() // ?
-            TryUpgradeTower()
-            Replay()
-
-            $prev_frame_game_status = 2
 
         ELSE
 

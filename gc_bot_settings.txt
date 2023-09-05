@@ -16,7 +16,7 @@ $wait_after_gab_open = 0.05
 $orc_and_military_on_skip_only = 1
 
 
-
+$cleanup_interval = 10800
 
 
 $I_have_3x = 0

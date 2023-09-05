@@ -827,6 +827,49 @@ END_SUB
 //===================================================================================================================================================================
 //===================================================================================================================================================================
 
+sub(EnterGC)
+
+    message_click(928-85,446)//growcastle open
+
+    logwrite($_date_str, " gc click[EnterGC] wait 20s for gc open")
+
+    CheckGCMenu()
+
+    WHILE(($gc_menu_open = 0) & ($stopwatch < 100))
+
+        $stopwatch = $stopwatch + 1
+        WAIT(0.2)
+        CheckGCMenu()
+
+    END_CYC
+
+    IF($stopwatch < 100)
+
+        wait(0.2)
+        logwrite($_date_str, " gc opened[EnterGC]")
+
+        $restarted = 1
+
+        $ms_of_last_replay_call = $_ms
+
+    else
+        
+        if($make_hints_long_gc_load = 1)
+            hintpopup("gc loading too long")
+        END_IF
+
+        if($screenshot_long_gc_load = 1)
+            screenshot("restartgcloadfail")
+        end_if
+
+        logwrite($_date_str, " too long loading. restarting.[EnterGC]")
+
+    END_IF
+
+    $stopwatch =0
+
+END_SUB
+
 SUB(Reset)
 
     logwrite($_date_str, " Nox Reset")
@@ -861,37 +904,7 @@ SUB(Reset)
         logwrite($_date_str, " nox opened")
         $stopwatch = 0
 
-        message_click(928-85,446) // growcastle open
-        logwrite($_date_str, " gc click[reset] wait up to 20s for gc open")
-
-        CheckGCMenu()
-        
-        WHILE(($gc_menu_open = 0) & ($stopwatch < 100))
-            
-            WAIT(0.2)
-            CheckGCMenu()
-            $stopwatch = $stopwatch + 1
-
-        END_CYC
-
-        IF($stopwatch < 100)
-
-            wait(0.5)
-            logwrite($_date_str, " gc opened[reset]")
-
-            $restarted = 1
-
-        else
-
-            if($screenshot_long_gc_load = 1)
-                screenshot("resetgcloadfail")
-            end_if
-
-            logwrite($_date_str, " gc load too long[reset]")
-
-        END_IF
-        
-        stopwatch =0
+        EnterGC()
 
     ELSE
 
@@ -909,6 +922,111 @@ SUB(Reset)
         halt
 
     END_IF
+
+END_SUB
+
+sub(MakeCleanup)
+    
+    $closed_GC = 0
+    $stopwatch = 0
+    logwrite($_date_str, " open recent")
+
+    message_click(1573-85,833)//open recent
+
+    wait(0.3)
+    logwrite($_date_str, " wait for clear all button")
+
+    WHILE(($quitcycle = 0) & ($stopwatch < 100))
+
+        WAIT(0.03)
+        GETSCREEN
+
+        IF_PIXEL_IN(985,91,1101,131,16777215)
+
+            logwrite($_date_str, " clear all button detected")
+
+            $quitcycle = 1
+
+        END_IF
+
+        $stopwatch = $stopwatch + 1
+
+    END_CYC
+
+    $quitcycle = 0
+
+    IF($stopwatch<100)
+
+        $stopwatch =0
+
+        logwrite($_date_str, " close recent apps")
+        wait(0.4)
+
+        message_click(1147-85,113)//close all
+
+        logwrite($_date_str, " wait for nox main menu")
+
+        WHILE((PXL(923-85,150) ! 16777215) & ($stopwatch < 50) )
+
+            WAIT(0.1)
+            GETSCREEN
+            $stopwatch = $stopwatch + 1
+
+        END_CYC
+
+        IF($stopwatch<50)
+
+            $stopwatch =0
+
+            wait(0.7)
+            logwrite($_date_str, " nox main menu opened")
+            $closed_GC = 1
+
+        else
+
+            if($make_hints_noxmainmenuloadfail = 1)
+                hintpopup("main menu loading too long")
+            END_IF
+
+            if($screenshot_noxmainmenuloadfail = 1)
+                screenshot("noxmainloadfail")
+            end_if
+
+            logwrite($_date_str, " nox main menu loading too long. restarting[restart]")
+
+        END_IF
+
+    else
+
+        $stopwatch = 0
+
+        if($make_hints_clearallfail = 1)
+            hintpopup("Cant see clear all")
+        END_IF
+
+        if($screenshot_clearallfail = 1)
+            screenshot("clearallfail")
+        end_if
+
+        logwrite($_date_str, " cant see clear all button.")
+
+    END_IF
+
+    if($closed_GC = 1)
+
+        message_click(1499,288)
+        wait(0.2)
+        move(1450,288)
+        logwrite($_date_str, " Cleanup click. wait 7s")
+        wait(7)
+        EnterGC()
+        $last_cleanup_time = $_time_t
+
+    else
+
+        logwrite($_date_str, " Cleanup fail")
+
+    end_if
 
 END_SUB
 
@@ -956,7 +1074,6 @@ SUB(Restart)
 
             IF($stopwatch<100)
 
-
                 $stopwatch =0
 
                 logwrite($_date_str, " close recent apps")
@@ -965,7 +1082,6 @@ SUB(Restart)
                 message_click(1147-85,113)//close all
 
                 logwrite($_date_str, " wait for nox main menu")
-
 
                 WHILE((PXL(923-85,150) ! 16777215) & ($stopwatch < 50) )
 
@@ -977,56 +1093,14 @@ SUB(Restart)
 
                 IF($stopwatch<50)
 
-
                     $stopwatch =0
 
                     wait(0.7)
                     logwrite($_date_str, " nox main menu opened")
 
-                    message_click(928-85,446)//growcastle open
+                    EnterGC()
 
-                    logwrite($_date_str, " gc click[restart] wait 20s for gc open")
-
-                    CheckGCMenu()
-
-                    WHILE(($gc_menu_open = 0) & ($stopwatch < 100))
-
-                        $stopwatch = $stopwatch + 1
-                        WAIT(0.2)
-                        CheckGCMenu()
-
-                    END_CYC
-
-                    IF($stopwatch < 100)
-
-
-                        wait(0.2)
-                        logwrite($_date_str, " gc opened[restart]")
-
-                        $restarted = 1
-
-                        $ms_of_last_replay_call = $_ms
-
-                    else
-
-                        
-                        
-                        if($make_hints_long_gc_load = 1)
-                            hintpopup("gc loading too long")
-                        END_IF
-
-                        if($screenshot_long_gc_load = 1)
-                            screenshot("restartgcloadfail")
-                        end_if
-
-                        logwrite($_date_str, " too long loading. restarting.[restart]")
-
-                    END_IF
-
-                    $stopwatch =0
-                    
                 else
-
 
                     if($make_hints_noxmainmenuloadfail = 1)
                         hintpopup("main menu loading too long")
@@ -1041,7 +1115,6 @@ SUB(Restart)
                 END_IF
 
             else
-
 
                 $stopwatch = 0
 
@@ -1059,8 +1132,6 @@ SUB(Restart)
         
         else
 
-
-
             if($make_hints_reset = 1)
                 hintpopup("Reset")
             END_IF
@@ -1069,11 +1140,9 @@ SUB(Restart)
 
             Reset()
 
-        
         END_IF
 
     END_CYC
-    
 
     if($restarted = 0)
 
@@ -1081,7 +1150,6 @@ SUB(Restart)
         halt
 
     END_IF
-
 
     $restarted = 0
 

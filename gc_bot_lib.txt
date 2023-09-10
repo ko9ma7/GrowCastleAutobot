@@ -139,7 +139,7 @@ SUB(CheckIfCaptcha)
 
     GETSCREEN
 
-    IF((PXL(547,147) = 4806498) & (pxl(470,214) = 14671839) & (pxl(401,140) = 10987431))
+    IF((pxl(342,141) = 4806498) & (pxl(535,136) = 4806498) & (pxl(303,805) = 2839928) & (pxl(419,741) = 3896999))
         $captcha_on_screen = 1
     else
         $captcha_on_screen = 0
@@ -258,12 +258,18 @@ END_SUB
 
 SUB(CheckLoseABWindow)
 
-    if(pxl(508,297) = 16777215)
-    if(pxl(612,275) = 16777215)
-    if(pxl(755,297) = 16777215)
-    if(pxl(814,275) = 16777215)
-    if(pxl(663,370) = 14342874)
-    if(pxl(471,384) = 4806498)
+    //if(pxl(508,297) = 16777215)
+    //if(pxl(612,275) = 16777215)
+    //if(pxl(755,297) = 16777215)
+    //if(pxl(814,275) = 16777215)
+    //if(pxl(663,370) = 14342874)
+    //if(pxl(471,384) = 4806498)
+    
+    if(pxl(483,265)  = 4806498)
+    if(pxl(995,375)  = 4806498)
+    if(pxl(481,385)  = 4806498)
+    if(pxl(1020,522) = 3423819)
+    if(pxl(1029,246) = 1974563)
 
         Rmessage_click(1157,466)
         logwrite($_date_str, " ab lost window exit")
@@ -281,7 +287,7 @@ END_SUB
 
 SUB(CheckHeroWindow)
 
-    if(pxl(852,576) = 47615)
+    if((pxl(768,548) = 5916911) & (pxl(875,547) = 5916911) & (pxl(742,607) = 3879896) & (pxl(871,607) = 3879896))
 
         logwrite($_date_str, " hero quit")
         Rmessage_click(603-85,404)  // 4806498

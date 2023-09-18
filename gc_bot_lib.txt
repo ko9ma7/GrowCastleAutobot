@@ -2158,12 +2158,14 @@ sub(Perform_wave_canceling)
     message_click(rnd(324-85,376-85),rnd(95,162)) //close top
     wait($hero_click_pause)
     Put_on_AB()
+    $ms_of_last_replay_call = $_ms
     $wait_for_cancel_AB_button_b = 1
 
 END_SUB
 
 sub(Perform_manual_battle_start)
 
+    $ms_of_last_replay_call = $_ms
     Perform_skip()
     message_click(rnd(324-85,376-85),rnd(95,162)) //close top
     wait($hero_click_pause)

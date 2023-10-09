@@ -74,6 +74,7 @@ WHILE(true)
         CheckNoxState()
 
         $quitcycle = 0
+        $stopwatch = 0
 
         CheckSky()
         WHILE(($sky_clear = 0) & ($stopwatch < 120) & ($quitcycle = 0))

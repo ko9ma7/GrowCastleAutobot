@@ -76,25 +76,31 @@ WHILE(true)
         $quitcycle = 0
         $stopwatch = 0
 
+        $startMoment = $_ms
+        $timePassed_b = 0
+        $timePassed = 0
+
         CheckSky()
-        WHILE(($sky_clear = 0) & ($stopwatch < 120) & ($quitcycle = 0))
+        WHILE(($sky_clear = 0) & ($timePassed_b = 0) & ($quitcycle = 0))
 
             TryOpenSky()
-            $stopwatch = $stopwatch + 1
-            WAIT(0.03)
             CheckSky()
+            $timePassed = $_ms - $startMoment
+            if($timePassed >= 4000)
+                $timePassed_b = 1
+            end_if
 
         END_CYC
         $quitcycle = 0
 
-        IF($stopwatch>119)
+        IF($timePassed_b = 1)
 
             logwrite($_date_str, " 4s waited. ")
             EscClickStart()
 
         else
 
-            if(($stopwatch > 10) & ($stopwatch < 25))
+            if(($timePassed > 1500) & ($timePassed < 2000))
                 ShowBattleLength()
             end_if
             

@@ -359,6 +359,8 @@ SUB(SolveCaptcha)
             $dungeonfarm = 1
         end_if
 
+        $captcha_start_b = 1
+
         $failcounter = 0
         $finished = 0
         $timergift = $_ms
@@ -447,11 +449,20 @@ SUB(SolveCaptcha)
                     CheckSky()
                     if($sky_clear = 0)
 
+                        if($captcha_start_b = 1)
+                            logwrite($_date_str, " couldnt find crystal on captcha. restart")
+                            if($gift_screen_before = 1)
+                                screenshot("giftNotFound")
+                            end_if
+                        END_IF
+
                         $restarts = $restarts + 1
                         logwrite($_date_str, " ", $restarts, " restarts")
                         Restart()
                         $ab_skip_num = $ab_skip_num + 1
                         Replay()
+
+                        $captcha_start_b = 1
 
                     ELSE
 
@@ -713,6 +724,7 @@ SUB(SolveCaptcha)
 
                 ELSE
 
+                    $captcha_start_b = 0
                     logwrite($_date_str, " [captcha] no clickpass")
 
                 END_IF

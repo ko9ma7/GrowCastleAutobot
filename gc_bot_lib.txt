@@ -281,7 +281,6 @@ SUB(CheckLoseABWindow)
     END_IF
     END_IF
     END_IF
-    END_IF
 
 END_SUB
 
@@ -1499,20 +1498,65 @@ END_SUB
 
 SUB(CHECK_ON_HINT)
 
+    $hint_detected = 0
+
     IF_PIXEL_IN(3,34,1476,82, 65352)
 
+        $hint_detected = 1
+
+    else
+
+        CheckSky()
+        if(($sky_clear = 0) & (pxl(19,315) = $SKY_COLOR))
+
+            if(pxl(19,315) = $SKY_COLOR)
+
+                logwrite($_date_str, " hint check 1")
+
+                wait(0.2)
+                getscreen
+                CheckSky()
+                if(($sky_clear = 0) & (pxl(19,315) = $SKY_COLOR))
+
+                    logwrite($_date_str, " hint check 2")
+
+                    wait(0.25)
+                    getscreen
+                    CheckSky()
+                    if(($sky_clear = 0) & (pxl(19,315) = $SKY_COLOR))
+
+                        logwrite($_date_str, " hint check 3")
+
+                        wait(0.4)
+                        getscreen
+                        CheckSky()
+                        if(($sky_clear = 0) & (pxl(19,315) = $SKY_COLOR))
+
+                            screenshot("___unknownHintDetected___")
+                            logwrite($_date_str, " unknown hint detected")
+                            $hint_detected = 1
+
+                        end_if
+
+                    end_if
+
+                end_if
+
+            end_if
+
+        end_if
+
+    end_if
+
+    if($hint_detected = 1)
+
+        screenshot("___unknownHint___")
         logwrite($_date_str, " ___Hint detected___")
         wait(3)
-        logwrite($_date_str, " 2 mins screenshotting")
 
-        for($i = 0, $i < 36)
+        getscreen
 
-            screenshot("___unknownHint___")
-            logwrite($_date_str, " ___Screenshot ", $i, "___")
-            wait(5)
-            getscreen
-
-        end_cyc
+        logwrite($_date_str, " ")
 
         screenshot("___unknownHint___")
 
@@ -1521,7 +1565,7 @@ SUB(CHECK_ON_HINT)
         Restart()
 
         logwrite($_date_str, " ___RESTARTED___")
-        logwrite($_date_str, " 1 min screenshotting")
+        logwrite($_date_str, " 2 min screenshotting")
 
         for($i = 0, $i < 24)
 
@@ -1531,7 +1575,7 @@ SUB(CHECK_ON_HINT)
             getscreen
 
         end_cyc
-        
+
         screenshot("__unknownHint__")
 
     end_if

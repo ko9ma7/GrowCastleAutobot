@@ -1647,7 +1647,7 @@ sub(Wait_for_cancel_ab_button)
 
         END_CYC
 
-        if($stopwatch > 599)
+        if($stopwatch > 2399)
 
             logwrite("? ? ? ?")
             Restart()
@@ -2001,6 +2001,8 @@ sub(Put_on_AB)
     logwrite($_date_str, " ab open")
     wait($wait_before_AB_open)
 
+    $ms_of_last_replay_call = $_ms
+
     message_click(1343-85,796)  // 10657679
     wait($wait_after_AB_open)
     
@@ -2012,7 +2014,6 @@ sub(Put_on_AB)
     END_IF
 
     message_click(rnd(738-85,910-85),rnd(504,561))  // 6869487
-    wait(0.2)
     wait(0.3)
 
 END_SUB

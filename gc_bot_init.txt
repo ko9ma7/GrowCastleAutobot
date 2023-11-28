@@ -99,6 +99,7 @@ DEFINE($wait_for_cancel_AB_button_b, 0)
 $last_addspeed = 0
 $quit_activating = 0
 
+$skip_next_wave = 0
 
 $castle_upgrade_color = 15379789
 

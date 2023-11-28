@@ -18,6 +18,7 @@ $orc_and_military_on_skip_only = 1
 
 $cleanup_interval = 10800
 
+$break_AB_on_30_cry = 0
 
 $I_have_3x = 0
 

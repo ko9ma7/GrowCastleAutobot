@@ -1687,6 +1687,20 @@ SUB(AB_WAIT, $seconds_to_wait)
             WAIT(0.5)
             CheckSky()
 
+            if($break_AB_on_30_cry = 1)
+
+                CountCrystals(1)
+
+                if($crystals_count_result >= 30)
+
+                    logwrite("break ab")
+                    $seconds_to_wait = -2
+                    $skip_next_wave = 1
+
+                end_if
+
+            end_if
+
         END_CYC
 
         IF($stopwatch>239)
@@ -2077,13 +2091,17 @@ END_SUB
 
 sub(Perform_skip)
 
-    IF((($replaysforskip20>5) | ($fivewavespauseskip = 0)) & ($skipwaves = 1))
+    IF(((($replaysforskip20>5) | ($fivewavespauseskip = 0)) | ($skip_next_wave = 1)) & ($skipwaves = 1))
+
+        if($skip_next_wave = 1)
+            logwrite("skip anyways")
+        end_if
 
         if($skipWithOranges = 0)
             CountCrystals(1)
         end_if
 
-        IF(($crystals_count_result > 29) | ($skipWithOranges = 1))
+        IF(($crystals_count_result > 29) | ($skipWithOranges = 1) | ($skip_next_wave = 1))
 
             wait(0.25)
 
@@ -2095,6 +2113,10 @@ sub(Perform_skip)
 
                 logwrite($_date_str, " skip 30 click")
                 Random_click_in(889,411,984,496)
+
+                if($skip_next_wave = 1)
+                    $skip_next_wave = 0
+                end_if
 
                 $Is_skip = 1
                 $replaysforskip20 = 0

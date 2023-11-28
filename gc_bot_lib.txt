@@ -1309,25 +1309,16 @@ SUB(GetItem)
 
             CASE(2) // black dragon
 
-                if_pixel_in(482-85,134,1201-85,440, 14342874)
+                if_pixel_in(482-85,134,1201-85,440, 14352196) // A
 
-                    if(pxlcount($_return1-5, $_return2-5,$_return1+5, $_return2+5, 16777215) = 0)
+                    Item_Drop(2, 3)
+
+                ELSE
+
+                    if_pixel_in(482-85,134,1201-85,440, 14342874) // B
 
                         Item_Drop(1, 2)
-                        
-                        $item_correct_b = 1
 
-                    end_if
-
-                end_if
-
-                if($item_correct_b = 0)
-
-
-                    if_pixel_in(482-85,134,1201-85,440, 14352196)
-
-                        Item_Drop(2, 3)
-                    
                     else
 
                         $wrong_item_bool = 1
@@ -1339,68 +1330,52 @@ SUB(GetItem)
 
             CASE(3) // red dragon
 
-                if_pixel_in(482-85,134,1201-85,440, 14342874)
-
-                    if(pxlcount($_return1-5, $_return2-5,$_return1+5, $_return2+5, 16777215) = 0)
-
-                        Item_Drop(1, 6)
-                        
-                        $item_correct_b = 1
-
-                    end_if
-
-                end_if
-
-                if($item_correct_b = 0)
 
 
-                    if_pixel_in(482-85,134,1201-85,440, 14352196)
+                if_pixel_in(482-85,134,1201-85,440,15292148) // S
+
+                    Item_Drop(3, 8)
+                
+                else
+
+                    if_pixel_in(482-85,134,1201-85,440, 14352196) // A
 
                         Item_Drop(2, 7)
-                    
+
                     ELSE
 
-                        if_pixel_in(482-85,134,1201-85,440,15292148)
+                        if_pixel_in(482-85,134,1201-85,440, 14342874) // B
 
-                            Item_Drop(3, 8)
-                        
+                            Item_Drop(1, 6)
+
                         else
 
                             $wrong_item_bool = 1
                             Item_Drop(0, 0)
-                        
+
                         end_if
 
-                    END_IF
-
-                END_IF
+                    end_if
+                
+                end_if
 
             CASE(4) // SIN
 
-                if_pixel_in(482-85,134,1201-85,440, 14342874)
+                if_pixel_in(482-85,134,1201-85,440,15292148) // S
 
-                    if(pxlcount($_return1-5, $_return2-5,$_return1+5, $_return2+5, 16777215) = 0)
+                    Item_Drop(3, 13)
+                
+                else
 
-                        Item_Drop(1, 11)
-
-                        $item_correct_b = 1
-
-                    end_if
-
-                end_if
-
-                if($item_correct_b = 0)
-
-
-                    if_pixel_in(482-85,134,1201-85,440, 14352196)
+                    if_pixel_in(482-85,134,1201-85,440, 14352196) // A
 
                         Item_Drop(2, 12)
 
                     ELSE
 
-                        if_pixel_in(482-85,134,1201-85,440,15292148)
+                        if_pixel_in(482-85,134,1201-85,440, 14342874) // B
 
-                            Item_Drop(3, 13)
+                            Item_Drop(1, 11)
 
                         else
 
@@ -1409,9 +1384,9 @@ SUB(GetItem)
 
                         end_if
 
-                    END_IF
-
-                END_IF
+                    end_if
+                
+                end_if
 
             CASE(5) // legendary dragon
 

@@ -1,3 +1,4 @@
+
 SUB(BlackLine, $_scrtoblackUp, $_scrtoblackDn)
 
     WHILE($_scrtoblackUp < $_scrtoblackDn)
@@ -69,11 +70,6 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
         $counter = 7
     end_if
 
-    $BezRef1X = 0
-    $BezRef1Y = 0
-    $BezRef2X = 0
-    $BezRef2Y = 0
-
     while($counter < 8)
 
         $this_heropxlsum = 0
@@ -112,6 +108,8 @@ SUB(MainGiftCycle, $main_cycle_key, $main_cycle_drawpathMode)
 
             $counting_square_h = $counting_square_RDY - $counting_square_LUY + 1
             $counting_square_w = $counting_square_RDX - $counting_square_LUX + 1
+
+            logwrite("LUY for ", $counter, " frame ", $frame_counter, ": ", $counting_square_LUY -  ($frame_counter - 9 * int($frame_counter / 9)) * 115)
 
             if($main_cycle_drawpathMode = 0)
 
@@ -197,6 +195,7 @@ sub(Windowpos_setup)
 
         $window_pos_in_frame_X[$dwsi] = -310 + int($dwsi / 9) * 823
         $window_pos_in_frame_Y[$dwsi] = -508 + ($dwsi - 9 * int($dwsi/9)) * 115 + int($vertical_length * (1 - $dwsi/17))
+        //logwrite("window_pos_in_frame_Y[", $dwsi, "] = ", $window_pos_in_frame_Y[$dwsi])
 
     end_cyc
     
@@ -207,12 +206,17 @@ SUB(CaptchaInit)
     $drawallpaths = 0
     $drawpathFor = 0
 
-    //$heronum = 8
+    // $heronum = 5
 
     $ancillary_area_SX = 1745
     $ancillary_area_SY = 0
     $ancillary_area_FX = 1919
     $ancillary_area_FY = 530
+
+    $ancillary_area_SX = 322
+    $ancillary_area_SY = 302
+    $ancillary_area_FX = 496
+    $ancillary_area_FY = 832
 
     $color_array[0] = $color_RED
     $color_array[1] = $color_ORANGE
@@ -240,7 +244,7 @@ SUB(CaptchaInit)
         $wms[$i] = round(($i * $tilt / 8 + $tilt)*1000, 0)
     end_cyc
 
-    $ms_of_last_wndpos = 0
+    $ms_of_last_screen = 0
     $curr_frame_wait = 0
 
     $counting_square_LUX = 0
@@ -353,401 +357,358 @@ END_SUB
 
 SUB(SolveCaptcha)
 
-    if($background_mode = 0)
+    if($dungeonfarm_global = 1)
+        $dungeonfarm = 1
+    end_if
 
-        if($dungeonfarm_global = 1)
-            $dungeonfarm = 1
-        end_if
+    $captcha_start_b = 1
 
-        $captcha_start_b = 1
+    $failcounter = 0
+    $finished = 0
+    $timergift = $_ms
+    $restarts = 0
 
-        $failcounter = 0
-        $finished = 0
-        $timergift = $_ms
-        $restarts = 0
+    logwrite($_date_str, " Gift solving start")
 
-        logwrite($_date_str, " Gift solving start")
+    WHILE(($finished = 0) & ($failcounter < 4))
 
-        WHILE(($finished = 0) & ($failcounter < 4))
+        $crystalrightpos= 0
+        $heronum= 0
+        $captcha_solving_bool = 1
 
-            $crystalrightpos= 0
-            $heronum= 0
-            $captcha_solving_bool = 1
+        WHILE(($crystalrightpos = 0) & ($finished = 0))
 
-            WHILE(($crystalrightpos = 0) & ($finished = 0))
+            wait(0.05)
 
-                wait(0.05)
+            GETSCREEN
+
+            IF((pxl(795-85,348) = 16761923) | (pxl(785-85,775) = 16761923) | (pxl(638-85,402) = 16761923) | (pxl(629-85,713) = 16761923) | (pxl(949-85,409) = 16761923) | (pxl(953-85,707) = 16761923) | (pxl(575-85,555) = 16761923) | (pxl(1004-85,566) = 16761923))
 
                 GETSCREEN
 
-                IF((pxl(795-85,348) = 16761923) | (pxl(785-85,775) = 16761923) | (pxl(638-85,402) = 16761923) | (pxl(629-85,713) = 16761923) | (pxl(949-85,409) = 16761923) | (pxl(953-85,707) = 16761923) | (pxl(575-85,555) = 16761923) | (pxl(1004-85,566) = 16761923))
+                $heronum = 0
 
-                    GETSCREEN
+                IF(pxl(638-85,402) = 16761923)
 
-                    $heronum = 0
+                    $heronum = 1
+                    $crystalrightpos = 1
 
-                    IF(pxl(638-85,402) = 16761923)
+                end_if
+                
+                IF(pxl(795-85,348) = 16761923)
 
-                        $heronum = 1
-                        $crystalrightpos = 1
+                    $heronum = 2
+                    $crystalrightpos = 1
 
-                    end_if
-                    
-                    IF(pxl(795-85,348) = 16761923)
+                end_if
 
-                        $heronum = 2
-                        $crystalrightpos = 1
+                IF(pxl(949-85,409) = 16761923)
 
-                    end_if
+                    $heronum = 3
+                    $crystalrightpos = 1
 
-                    IF(pxl(949-85,409) = 16761923)
+                end_if
 
-                        $heronum = 3
-                        $crystalrightpos = 1
+                IF(pxl(629-85,713) = 16761923)
 
-                    end_if
+                    $heronum = 4
+                    $crystalrightpos = 1
 
-                    IF(pxl(629-85,713) = 16761923)
+                end_if
 
-                        $heronum = 4
-                        $crystalrightpos = 1
+                IF(pxl(785-85,775) = 16761923)
 
-                    end_if
+                    $heronum = 5
+                    $crystalrightpos = 1
 
-                    IF(pxl(785-85,775) = 16761923)
+                end_if
 
-                        $heronum = 5
-                        $crystalrightpos = 1
+                IF(pxl(953-85,707) = 16761923)
 
-                    end_if
+                    $heronum = 6
+                    $crystalrightpos = 1
 
-                    IF(pxl(953-85,707) = 16761923)
+                end_if
 
-                        $heronum = 6
-                        $crystalrightpos = 1
+                IF(pxl(575-85,555) = 16761923)
 
-                    end_if
+                    $heronum = 7
+                    $crystalrightpos = 1
 
-                    IF(pxl(575-85,555) = 16761923)
+                end_if
 
-                        $heronum = 7
-                        $crystalrightpos = 1
+                IF(pxl(1004-85,566) = 16761923)
 
-                    end_if
+                    $heronum = 8
+                    $crystalrightpos = 1
 
-                    IF(pxl(1004-85,566) = 16761923)
+                end_if
 
-                        $heronum = 8
-                        $crystalrightpos = 1
+            ELSE
 
-                    end_if
+                GETSCREEN
+
+                CheckSky()
+                if($sky_clear = 0)
+
+                    if($captcha_start_b = 1)
+                        logwrite($_date_str, " couldnt find crystal on captcha. restart")
+                        if($gift_screen_before = 1)
+                            screenshot("giftNotFound")
+                        end_if
+                    END_IF
+
+                    $restarts = $restarts + 1
+                    logwrite($_date_str, " ", $restarts, " restarts")
+                    Restart()
+                    $ab_skip_num = $ab_skip_num + 1
+                    Replay()
+
+                    $captcha_start_b = 1
 
                 ELSE
 
-                    GETSCREEN
-
-                    CheckSky()
-                    if($sky_clear = 0)
-
-                        if($captcha_start_b = 1)
-                            logwrite($_date_str, " couldnt find crystal on captcha. restart")
-                            if($gift_screen_before = 1)
-                                screenshot("giftNotFound")
-                            end_if
-                        END_IF
-
-                        $restarts = $restarts + 1
-                        logwrite($_date_str, " ", $restarts, " restarts")
-                        Restart()
-                        $ab_skip_num = $ab_skip_num + 1
-                        Replay()
-
-                        $captcha_start_b = 1
-
-                    ELSE
-
-                        $finished = 1
-
-                    END_IF
+                    $finished = 1
 
                 END_IF
 
+            END_IF
+
+        END_CYC
+
+        if($crystalrightpos = 1)
+
+            getscreen
+            WHILE(PXL(376-85,564) = 3687243)
+
+                logwrite($_date_str, " wait for gift timer")
+                WAIT(1)
+                GETSCREEN
+
             END_CYC
 
-            if($crystalrightpos = 1)
+            wait(0.05)
 
-                getscreen
-                WHILE(PXL(376-85,564) = 3687243)
+            $crystalrightpos = 0
+            $captcha_clickpass = 1
 
-                    logwrite($_date_str, " wait for gift timer")
-                    WAIT(1)
-                    GETSCREEN
+            CaptchaInit()
 
-                END_CYC
+            logwrite($_date_str, " start click") // v11
+            message_click(rnd(300, 435),rnd(747, 805))
 
-                wait(0.05)
+            wait(0.4)
 
-                $crystalrightpos = 0
-                $captcha_clickpass = 1
+            $ms_of_last_screen = $_ms
 
-                CaptchaInit()
+            wait(0.1)
 
-                logwrite($_date_str, " start click") // v11
-                message_click(rnd(300, 435),rnd(747, 805))
+            getscreen($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY)
+            $imageFilePath = STRCONCAT($_pdir, "IgnoreColorArea.bmp")
+            screenshotFix($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY, $imageFilePath)
 
-                wait(0.4)
+            wait(0.1)
 
-                $ms_of_last_wndpos = $_ms
-                wndpos($hwnd, $ancillary_area_SX-322 , $ancillary_area_SY-302)
+            $upperYScreenPoint = 508 - $vertical_length
+            getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
 
-                wait(0.1)
+            $imageFilePath = STRCONCAT($_pdir, "GiftScreen_1.bmp")
+            screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
 
-                getscreen($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY)
+            $curr_frame_wait = 232 + 215 - ($_ms - $ms_of_last_screen)
 
-                wait(0.1)
+            if($curr_frame_wait > 0)
+                waitms($curr_frame_wait)
+            end_if
 
-                wndpos($hwnd, $window_pos_in_frame_X[0], $window_pos_in_frame_Y[0])
-                getscreen($block_coords_LUX[0], $block_coords_LUY[0], $block_coords_LUX[0] + 822, $block_coords_LUY[0] + 114)
+            $screen_counter=1
 
-                $curr_frame_wait = 232 + 215 - ($_ms - $ms_of_last_wndpos)
+            while($screen_counter < 17)
+
+                $ms_of_last_screen = $_ms
+
+                getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
+
+                $upperYScreenPoint = 508 - int($vertical_length * (1 - $screen_counter/17)) - $vertical_offsets[$screen_counter]
+                getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
+
+                $imageFilePath = STRCONCAT($_pdir, "GiftScreen_", $screen_counter+1, ".bmp")
+                screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
+                
+                $curr_frame_wait = $wms[$screen_counter] - $_ms + $ms_of_last_screen
 
                 if($curr_frame_wait > 0)
                     waitms($curr_frame_wait)
                 end_if
 
-                $screen_counter=1
+                $screen_counter = $screen_counter+ 1
 
-                while($screen_counter < 17)
+            end_cyc
 
-                    $ms_of_last_wndpos = $_ms
+            $upperYScreenPoint = 508 - int($vertical_length * (1 - $screen_counter/17)) - $vertical_offsets[$screen_counter]
+            getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
 
-                    wndpos($hwnd, $window_pos_in_frame_X[$screen_counter], $window_pos_in_frame_Y[$screen_counter] + $vertical_offsets[$screen_counter])
-                    getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
-                    
-                    $curr_frame_wait = $wms[$screen_counter] - $_ms + $ms_of_last_wndpos
+            $imageFilePath = STRCONCAT($_pdir, "GiftScreen_18.bmp")
+            screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
 
-                    if($curr_frame_wait > 0)
-                        waitms($curr_frame_wait)
+            logwrite($_date_str, " Transfer control to slpx.dll")
+
+            // parameters: heronum int, modeAll bool, selectedPath int
+            call("slpx.dll", $heronum, 0, 0)
+
+            $returnedValue = $_return1
+            CheckDLLErrors($returnedValue)
+
+            logwrite("returnedValue: ", $returnedValue)
+            
+            $captcha_answer = $returnedValue - int($returnedValue / 8) * 8
+
+            $returnedValue = $returnedValue - $captcha_answer 
+            $chance_of_fail = ($returnedValue - (int($returnedValue / 65536) * 65536)) / 256
+
+            $returnedValue = $returnedValue - $chance_of_fail * 256
+
+            $durationSolving = int($returnedValue / 65536)
+
+            logwrite("answer: ", $captcha_answer+1)
+            logwrite("chance_of_fail: ", $chance_of_fail, "%")
+            logwrite("durationSolving: ", $durationSolving/1000, "s.")
+
+            wait(0.2)
+
+            switch($failcounter)
+
+                case(0)
+
+                    if($chance_of_fail > $captcha_fail0_maxchance)
+                        $captcha_clickpass = 0
                     end_if
 
-                    $screen_counter = $screen_counter+ 1
+                case(1)
 
-                end_cyc
-
-                wndpos($hwnd, $window_pos_in_frame_X[$screen_counter], $window_pos_in_frame_Y[$screen_counter] + $vertical_offsets[$screen_counter])
-                getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
-
-                if($gift_screen_before = 1)
-                    screenshot("gift")
-                end_if
-
-                wndpos($hwnd, 0,0)
-
-                logwrite($_date_str, " path saved on screen")
-
-                colormode(4)
-
-                BlackBackgroundGift11()
-
-                MainGiftCycle(0, 0)
-
-                for($sort_array_i = 0, $sort_array_i < 8, 1)
-
-                    for($sort_array_j = 0, $sort_array_j < 8 - $sort_array_i, 1)
-
-                        if($all_pos_scores[$sort_array_j] < $all_pos_scores[$sort_array_j+1])
-
-                            $tempval = $all_pos_scores[$sort_array_j]
-                            $all_pos_scores[$sort_array_j  ] = $all_pos_scores[$sort_array_j+1]
-                            $all_pos_scores[$sort_array_j+1] = $tempval
-
-                            $tempval = $all_pos_scores_top[$sort_array_j]
-                            $all_pos_scores_top[$sort_array_j  ] = $all_pos_scores_top[$sort_array_j+1]
-                            $all_pos_scores_top[$sort_array_j+1] = $tempval
-
-                        end_if
-
-                    end_cyc
-
-                end_cyc
-
-                //for($foriterator = 0, $foriterator < 8, 1)
-                //    logwrite("pos ", $all_pos_scores_top[$foriterator] + 1, " score: ", $all_pos_scores[$foriterator])
-                //end_cyc
-
-                $counter = 0
-
-                $chance_of_fail = pow(($all_pos_scores[1]/$all_pos_scores[0]), 10)*100
-                logwrite("pos ", $all_pos_scores_top[0]+1, " chance of fail: ", $chance_of_fail, "%")
-
-                $this_square_color = $color_LIMEGREEN
-
-                if($gift_screen_after = 1)
-                    MainGiftCycle($all_pos_scores_top[0], 1)
-                end_if
-
-                //for($foriterator = 0, $foriterator < 8, 1)
-                //    logwrite($foriterator + 1, ": minimum: ", $minimum_pixels[$foriterator])
-                //end_cyc
-
-                if($chance_of_fail > 70)
-
-                    if($gift_screen_after = 1)
-
-                        $this_square_color = $color_ORANGE
-                        MainGiftCycle($all_pos_scores_top[1], 1)
-
+                    if($chance_of_fail > $captcha_fail1_maxchance)
+                        $captcha_clickpass = 0
                     end_if
 
-                end_if
+                case(2)
 
-                $captcha_answer = $all_pos_scores_top[0]
+                    if($chance_of_fail > $captcha_fail2_maxchance)
+                        $captcha_clickpass = 0
+                    end_if
 
-                logwrite("answer: ", $captcha_answer+1)
-                
-                if($gift_screen_after = 1)
-                    screenshot("gift")
-                end_if
+                case(3)
 
-                switch($failcounter)
+                    if($chance_of_fail > $captcha_fail3_maxchance)
+                        $captcha_clickpass = 0
+                    end_if
 
-                    case(0)
+            END_SWITCH
 
-                        if($chance_of_fail > $captcha_fail0_maxchance)
-                            $captcha_clickpass = 0
-                        end_if
+            IF($captcha_clickpass = 1)
 
-                    case(1)
+                //move(rnd(($captcha_answer) * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
+                message_click(rnd($captcha_answer * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
 
-                        if($chance_of_fail > $captcha_fail1_maxchance)
-                            $captcha_clickpass = 0
-                        end_if
+                WAIT(0.5)
+                GETSCREEN
 
-                    case(2)
+                $totalseconds = INT(($_ms-$timergift)/1000)
 
-                        if($chance_of_fail > $captcha_fail2_maxchance)
-                            $captcha_clickpass = 0
-                        end_if
+                $hoursnum =  INT($totalseconds/3600)
+                $minsnum =   INT(($totalseconds- $hoursnum*3600)/60)
+                $secsnum =   $totalseconds- $hoursnum*3600 - $minsnum*60
 
-                    case(3)
+                IF(strlen($hoursnum) = 1)
+                    $hoursnum = STRCONCAT("0",$hoursnum)
+                END_IF
 
-                        if($chance_of_fail > $captcha_fail3_maxchance)
-                            $captcha_clickpass = 0
-                        end_if
+                IF(strlen($minsnum) = 1)
+                    $minsnum = STRCONCAT("0",$minsnum)
+                END_IF
 
-                END_SWITCH
+                IF(strlen($secsnum) = 1)
+                    $secsnum = STRCONCAT("0",$secsnum)
+                END_IF
 
-                IF($captcha_clickpass = 1)
+                IF(PXL(632-85,134) = 4806498)
 
-                    //move(rnd(($captcha_answer) * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
-                    message_click(rnd($captcha_answer * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
-
-                    WAIT(0.5)
-                    GETSCREEN
-
-                    $totalseconds = INT(($_ms-$timergift)/1000)
-
-                    $hoursnum =  INT($totalseconds/3600)
-                    $minsnum =   INT(($totalseconds- $hoursnum*3600)/60)
-                    $secsnum =   $totalseconds- $hoursnum*3600 - $minsnum*60
-
-                    IF(strlen($hoursnum) = 1)
-                        $hoursnum = STRCONCAT("0",$hoursnum)
-                    END_IF
-
-                    IF(strlen($minsnum) = 1)
-                        $minsnum = STRCONCAT("0",$minsnum)
-                    END_IF
-
-                    IF(strlen($secsnum) = 1)
-                        $secsnum = STRCONCAT("0",$secsnum)
-                    END_IF
-
-                    IF(PXL(632-85,134) = 4806498)
-
-                        inc($failcounter, 1)
-                        logwrite($_date_str, " Fail ", $failcounter)
-                        TFWRITE("informgift.txt", STRCONCAT( " -   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", FC ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts"))
-                        message_click(790,714)  // 1974563
-                        wait(0.5)
-
-                    ELSE
-
-                        $captcha_solving_bool = 0
-                        logwrite($_date_str, " Gift solved in ", $hoursnum,":", $minsnum,":", $secsnum)
-                        TFWRITE("informgift.txt", STRCONCAT( " +   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", FC ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts, ", $hoursnum, ":", $minsnum, ":", $secsnum))
-
-                        $failcounter =0
-                        $finished =1
-
-                        $ms_of_last_replay_call = $_ms
-
-                        if($autobattlemode = 1)
-                            $ab_skip_num = $ab_skip_num + 1
-                        end_if
-
-                        IF(($autobattlemode = 1) | ($wave_canceling = 1))
-
-                            $replaysforskip20 = $replaysforskip20 - 1
-                            $quitcycle = 0
-                            while(($quitcycle < 5) & ((pxl(605,364) ! 4806498) | (pxl(867,364) ! 4806498) | (pxl(509,470) ! 3896999) | (pxl(690,470) ! 3896999) | (pxl(1022,476) ! 2342642) | (pxl(867,526) ! 1551083)))
-
-                                inc($quitcycle, 1)
-                                Rmessage_click(915-85,362)
-                                wait(0.5)
-                                GETSCREEN
-
-                            end_cyc
-
-                            if($quitcycle < 5)
-
-                                message_click(997-85,500)  
-                                wait(0.3)
-
-                            end_if
-                            $quitcycle = 0
-
-                        END_IF
-
-                        IF(($restarts > 0) & ($dungeon_number > 6) & ($dungeonfarm = 1))
-
-                            Rmessage_click(915-85,362)
-                            wait(0.3)
-                            message_click(997-85,500)  
-                            wait(0.3)
-
-                        END_IF
-
-                    END_IF
-
-                    $restarts=0
+                    //inc($failcounter, 1)
+                    logwrite($_date_str, " Fail ", $failcounter)
+                    TFWRITE("informgift.txt", STRCONCAT( " -   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", FC ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts"))
+                    message_click(790,714)  // 1974563
+                    call("slpx.dll", $heronum, 1, $captcha_answer)
+                    logwrite("Saved screens of failed gift to FailedGifts in ", $_return1 / 65535000, "s.")
 
                 ELSE
 
-                    $captcha_start_b = 0
-                    logwrite($_date_str, " [captcha] no clickpass")
+                    $captcha_solving_bool = 0
+                    logwrite($_date_str, " Gift solved in ", $hoursnum,":", $minsnum,":", $secsnum)
+                    TFWRITE("informgift.txt", STRCONCAT( " +   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", FC ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts, ", $hoursnum, ":", $minsnum, ":", $secsnum))
+
+                    $failcounter =0
+                    $finished =1
+
+                    $ms_of_last_replay_call = $_ms
+
+                    if($autobattlemode = 1)
+                        $ab_skip_num = $ab_skip_num + 1
+                    end_if
+
+                    IF(($autobattlemode = 1) | ($wave_canceling = 1))
+
+                        $replaysforskip20 = $replaysforskip20 - 1
+                        $quitcycle = 0
+                        while(($quitcycle < 5) & ((pxl(605,364) ! 4806498) | (pxl(867,364) ! 4806498) | (pxl(509,470) ! 3896999) | (pxl(690,470) ! 3896999) | (pxl(1022,476) ! 2342642) | (pxl(867,526) ! 1551083)))
+
+                            inc($quitcycle, 1)
+                            Rmessage_click(915-85,362)
+                            wait(0.5)
+                            GETSCREEN
+
+                        end_cyc
+
+                        if($quitcycle < 5)
+
+                            message_click(997-85,500)  
+                            wait(0.3)
+
+                        end_if
+                        $quitcycle = 0
+
+                    END_IF
+
+                    IF(($restarts > 0) & ($dungeon_number > 6) & ($dungeonfarm = 1))
+
+                        Rmessage_click(915-85,362)
+                        wait(0.3)
+                        message_click(997-85,500)  
+                        wait(0.3)
+
+                    END_IF
 
                 END_IF
 
-                getscreen
-                
-            end_if
+                $restarts=0
 
-        END_CYC
+            ELSE
 
-        IF(($failcounter > 3) & (PXL(406-85,152) = 4806498))
+                $captcha_start_b = 0
+                logwrite($_date_str, " [captcha] no clickpass")
 
-            logwrite($_date_str, " 4 fails on captcha. clicker will be stopped ")
-            WAIT(310)
-            $emerg_stop = 1
+            END_IF
 
-        END_IF
+            getscreen
+            
+        end_if
 
-    else
+    END_CYC
 
-        $dialog = DIALOGBOX("CANT SOLVE CAPTCHA IN BACKGROUND MODE", 1, 1)
-        halt
+    IF(($failcounter > 3) & (PXL(406-85,152) = 4806498))
 
-    end_if
+        logwrite($_date_str, " 4 fails on captcha. clicker will be stopped ")
+        WAIT(310)
+        $emerg_stop = 1
+
+    END_IF
 
 END_SUB

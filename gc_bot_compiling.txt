@@ -1,5 +1,53 @@
+Sub(CheckDLLErrors, $exitCode)
+
+    switch($exitCode)
+
+        case(0)
+            $dialog = DIALOGBOX("dll is missing or cannot be called. Should be in core folder", 1, 1)
+            halt
+        case(20)
+            $dialog = DIALOGBOX("For some reason couldnt get current directory path. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
+            halt
+        case(61)
+            $dialog = DIALOGBOX("For some reason couldnt create /FailedGifts folder. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
+            halt
+        case(62)
+            $dialog = DIALOGBOX("For some reason couldnt create /FailedGifts/Gift_<N> folder. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
+            halt
+        case(100)
+            $dialog = DIALOGBOX("Wrong test input. Should be 69", 1, 1)
+            halt
+        case(101)
+            $dialog = DIALOGBOX("Wrong heronum (parameter 1). Should be 1 - 8", 1, 1)
+            halt
+        case(102)
+            $dialog = DIALOGBOX("Wrong modeAll (parameter 2). Should be 0 or 1", 1, 1)
+            halt
+        case(103)
+            $dialog = DIALOGBOX("Wrong parameters count. Should be 1 or 3", 1, 1)
+            halt
+        case(104)
+            $dialog = DIALOGBOX("Wrong selectedPath (parameter 3). Should be 0 - 7", 1, 1)
+            halt
+
+    END_SWITCH
+
+    if(($exitCode > 50) & ($exitCode < 69))
+        $dialog = DIALOGBOX(STRCONCAT("Couldnt find image ", $_pdir, "GiftScreen_", $exitCode - 50, ".bmp'. Should be in clicker core folder"), 1, 1)
+        halt
+    end_if
+    if($exitCode = 69)
+        $dialog = DIALOGBOX(STRCONCAT("Couldnt find image ", $_pdir, "IgnoreColorArea.bmp'. Should be in clicker core folder"), 1, 1)
+        halt
+    end_if
+
+END_SUB
+
+
 $error_string = ""
 getscreen
+
+$background_mode = 1
 
 IF(($dungeon_number>9) | ($dungeon_number < 1) & ($dungeonfarm = 1))
 
@@ -21,10 +69,24 @@ if($hwnd = 0)
 
 end_if
 
-if(($background_mode = 1) & ($solve_capcha = 1))
+if($solve_capcha = 1)
 
-    $dialog = DIALOGBOX("cant solve gift in background mode", 1, 1)
-    halt
+    call("slpx.dll", 420)
+    $r1 = $_return1
+
+    call("slpx.dll", 69)
+    $r2 = $_return1
+
+    if($r1 ! 69)
+        $dialog = DIALOGBOX(STRCONCAT("Error while calling dll. Expected 69, but was: ", $r1), 1, 1)
+        halt
+    end_if
+    if($r2 ! 420)
+        $dialog = DIALOGBOX(STRCONCAT("Error while calling dll. Expected 420, but was: ", $r2), 1, 1)
+        halt
+    end_if
+
+    logwrite("DLL OK")
 
 end_if
 
@@ -179,7 +241,6 @@ IF($autoupgrade = 1)
 
 end_if
 
-
 if(($autobattlemode = 1) & ($skipwaves = 0))
 
     $dialog = DIALOGBOX("cannot autobattlemode without skipwaves", 1, 1)
@@ -209,20 +270,10 @@ if(($adforx3 = 1) & ($I_have_3x = 1))
 
 end_if
 
-
-
-
-
 if(($decktoplay<1) | ($decktoplay > 5))
     $error_string = STRCONCAT($error_string, "wrond deck to play. 1...5",char(10))
 end_if
 
-IF((($_xmax < 1919) | ($_ymax < 1079)) & ($solve_capcha = 1) & ($background_mode = 0))
-
-    $dialog = DIALOGBOX("small screen size", 1, 1)
-    halt
-
-end_if
 
 //LCLICK(1519,864)  // max
 IF((($_xmax < 1519) | ($_ymax < 864+40)) & ($background_mode = 0))

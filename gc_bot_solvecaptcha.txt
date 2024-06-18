@@ -606,8 +606,8 @@ SUB(SolveCaptcha)
 
             IF($captcha_clickpass = 1)
 
-                //move(rnd(($captcha_answer) * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
-                message_click(rnd($captcha_answer * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
+                move(rnd(($captcha_answer) * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
+                //message_click(rnd($captcha_answer * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
 
                 WAIT(0.5)
                 GETSCREEN

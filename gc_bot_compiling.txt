@@ -47,7 +47,7 @@ END_SUB
 $error_string = ""
 getscreen
 
-$background_mode = 1
+//$background_mode = 1
 
 IF(($dungeon_number>9) | ($dungeon_number < 1) & ($dungeonfarm = 1))
 

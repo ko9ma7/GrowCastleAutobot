@@ -21,3 +21,8 @@ GiftScreen_16.bmp
 GiftScreen_17.bmp
 GiftScreen_18.bmp
 IgnoreColorArea.bmp
+IgnoreColorArea2.bmp
+
+*.exp
+*.lib
+*.pdb

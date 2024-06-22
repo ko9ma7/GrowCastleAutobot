@@ -18,16 +18,16 @@ Sub(CheckDLLErrors, $exitCode)
             $dialog = DIALOGBOX("Wrong test input. Should be 69", 1, 1)
             halt
         case(101)
-            $dialog = DIALOGBOX("Wrong heronum (parameter 1). Should be 1 - 8", 1, 1)
+            $dialog = DIALOGBOX("Wrong heronum (parameter 1). Should be 0 - 7", 1, 1)
             halt
         case(102)
-            $dialog = DIALOGBOX("Wrong modeAll (parameter 2). Should be 0 or 1", 1, 1)
+            $dialog = DIALOGBOX("Wrong drawMode (parameter 2). Should be -1, 0 or 1", 1, 1)
             halt
         case(103)
             $dialog = DIALOGBOX("Wrong parameters count. Should be 1 or 3", 1, 1)
             halt
         case(104)
-            $dialog = DIALOGBOX("Wrong selectedPath (parameter 3). Should be 0 - 7", 1, 1)
+            $dialog = DIALOGBOX("Wrong logOutput (parameter 3). Should be 0 or 1", 1, 1)
             halt
 
     END_SWITCH

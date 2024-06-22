@@ -229,10 +229,12 @@ SUB(SolveCaptcha)
             wait(0.1)
 
             $upperYScreenPoint = 508 - $vertical_length
-            getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
+            //getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
+            getscreen(310, 345, 1132, 778)
 
             $imageFilePath = STRCONCAT($_pdir, "GiftScreen_1.bmp")
-            screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
+            //screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
+            screenshotFix(310, 345, 1132, 778, $imageFilePath)
 
             $curr_frame_wait = 647 - ($_ms - $ms_of_last_screen)
 
@@ -246,13 +248,15 @@ SUB(SolveCaptcha)
 
                 $ms_of_last_screen = $_ms
 
-                getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
+                //getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
 
-                $upperYScreenPoint = 508 - int($vertical_length * (1 - $screen_counter/17)) - $vertical_offsets[$screen_counter]
-                getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
+                $upperYScreenPoint = 508 - int($vertical_length * (1 - $screen_counter/17))
+                //getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
+                getscreen(310, 345, 1132, 778)
 
                 $imageFilePath = STRCONCAT($_pdir, "GiftScreen_", $screen_counter+1, ".bmp")
-                screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
+                //screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
+                screenshotFix(310, 345, 1132, 778, $imageFilePath)
                 
                 $curr_frame_wait = $wms[$screen_counter] - $_ms + $ms_of_last_screen
 
@@ -264,16 +268,18 @@ SUB(SolveCaptcha)
 
             end_cyc
 
-            $upperYScreenPoint = 508 - int($vertical_length * (1 - $screen_counter/17)) - $vertical_offsets[$screen_counter]
-            getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
+            $upperYScreenPoint = 508 - int($vertical_length * (1 - $screen_counter/17))
+            //getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
+            getscreen(310, 345, 1132, 778)
 
             $imageFilePath = STRCONCAT($_pdir, "GiftScreen_18.bmp")
-            screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
+            //screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
+            screenshotFix(310, 345, 1132, 778, $imageFilePath)
 
             logwrite($_date_str, " Transfer control to slpx.dll")
 
-            // parameters: heronum int, modeAll bool, selectedPath int
-            call("slpx.dll", $heronum, 0, 0)
+            // parameters: heronum int, drawMode bool, selectedPath int
+            call("slpx.dll", $heronum-1, $gift_saveScreenshotsAlways, $gift_logOutput)
 
             $returnedValue = $_return1
             CheckDLLErrors($returnedValue)
@@ -356,12 +362,33 @@ SUB(SolveCaptcha)
 
                 IF(PXL(632-85,134) = 4806498)
 
-                    //inc($failcounter, 1)
+                    inc($failcounter, 1)
                     logwrite($_date_str, " Fail ", $failcounter)
                     TFWRITE("informgift.txt", STRCONCAT( " -   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", FC ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts"))
                     message_click(790,714)  // 1974563
-                    call("slpx.dll", $heronum, 1, $captcha_answer)
-                    logwrite("Saved screens of failed gift to FailedGifts in ", $_return1 / 65535000, "s.")
+
+                    if($gift_saveFailedGiftScreenshots = 1)
+
+                        logwrite($_date_str, " Transfer control to slpx.dll (FAIL mode)")
+                        call("slpx.dll", $heronum-1, -1, $gift_logOutput)
+
+                        $returnedValue = $_return1
+                        CheckDLLErrors($returnedValue)
+
+                        logwrite("returnedValue: ", $returnedValue)
+                        
+                        $captcha_answer = $returnedValue - int($returnedValue / 8) * 8
+
+                        $returnedValue = $returnedValue - $captcha_answer 
+                        $chance_of_fail = ($returnedValue - (int($returnedValue / 65536) * 65536)) / 256
+
+                        $returnedValue = $returnedValue - $chance_of_fail * 256
+
+                        $durationSolving = int($returnedValue / 65536)
+
+                        logwrite("Saved screens of failed gift in ", $durationSolving, "s.")
+
+                    end_if
 
                 ELSE
 

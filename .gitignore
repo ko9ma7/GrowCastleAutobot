@@ -1,6 +1,7 @@
 
 /screens
 /FailedGifts
+/Gifts
 
 GiftScreen_1.bmp
 GiftScreen_2.bmp
@@ -26,3 +27,4 @@ IgnoreColorArea2.bmp
 *.exp
 *.lib
 *.pdb
+*.log

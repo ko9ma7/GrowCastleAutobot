@@ -34,6 +34,10 @@ $mimic_collect_percent = 100 // 0 to 100
 $log_CurrentBattleLength = 0
 $print_settings = 0
 
+$gift_logOutput = 1
+$gift_saveScreenshotsAlways = 1
+$gift_saveFailedGiftScreenshots = 1
+
 //background_mode only
 
 $make_hints_gift = 0

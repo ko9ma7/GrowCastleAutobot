@@ -222,9 +222,9 @@ SUB(SolveCaptcha)
             getscreen($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY)
             getscreen($ancillary_area2_SX,$ancillary_area2_SY,$ancillary_area2_FX,$ancillary_area2_FY)
             $imageFilePath = STRCONCAT($_pdir, "IgnoreColorArea.bmp")
-            screenshotFix($ancillary_area_SX + $screenShiftX,$ancillary_area_SY,$ancillary_area_FX + $screenShiftX,$ancillary_area_FY, $imageFilePath)
+            screenshotFix($ancillary_area_SX + $screenShiftX,$ancillary_area_SY + $screenShiftY,$ancillary_area_FX + $screenShiftX,$ancillary_area_FY + $screenShiftY, $imageFilePath)
             $imageFilePath = STRCONCAT($_pdir, "IgnoreColorArea2.bmp")
-            screenshotFix($ancillary_area2_SX + $screenShiftX,$ancillary_area2_SY,$ancillary_area2_FX + $screenShiftX,$ancillary_area2_FY, $imageFilePath)
+            screenshotFix($ancillary_area2_SX + $screenShiftX,$ancillary_area2_SY + $screenShiftY,$ancillary_area2_FX + $screenShiftX,$ancillary_area2_FY + $screenShiftY, $imageFilePath)
 
             wait(0.1)
 
@@ -234,7 +234,7 @@ SUB(SolveCaptcha)
 
             $imageFilePath = STRCONCAT($_pdir, "GiftScreen_1.bmp")
             //screenshotFix(310 + $screenShiftX, $upperYScreenPoint, 1132 + $screenShiftX, $upperYScreenPoint + 114, $imageFilePath)
-            screenshotFix(310 + $screenShiftX, 345, 1132 + $screenShiftX, 778, $imageFilePath)
+            screenshotFix(310 + $screenShiftX, 345 + $screenShiftY, 1132 + $screenShiftX, 778 + $screenShiftY, $imageFilePath)
 
             $curr_frame_wait = 647 - ($_ms - $ms_of_last_screen)
 
@@ -256,7 +256,7 @@ SUB(SolveCaptcha)
 
                 $imageFilePath = STRCONCAT($_pdir, "GiftScreen_", $screen_counter+1, ".bmp")
                 //screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
-                screenshotFix(310 + $screenShiftX, 345, 1132 + $screenShiftX, 778, $imageFilePath)
+                screenshotFix(310 + $screenShiftX, 345 + $screenShiftY, 1132 + $screenShiftX, 778 + $screenShiftY, $imageFilePath)
                 
                 $curr_frame_wait = $wms[$screen_counter] - $_ms + $ms_of_last_screen
 
@@ -274,7 +274,7 @@ SUB(SolveCaptcha)
 
             $imageFilePath = STRCONCAT($_pdir, "GiftScreen_18.bmp")
             //screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
-            screenshotFix(310 + $screenShiftX, 345, 1132 + $screenShiftX, 778, $imageFilePath)
+            screenshotFix(310 + $screenShiftX, 345 + $screenShiftY, 1132 + $screenShiftX, 778 + $screenShiftY, $imageFilePath)
 
             logwrite($_date_str, " Transfer control to slpx.dll")
 

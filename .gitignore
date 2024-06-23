@@ -27,4 +27,4 @@ IgnoreColorArea2.bmp
 *.exp
 *.lib
 *.pdb
-*.log
+giftLog.log

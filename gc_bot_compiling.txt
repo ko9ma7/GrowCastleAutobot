@@ -8,12 +8,6 @@ Sub(CheckDLLErrors, $exitCode)
         case(20)
             $dialog = DIALOGBOX("For some reason couldnt get current directory path. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
             halt
-        case(61)
-            $dialog = DIALOGBOX("For some reason couldnt create output folder. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
-            halt
-        case(62)
-            $dialog = DIALOGBOX("For some reason couldnt create output folder. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
-            halt
         case(100)
             $dialog = DIALOGBOX("Wrong test input. Should be 69", 1, 1)
             halt
@@ -107,6 +101,8 @@ else
 
 end_if
 
+// for multiple monitors, coordinates for functions like SCREENSHOT, SCREENSHOTEX, SCREENSHOTFIX are relative to point ($_xmin, $_ymin)
+// and if these points are not zero, it will output shifted screenshot. To fix it, these shift values are here
 //==========================================
 
 $screenShiftX = -$_xmin
@@ -648,6 +644,7 @@ END_IF
 if($background_mode = 0)
 
     $make_hints_gift = 0
+    $make_hints_failGift = 0
     $make_hints_cant_fight_dungeon = 0
     $make_hints_clearallfail = 0
     $make_hints_emergstop = 0
@@ -655,12 +652,6 @@ if($background_mode = 0)
     $make_hints_long_gc_load = 0
     $make_hints_noxmainmenuloadfail = 0
     $make_hints_reset = 0
-
-end_if
-
-if($print_settings = 1)
-
-    OutputCurrentSettings()
 
 end_if
 

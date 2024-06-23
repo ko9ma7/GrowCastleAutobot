@@ -299,8 +299,6 @@ SUB(SolveCaptcha)
             logwrite("chance_of_fail: ", $chance_of_fail, "%")
             logwrite("Time solving: ", $durationSolving/1000, "s.")
 
-            wait(0.2)
-
             switch($failcounter)
 
                 case(0)

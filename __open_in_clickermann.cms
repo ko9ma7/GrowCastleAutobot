@@ -1,5 +1,5 @@
 ﻿
-#logfile "gc_reg.txt"
+#logfile "gc.log"
 
 #include "colorlist.txt"
 #include "gc_bot_lib.txt"

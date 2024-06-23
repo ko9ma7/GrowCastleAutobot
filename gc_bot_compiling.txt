@@ -657,8 +657,8 @@ end_if
 
 //files check
 
-tfwrite("gc_reg.txt", "teststring")
-tfdelete("gc_reg.txt", tfcount("gc_reg.txt"))
+tfwrite("gc.log", "teststring")
+tfdelete("gc.log", tfcount("gc.log"))
 
 tfwrite("informgift.txt", "teststring")
 tfdelete("informgift.txt", tfcount("informgift.txt"))

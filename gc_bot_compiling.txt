@@ -107,6 +107,13 @@ else
 
 end_if
 
+//==========================================
+
+$screenShiftX = -$_xmin
+$screenShiftY = -$_ymin
+
+//==========================================
+
 logwrite("hwnd: ", $hwnd)
 
 $v1 = 0

@@ -9,10 +9,10 @@ Sub(CheckDLLErrors, $exitCode)
             $dialog = DIALOGBOX("For some reason couldnt get current directory path. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
             halt
         case(61)
-            $dialog = DIALOGBOX("For some reason couldnt create /FailedGifts folder. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
+            $dialog = DIALOGBOX("For some reason couldnt create output folder. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
             halt
         case(62)
-            $dialog = DIALOGBOX("For some reason couldnt create /FailedGifts/Gift_<N> folder. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
+            $dialog = DIALOGBOX("For some reason couldnt create output folder. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
             halt
         case(100)
             $dialog = DIALOGBOX("Wrong test input. Should be 69", 1, 1)

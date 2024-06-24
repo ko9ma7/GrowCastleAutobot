@@ -122,10 +122,10 @@ $screenshot_clearallfail = strfilter( TFREAD("_main_settings.txt", 40),"12345678
 $gift_screen_before = strfilter( TFREAD("_main_settings.txt", 41),"1234567890." , 1 )// 0 or 1
 $gift_screen_after = strfilter( TFREAD("_main_settings.txt", 42),"1234567890." , 1 )// 0 or 1
 
-$captcha_fail0_maxchance = strfilter( TFREAD("_main_settings.txt", 43),"1234567890." , 1 )// 10 to 100
-$captcha_fail1_maxchance = strfilter( TFREAD("_main_settings.txt", 44),"1234567890." , 1 )// 10 to 100
-$captcha_fail2_maxchance = strfilter( TFREAD("_main_settings.txt", 45),"1234567890." , 1 )// 10 to 100
-$captcha_fail3_maxchance = strfilter( TFREAD("_main_settings.txt", 46),"1234567890." , 1 )// 10 to 100
+$captcha_fail0_maxConflicts = strfilter( TFREAD("_main_settings.txt", 43),"1234567890." , 1 )// 10 to 100
+$captcha_fail1_maxConflicts = strfilter( TFREAD("_main_settings.txt", 44),"1234567890." , 1 )// 10 to 100
+$captcha_fail2_maxConflicts = strfilter( TFREAD("_main_settings.txt", 45),"1234567890." , 1 )// 10 to 100
+$captcha_fail3_maxConflicts = strfilter( TFREAD("_main_settings.txt", 46),"1234567890." , 1 )// 10 to 100
 
 
 

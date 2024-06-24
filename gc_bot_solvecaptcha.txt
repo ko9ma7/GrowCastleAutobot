@@ -289,39 +289,39 @@ SUB(SolveCaptcha)
             $captcha_answer = $returnedValue - int($returnedValue / 8) * 8
 
             $returnedValue = $returnedValue - $captcha_answer 
-            $chance_of_fail = ($returnedValue - (int($returnedValue / 65536) * 65536)) / 256
+            $conflict_count = ($returnedValue - (int($returnedValue / 65536) * 65536)) / 256
 
-            $returnedValue = $returnedValue - $chance_of_fail * 256
+            $returnedValue = $returnedValue - $conflict_count * 256
 
             $durationSolving = int($returnedValue / 65536)
 
             logwrite("answer: ", $captcha_answer+1)
-            logwrite("chance_of_fail: ", $chance_of_fail, "%")
+            logwrite("conflict_count: ", $conflict_count)
             logwrite("Time solving: ", $durationSolving/1000, "s.")
 
             switch($failcounter)
 
                 case(0)
 
-                    if($chance_of_fail > $captcha_fail0_maxchance)
+                    if($conflict_count > $captcha_fail0_maxConflicts)
                         $captcha_clickpass = 0
                     end_if
 
                 case(1)
 
-                    if($chance_of_fail > $captcha_fail1_maxchance)
+                    if($conflict_count > $captcha_fail1_maxConflicts)
                         $captcha_clickpass = 0
                     end_if
 
                 case(2)
 
-                    if($chance_of_fail > $captcha_fail2_maxchance)
+                    if($conflict_count > $captcha_fail2_maxConflicts)
                         $captcha_clickpass = 0
                     end_if
 
                 case(3)
 
-                    if($chance_of_fail > $captcha_fail3_maxchance)
+                    if($conflict_count > $captcha_fail3_maxConflicts)
                         $captcha_clickpass = 0
                     end_if
 
@@ -362,7 +362,7 @@ SUB(SolveCaptcha)
 
                     inc($failcounter, 1)
                     logwrite($_date_str, " Fail ", $failcounter)
-                    TFWRITE("informgift.txt", STRCONCAT( " -   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", FC ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts"))
+                    TFWRITE("informgift.txt", STRCONCAT( " -   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", CC: ", ROUND($conflict_count, -1), ", ", $restarts, " restarts"))
                     message_click(790,714)  // 1974563
 
                     if($make_hints_failGift = 1)
@@ -382,9 +382,9 @@ SUB(SolveCaptcha)
                         $captcha_answer = $returnedValue - int($returnedValue / 8) * 8
 
                         $returnedValue = $returnedValue - $captcha_answer 
-                        $chance_of_fail = ($returnedValue - (int($returnedValue / 65536) * 65536)) / 256
+                        $conflict_count = ($returnedValue - (int($returnedValue / 65536) * 65536)) / 256
 
-                        $returnedValue = $returnedValue - $chance_of_fail * 256
+                        $returnedValue = $returnedValue - $conflict_count * 256
 
                         $durationSolving = int($returnedValue / 65536)
 
@@ -396,7 +396,7 @@ SUB(SolveCaptcha)
 
                     $captcha_solving_bool = 0
                     logwrite($_date_str, " Gift solved in ", $hoursnum,":", $minsnum,":", $secsnum, ":", $millisecsnum)
-                    TFWRITE("informgift.txt", STRCONCAT( " +   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", FC ", ROUND($chance_of_fail, -1), "%, ", $restarts, " restarts, ", $hoursnum, ":", $minsnum, ":", $secsnum, ":", $millisecsnum))
+                    TFWRITE("informgift.txt", STRCONCAT( " +   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", CC: ", ROUND($conflict_count, -1), ", ", $restarts, " restarts, ", $hoursnum, ":", $minsnum, ":", $secsnum, ":", $millisecsnum))
 
                     $failcounter =0
                     $finished =1

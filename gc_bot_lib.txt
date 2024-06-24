@@ -2396,6 +2396,11 @@ END_SUB
 
 SUB(WaitForAdEnd, $coins_0_x3_1)
 
+    if($fixed_ad_wait > 0)
+        logwrite($_date_str, " [WaitForAdEnd] wait for ", $fixed_ad_wait, "s.")
+        wait($fixed_ad_wait)
+    end_if
+    
     $esccounter = 0
 
     CheckSky()

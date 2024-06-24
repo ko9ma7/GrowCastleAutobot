@@ -28,6 +28,7 @@ $max_restarts_in_row_for_reset = 5
 
 $mimic_collect_percent = 100 // 0 to 100
 
+$fixed_ad_wait = 40 // fixed delay after starting ad (seconds)
 
 // 0 or 1
 

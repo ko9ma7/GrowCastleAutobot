@@ -299,6 +299,9 @@ SUB(SolveCaptcha)
             logwrite("conflict_count: ", $conflict_count)
             logwrite("Time solving: ", $durationSolving/1000, "s.")
 
+            // small wait to make sure that all heroes are clickable
+            wait(0.3)
+
             switch($failcounter)
 
                 case(0)

@@ -18,8 +18,6 @@ $orc_and_military_on_skip_only = 1
 
 $cleanup_interval = 10800
 
-$break_AB_on_30_cry = 0
-
 $I_have_3x = 0
 
 $max_battle_length_ms = 180000
@@ -140,6 +138,7 @@ $replays_if_dungeon_dont_load = strfilter( TFREAD("_main_settings.txt", 49),"123
 
 $always_manual_skips_in_ab_mode = strfilter( TFREAD("_main_settings.txt", 50),"1234567890." , 1 )// 0 or 1
 $wave_canceling = strfilter( TFREAD("_main_settings.txt", 51),"1234567890." , 1 )// 0 or 1
+$break_AB_on_30_cry = strfilter( TFREAD("_main_settings.txt", 52),"1234567890." , 1 )// 0 or 1
 
 $b1start = 69
 $diff = 20

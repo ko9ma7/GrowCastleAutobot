@@ -38,6 +38,8 @@ $gift_logOutput = 1
 $gift_saveScreenshotsAlways = 0
 $gift_saveFailedGiftScreenshots = 1
 
+$gift_notFoundScreen = 1
+
 //background_mode only
 
 $make_hints_gift = 0

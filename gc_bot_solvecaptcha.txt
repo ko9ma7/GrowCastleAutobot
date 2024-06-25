@@ -173,7 +173,7 @@ SUB(SolveCaptcha)
 
                     if($captcha_start_b = 1)
                         logwrite($_date_str, " couldnt find crystal on captcha. restart")
-                        if($gift_screen_before = 1)
+                        if($gift_notFoundScreen = 1)
                             screenshot("giftNotFound")
                         end_if
                     END_IF

@@ -836,6 +836,11 @@ sub(EnterGC)
 
     message_click(928-85,446)//growcastle open
 
+    if($fixed_loading_wait > 0)
+        logwrite($_date_str, " [EnterGC] wait fixed ", $fixed_loading_wait, "s.")
+        wait($fixed_loading_wait)
+    end_if
+
     logwrite($_date_str, " gc click[EnterGC] wait 20s for gc open")
 
     CheckGCMenu()

@@ -277,11 +277,10 @@ if(($decktoplay<1) | ($decktoplay > 5))
     $error_string = STRCONCAT($error_string, "wrond deck to play. 1...5",char(10))
 end_if
 
-
 //LCLICK(1519,864)  // max
-IF((($_xmax < 1519) | ($_ymax < 864+40)) & ($background_mode = 0))
+IF((($_xmax < 1519) | ($_ymax < 864)) & ($background_mode = 0))
 
-    $dialog = DIALOGBOX("small screen size.", 1, 1)
+    $dialog = DIALOGBOX("small screen size. Try start with background mode enabled", 1, 1)
     halt
 
 end_if

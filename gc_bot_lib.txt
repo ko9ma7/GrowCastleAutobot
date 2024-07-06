@@ -48,7 +48,7 @@ SUB(dbmessage_click, $posX, $posY)
         $last_mouse_posX = $posX
         $last_mouse_posY = $posY
     end_if
-    
+
     if($background_mode = 1)
 
         SendMessage($hwnd,513,1,$posX+$posY*65536)
@@ -2163,6 +2163,16 @@ sub(Perform_skip)
 
 END_SUB
 
+sub(CloseTop)
+
+    getscreen(259,129,261,131)
+    if(pxl(260,130) ! $SKY_COLOR)
+        message_click(rnd(324-85,376-85),rnd(95,162)) //close top
+        wait($hero_click_pause)
+    end_if
+
+END_SUB
+
 sub(Perform_AB_with_skips_mode)
 
     logwrite($_date_str, " Perform_AB_with_skips_mode")
@@ -2176,8 +2186,7 @@ sub(Perform_AB_with_skips_mode)
             logwrite($_date_str, " sky clear on AB start [Perform_AB_with_skips_mode]")
 
             Perform_skip()
-            message_click(rnd(324-85,376-85),rnd(95,162)) //close top
-            wait($hero_click_pause)
+            CloseTop()
             Put_on_AB()
 
             logwrite("AB ",$seconds_between_skips, " seconds")
@@ -2197,8 +2206,7 @@ sub(Perform_AB_with_skips_mode)
     else
 
         Perform_skip()
-        message_click(rnd(324-85,376-85),rnd(95,162)) //close top
-        wait($hero_click_pause)
+        CloseTop()
         if($always_manual_skips_in_ab_mode = 0)
 
             Put_on_AB()
@@ -2220,8 +2228,7 @@ END_SUB
 sub(Perform_wave_canceling)
 
     Perform_skip()
-    message_click(rnd(324-85,376-85),rnd(95,162)) //close top
-    wait($hero_click_pause)
+    CloseTop()
     Put_on_AB()
     $ms_of_last_replay_call = $_ms
     $wait_for_cancel_AB_button_b = 1
@@ -2232,8 +2239,7 @@ sub(Perform_manual_battle_start)
 
     $ms_of_last_replay_call = $_ms
     Perform_skip()
-    message_click(rnd(324-85,376-85),rnd(95,162)) //close top
-    wait($hero_click_pause)
+    CloseTop()
     ChronoClick()
     Perform_OrcBand_Milit()
 

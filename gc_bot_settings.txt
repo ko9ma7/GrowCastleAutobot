@@ -29,7 +29,7 @@ $mimic_collect_percent = 100 // 0 to 100
 $fixed_loading_wait = 0 // fixed delay after open gc (for long loading)
 $fixed_ad_wait = 0 // fixed delay after starting ad (seconds)
 
-$simulate_mouse_movement = 1
+$simulate_mouse_movement = 0
 
 // 0 or 1
 

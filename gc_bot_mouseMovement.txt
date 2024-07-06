@@ -1,0 +1,102 @@
+
+sub(GetMin, $val1, $val2)
+    $min_return = $val1
+    if($val2 < $val1)
+        $min_return = $val2
+    end_if
+END_SUB
+
+sub(GetMax, $val1, $val2)
+    $max_return = $val1
+    if($val2 > $val1)
+        $max_return = $val2
+    end_if
+END_SUB
+
+sub(GetCP, $MSX, $MSY, $MFX, $MFY)
+
+    $cpXRes = 0
+    $cpYRes = 0
+
+    GetMin($MSX, $MFX)
+    $mouseMinX = $min_return
+    GetMax($MSX, $MFX)
+    $mouseMaxX = $max_return
+
+    GetMin($MSY, $MFY)
+    $mouseMinY = $min_return
+    GetMax($MSY, $MFY)
+    $mouseMaxY = $max_return
+
+    $rectBoundLUX = $mouseMinX // - ($mouseMaxX - $mouseMinX)
+    $rectBoundLUY = $mouseMinY // - ($mouseMaxY - $mouseMinY)
+    $rectBoundRDX = $mouseMaxX // + ($mouseMaxX - $mouseMinX)
+    $rectBoundRDY = $mouseMaxY // + ($mouseMaxY - $mouseMinY)
+
+    //$rectBoundLUX = 0
+    //$rectBoundLUY = 0
+    //$rectBoundRDX = 1919
+    //$rectBoundRDY = 1079
+
+    $cpXRes = rnd($rectBoundLUX, $rectBoundRDX)
+    $cpYRes = rnd($rectBoundLUY, $rectBoundRDY)
+
+END_SUB
+
+
+Sub(GetXBezier, $t)
+    $returned_x = (1-$t) * (1-$t) * (1-$t) * (1-$t) * $mouseStartX + 4 * $t * (1-$t) *(1-$t) *(1-$t) * $bezierCP_1X + 6 * $t * $t * (1-$t) * (1-$t) * $bezierCP_2X + 4 * $t * $t * $t * (1-$t) * $bezierCP_3X + $t * $t * $t * $t * $mouseFinishX
+END_SUB
+
+Sub(GetYBezier, $t)
+    $returned_y = (1-$t) * (1-$t) * (1-$t) * (1-$t) * $mouseStartY + 4 * $t * (1-$t) *(1-$t) *(1-$t) * $bezierCP_1Y + 6 * $t * $t * (1-$t) * (1-$t) * $bezierCP_2Y + 4 * $t * $t * $t * (1-$t) * $bezierCP_3Y + $t * $t * $t * $t * $mouseFinishY
+END_SUB
+
+sub(MoveTo, $moveToX, $moveToY)
+
+    $mouseStartX = $last_mouse_posX
+    $mouseStartY = $last_mouse_posY
+
+    $mouseFinishX = $moveToX
+    $mouseFinishY = $moveToY
+
+    GetCP($mouseStartX, $mouseStartY, $mouseFinishX, $mouseFinishY)
+    $bezierCP_1X = $cpXRes
+    $bezierCP_1Y = $cpYRes
+    GetCP($mouseStartX, $mouseStartY, $mouseFinishX, $mouseFinishY)
+    $bezierCP_2X = $cpXRes
+    $bezierCP_2Y = $cpYRes
+    GetCP($mouseStartX, $mouseStartY, $mouseFinishX, $mouseFinishY)
+    $bezierCP_3X = $cpXRes
+    $bezierCP_3Y = $cpYRes
+
+    $mouseStepsMove = int(sqrt(dist($mouseStartX, $mouseStartY, $mouseFinishX, $mouseFinishY) / 3))
+    //$mouseStepsMove = int(dist($mouseStartX, $mouseStartY, $mouseFinishX, $mouseFinishY) / 20)
+
+    if($mouseStepsMove ! 0)
+
+        for($i = 0, $i <= $mouseStepsMove, 1)
+
+            $movementProgress = 1 - ((1 - $i/$mouseStepsMove) * (1 - $i/$mouseStepsMove))
+
+            GetXBezier($movementProgress)
+            GetYBezier($movementProgress)
+
+            GetMin($returned_x, 1919)
+            GetMax($min_return, 0)
+            $currMoveX = int($max_return)
+
+            GetMin($returned_y, 1079)
+            GetMax($min_return, 0)
+            $currMoveY = int($max_return)
+
+            move($currMoveX, $currMoveY)
+
+            //waitms(rnd(5,10))
+
+        end_cyc
+
+    end_if
+
+
+END_SUB

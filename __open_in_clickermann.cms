@@ -2,6 +2,7 @@
 #logfile "gc.log"
 
 #include "colorlist.txt"
+#include "gc_bot_mouseMovement.txt"
 #include "gc_bot_lib.txt"
 #include "gc_bot_settings.txt"
 #include "gc_bot_compiling.txt"

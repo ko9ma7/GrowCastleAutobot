@@ -7,7 +7,8 @@ $x3timer = TFREAD("timerx3spd.txt", 1)
 
 
 
-
+$last_mouse_posX = $_xmouse
+$last_mouse_posY = $_ymouse
 
 DEFINE($failcounter,0)
 DEFINE($clicked,0)

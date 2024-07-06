@@ -1,13 +1,19 @@
 
 SUB(message_click, $posX, $posY)
 
+    if($simulate_mouse_movement = 1)
+        MoveTo($posX, $posY)
+        $last_mouse_posX = $posX
+        $last_mouse_posY = $posY
+    end_if
+
     if($background_mode = 1)
 
         SendMessage($hwnd,513,1,$posX+$posY*65536)
         SendMessage($hwnd,514,0,$posX+$posY*65536)
 
-    else 
-
+    else
+        
         lclick($posX, $posY)
 
     end_if
@@ -15,6 +21,12 @@ SUB(message_click, $posX, $posY)
 END_SUB
 
 SUB(Rmessage_click, $posX, $posY)
+
+    if($simulate_mouse_movement = 1)
+        MoveTo($posX, $posY)
+        $last_mouse_posX = $posX
+        $last_mouse_posY = $posY
+    end_if
 
     if($background_mode = 1)
 
@@ -31,6 +43,12 @@ END_SUB
 
 SUB(dbmessage_click, $posX, $posY)
 
+    if($simulate_mouse_movement = 1)
+        MoveTo($posX, $posY)
+        $last_mouse_posX = $posX
+        $last_mouse_posY = $posY
+    end_if
+    
     if($background_mode = 1)
 
         SendMessage($hwnd,513,1,$posX+$posY*65536)

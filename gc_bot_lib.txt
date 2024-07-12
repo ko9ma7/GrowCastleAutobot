@@ -1914,13 +1914,21 @@ sub(Perform_dungeon_start)
                 END_IF
 
                 logwrite($_date_str, " probably inventory is full")
-                logwrite($_date_str, " couldnt figth dungeon. captcha wasnt detected. replays will be called")
+                logwrite($_date_str, " couldnt figth dungeon. captcha wasnt detected")
 
-                $dungeonfarm = 0
-                $makereplays = 1
+                if($replays_if_dungeon_dont_load = 1)
+
+                    $dungeonfarm = 0
+                    $makereplays = 1
+                    logwrite($_date_str, " replays will be called")
+
+                end_if
                 
+                // close current dungeon
                 message_click(1250-85,134)  // 2105635
                 wait(0.1)
+
+                // close dungeons
                 message_click(1527-85,122)  // 658189
                 wait(0.1)
 
@@ -3292,6 +3300,10 @@ SUB(ActivateHeroesDun)
         CheckGCMenu()
 
     end_cyc
+
+    if(($dungeon_number > 6) & ($gc_menu_open = 1))
+        wait(0.2)
+    end_if
 
 END_SUB
 

@@ -23,6 +23,29 @@ SUB(CaptchaInit)
     $color_array[6] = $color_MAGENTA
     $color_array[7] = $color_HOTPINK
 
+    // to make transition from low wait to higher wait, so they add up to $whole_path_time:
+    // (x + nx) / 2 * c = t
+    // where x = time for first frame wait,
+    // nx = time for last (first times n)
+    // n = difference between first and last wait (n=3 means that last wait will be 3x longer than first)
+    // c = waits count
+    // t = whole path time
+    // x = 2t / (cn + c)
+
+    $whole_path_time = 0.65
+    // $diffTimesFirstLast = 4
+    // $waitsCount = $SCREENS_COUNT - 1
+    // $firstFrameWait = 2*$whole_path_time / ($waitsCount * $diffTimesFirstLast + $waitsCount)
+    // $stepEachFrame = ($diffTimesFirstLast - 1) * $firstFrameWait / ($waitsCount - 1)
+    // //$totalWait = 0
+    // for($i = 0, $i < $waitsCount)
+    //     $wms[$i] = round(($firstFrameWait + $stepEachFrame * $i)*1000, 0)
+    //     //$totalWait = $totalWait + $wms[$i]
+    //     //logwrite("wms[", $i, "] = ", $wms[$i])
+    // end_cyc
+
+    //logwrite("Total: ", $totalWait)
+
     $frameWaitMs = round(($whole_path_time * 1000 / ($SCREENS_COUNT - 1)), 0)
     logwrite("Frame wait: ", $frameWaitMs)
 
@@ -189,64 +212,115 @@ SUB(SolveCaptcha)
 
             logwrite($_date_str, " Transfer control to slpx.dll")
 
-            // parameters: heronum int, saveScreen bool (-1 - as fail, 0 - no save, 1 - as normal), logOutput bool
-            // call("slpx.dll", $heronum-1, $gift_saveScreenshotsAlways, $gift_logOutput)
-
-            HALT
+            // parameters: TODO
+            call("slpx.dll")
 
             $returnedValue = $_return1
             CheckDLLErrors($returnedValue)
 
             logwrite("returnedValue: ", $returnedValue)
             
-            $captcha_answer = $returnedValue - int($returnedValue / 8) * 8
+            $captcha_answer = $returnedValue
 
             $returnedValue = $returnedValue - $captcha_answer 
-            $conflict_count = ($returnedValue - (int($returnedValue / 65536) * 65536)) / 256
+            // $conflict_count = ($returnedValue - (int($returnedValue / 65536) * 65536)) / 256
 
-            $returnedValue = $returnedValue - $conflict_count * 256
+            // $returnedValue = $returnedValue - $conflict_count * 256
 
             $durationSolving = int($returnedValue / 65536)
 
-            logwrite("answer: ", $captcha_answer+1)
-            logwrite("conflict_count: ", $conflict_count)
-            logwrite("Time solving: ", $durationSolving/1000, "s.")
+            logwrite("answer: ", $captcha_answer)
+            // logwrite("conflict_count: ", $conflict_count)
+            // logwrite("Time solving: ", $durationSolving/1000, "s.")
 
-            // small wait to make sure that all heroes are clickable
+            // small wait to make sure that all boxes are clickable
             wait(0.3)
-
-            switch($failcounter)
-
-                case(0)
-
-                    if($conflict_count > $captcha_fail0_maxConflicts)
-                        $captcha_clickpass = 0
-                    end_if
-
-                case(1)
-
-                    if($conflict_count > $captcha_fail1_maxConflicts)
-                        $captcha_clickpass = 0
-                    end_if
-
-                case(2)
-
-                    if($conflict_count > $captcha_fail2_maxConflicts)
-                        $captcha_clickpass = 0
-                    end_if
-
-                case(3)
-
-                    if($conflict_count > $captcha_fail3_maxConflicts)
-                        $captcha_clickpass = 0
-                    end_if
-
-            END_SWITCH
 
             IF($captcha_clickpass = 1)
 
                 //move(rnd(($captcha_answer) * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
-                message_click(rnd($captcha_answer * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
+
+                $test_captcha_mode = 1
+
+                // LCLICK(719,278,762,338)  // 1
+                // LCLICK(823,312,866,373)  // 2
+                // LCLICK(857,414,899,477)  // 3
+                // LCLICK(820,517,864,584)  // 4
+                // LCLICK(719,551,760,618)  // 5
+                // LCLICK(615,516,661,582)  // 6
+                // LCLICK(582,411,625,478)  // 7
+                // LCLICK(616,309,660,372)  // 8
+
+                switch($captcha_answer)
+
+                    case(1)
+
+                        if($test_captcha_mode = 0)
+                            Random_click_in(719,278,762,338)
+                        else
+                            Random_move_in(719,278,762,338)
+                        end_if
+
+                    case(2)
+
+                        if($test_captcha_mode = 0)
+                            Random_click_in(823,312,866,373)
+                        else
+                            Random_move_in(823,312,866,373)
+                        end_if
+
+                    case(3)
+
+                        if($test_captcha_mode = 0)
+                            Random_click_in(857,414,899,477)
+                        else
+                            Random_move_in(857,414,899,477)
+                        end_if
+                        
+                    case(4)
+
+                        if($test_captcha_mode = 0)
+                            Random_click_in(820,517,864,584)
+                        else
+                            Random_move_in(820,517,864,584)
+                        end_if
+
+                    case(5)
+
+                        if($test_captcha_mode = 0)
+                            Random_click_in(719,551,760,618)
+                        else
+                            Random_move_in(719,551,760,618)
+                        end_if
+
+                    case(6)
+
+                        if($test_captcha_mode = 0)
+                            Random_click_in(615,516,661,582)
+                        else
+                            Random_move_in(615,516,661,582)
+                        end_if
+
+                    case(7)
+
+                        if($test_captcha_mode = 0)
+                            Random_click_in(582,411,625,478)
+                        else
+                            Random_move_in(582,411,625,478)
+                        end_if
+
+                    case(8)
+
+                        if($test_captcha_mode = 0)
+                            Random_click_in(616,309,660,372)
+                        else
+                            Random_move_in(616,309,660,372)
+                        end_if
+
+
+                END_SWITCH
+
+                // message_click(rnd($captcha_answer * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
 
                 WAIT(0.5)
                 GETSCREEN
@@ -276,7 +350,7 @@ SUB(SolveCaptcha)
 
                 IF(PXL(632-85,134) = 4806498)
 
-                    inc($failcounter, 1)
+                    //inc($failcounter, 1)
                     logwrite($_date_str, " Fail ", $failcounter)
                     TFWRITE("informgift.txt", STRCONCAT( " -   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", CC: ", $conflict_count, ", ", $restarts, " restarts"))
                     message_click(790,714)  // 1974563

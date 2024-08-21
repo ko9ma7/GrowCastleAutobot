@@ -1,3 +1,4 @@
+$SCREENS_COUNT = 15
 
 SUB(CaptchaInit)
 
@@ -22,15 +23,8 @@ SUB(CaptchaInit)
     $color_array[6] = $color_MAGENTA
     $color_array[7] = $color_HOTPINK
 
-    //$whole_path_time = 1.03
-    //$whole_path_time = 1.062321
-    $whole_path_time = 1.3
-
-    $tilt = $whole_path_time / 34
-
-    for($i = 0, $i < 17)
-        $wms[$i] = round(($i * $tilt / 8 + $tilt)*1000, 0)
-    end_cyc
+    $frameWaitMs = round(($whole_path_time * 1000 / ($SCREENS_COUNT - 1)), 0)
+    logwrite("Frame wait: ", $frameWaitMs)
 
     $ms_of_last_screen = 0
     $curr_frame_wait = 0
@@ -98,71 +92,17 @@ SUB(SolveCaptcha)
 
         WHILE(($crystalrightpos = 0) & ($finished = 0))
 
+            // colormode 5 crystal:
+            // LCLICK(744,447)  // 16768863
+
             wait(0.05)
 
             GETSCREEN
+            colormode(5)
 
-            IF((pxl(795-85,348) = 16761923) | (pxl(785-85,775) = 16761923) | (pxl(638-85,402) = 16761923) | (pxl(629-85,713) = 16761923) | (pxl(949-85,409) = 16761923) | (pxl(953-85,707) = 16761923) | (pxl(575-85,555) = 16761923) | (pxl(1004-85,566) = 16761923))
+            IF(pxl(744,447) = 16768863)
 
-                GETSCREEN
-
-                $heronum = 0
-
-                IF(pxl(638-85,402) = 16761923)
-
-                    $heronum = 1
-                    $crystalrightpos = 1
-
-                end_if
-                
-                IF(pxl(795-85,348) = 16761923)
-
-                    $heronum = 2
-                    $crystalrightpos = 1
-
-                end_if
-
-                IF(pxl(949-85,409) = 16761923)
-
-                    $heronum = 3
-                    $crystalrightpos = 1
-
-                end_if
-
-                IF(pxl(629-85,713) = 16761923)
-
-                    $heronum = 4
-                    $crystalrightpos = 1
-
-                end_if
-
-                IF(pxl(785-85,775) = 16761923)
-
-                    $heronum = 5
-                    $crystalrightpos = 1
-
-                end_if
-
-                IF(pxl(953-85,707) = 16761923)
-
-                    $heronum = 6
-                    $crystalrightpos = 1
-
-                end_if
-
-                IF(pxl(575-85,555) = 16761923)
-
-                    $heronum = 7
-                    $crystalrightpos = 1
-
-                end_if
-
-                IF(pxl(1004-85,566) = 16761923)
-
-                    $heronum = 8
-                    $crystalrightpos = 1
-
-                end_if
+                $crystalrightpos = 1
 
             ELSE
 
@@ -188,6 +128,7 @@ SUB(SolveCaptcha)
 
                 ELSE
 
+                    logwrite($_date_str, " Got in captcha solve block and didn't find crystal")
                     $finished = 1
 
                 END_IF
@@ -213,52 +154,25 @@ SUB(SolveCaptcha)
             CaptchaInit()
 
             logwrite($_date_str, " start click")
-            message_click(rnd(300, 435),rnd(747, 805))
+            message_click(rnd(1002, 1123),rnd(671, 731)) // updated
 
-            wait(0.2)
+            wait(1.6)
 
-            $ms_of_last_screen = $_ms
+            $screen_counter = 0
 
-            getscreen($ancillary_area_SX,$ancillary_area_SY,$ancillary_area_FX,$ancillary_area_FY)
-            getscreen($ancillary_area2_SX,$ancillary_area2_SY,$ancillary_area2_FX,$ancillary_area2_FY)
-            $imageFilePath = STRCONCAT($_pdir, "IgnoreColorArea.bmp")
-            screenshotFix($ancillary_area_SX + $screenShiftX,$ancillary_area_SY + $screenShiftY,$ancillary_area_FX + $screenShiftX,$ancillary_area_FY + $screenShiftY, $imageFilePath)
-            $imageFilePath = STRCONCAT($_pdir, "IgnoreColorArea2.bmp")
-            screenshotFix($ancillary_area2_SX + $screenShiftX,$ancillary_area2_SY + $screenShiftY,$ancillary_area2_FX + $screenShiftX,$ancillary_area2_FY + $screenShiftY, $imageFilePath)
+            while($screen_counter < $SCREENS_COUNT - 1)
 
-            wait(0.1)
-
-            $upperYScreenPoint = 508 - $vertical_length
-            //getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
-            getscreen(310, 345, 1132, 778)
-
-            $imageFilePath = STRCONCAT($_pdir, "GiftScreen_1.bmp")
-            //screenshotFix(310 + $screenShiftX, $upperYScreenPoint, 1132 + $screenShiftX, $upperYScreenPoint + 114, $imageFilePath)
-            screenshotFix(310 + $screenShiftX, 345 + $screenShiftY, 1132 + $screenShiftX, 778 + $screenShiftY, $imageFilePath)
-
-            $curr_frame_wait = 647 - ($_ms - $ms_of_last_screen)
-
-            if($curr_frame_wait > 0)
-                waitms($curr_frame_wait)
-            end_if
-
-            $screen_counter=1
-
-            while($screen_counter < 17)
+                // captcha block coords: 504, 204, 972, 672
 
                 $ms_of_last_screen = $_ms
 
-                //getscreen(int($screen_counter/9) * 823 , ($screen_counter - 9 * int($screen_counter/9)) * 115,  int($screen_counter/9) * 823 + 822, ($screen_counter - 9 * int($screen_counter/9)) * 115 + 114)
-
-                $upperYScreenPoint = 508 - int($vertical_length * (1 - $screen_counter/17))
-                //getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
-                getscreen(310, 345, 1132, 778)
+                getscreen(504, 204, 972, 672)
 
                 $imageFilePath = STRCONCAT($_pdir, "GiftScreen_", $screen_counter+1, ".bmp")
-                //screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
-                screenshotFix(310 + $screenShiftX, 345 + $screenShiftY, 1132 + $screenShiftX, 778 + $screenShiftY, $imageFilePath)
+                screenshotFix(504 + $screenShiftX, 204 + $screenShiftY, 972 + $screenShiftX, 672 + $screenShiftY, $imageFilePath) // updated
                 
-                $curr_frame_wait = $wms[$screen_counter] - $_ms + $ms_of_last_screen
+                //$curr_frame_wait = $wms[$screen_counter] - $_ms + $ms_of_last_screen
+                $curr_frame_wait = $frameWaitMs - $_ms + $ms_of_last_screen
 
                 if($curr_frame_wait > 0)
                     waitms($curr_frame_wait)
@@ -268,18 +182,17 @@ SUB(SolveCaptcha)
 
             end_cyc
 
-            $upperYScreenPoint = 508 - int($vertical_length * (1 - $screen_counter/17))
-            //getscreen(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114)
-            getscreen(310, 345, 1132, 778)
-
-            $imageFilePath = STRCONCAT($_pdir, "GiftScreen_18.bmp")
-            //screenshotFix(310, $upperYScreenPoint, 1132, $upperYScreenPoint + 114, $imageFilePath)
-            screenshotFix(310 + $screenShiftX, 345 + $screenShiftY, 1132 + $screenShiftX, 778 + $screenShiftY, $imageFilePath)
+            // last screen out of loop to avoid unneeded wait
+            getscreen(504, 204, 972, 672)
+            $imageFilePath = STRCONCAT($_pdir, "GiftScreen_", $screen_counter+1, ".bmp")
+            screenshotFix(504 + $screenShiftX, 204 + $screenShiftY, 972 + $screenShiftX, 672 + $screenShiftY, $imageFilePath) // updated
 
             logwrite($_date_str, " Transfer control to slpx.dll")
 
             // parameters: heronum int, saveScreen bool (-1 - as fail, 0 - no save, 1 - as normal), logOutput bool
-            call("slpx.dll", $heronum-1, $gift_saveScreenshotsAlways, $gift_logOutput)
+            // call("slpx.dll", $heronum-1, $gift_saveScreenshotsAlways, $gift_logOutput)
+
+            HALT
 
             $returnedValue = $_return1
             CheckDLLErrors($returnedValue)

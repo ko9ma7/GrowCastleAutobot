@@ -1,30 +1,24 @@
 
 /screens
-/FailedGifts
-/Gifts
+/Captchas
+/Failed captchas
 
-GiftScreen_1.bmp
-GiftScreen_2.bmp
-GiftScreen_3.bmp
-GiftScreen_4.bmp
-GiftScreen_5.bmp
-GiftScreen_6.bmp
-GiftScreen_7.bmp
-GiftScreen_8.bmp
-GiftScreen_9.bmp
-GiftScreen_10.bmp
-GiftScreen_11.bmp
-GiftScreen_12.bmp
-GiftScreen_13.bmp
-GiftScreen_14.bmp
-GiftScreen_15.bmp
-GiftScreen_16.bmp
-GiftScreen_17.bmp
-GiftScreen_18.bmp
-IgnoreColorArea.bmp
-IgnoreColorArea2.bmp
+CaptchaImage_1.bmp
+CaptchaImage_2.bmp
+CaptchaImage_3.bmp
+CaptchaImage_4.bmp
+CaptchaImage_5.bmp
+CaptchaImage_6.bmp
+CaptchaImage_7.bmp
+CaptchaImage_8.bmp
+CaptchaImage_9.bmp
+CaptchaImage_10.bmp
+CaptchaImage_11.bmp
+CaptchaImage_12.bmp
+CaptchaImage_13.bmp
+CaptchaImage_14.bmp
+CaptchaImage_15.bmp
 
 *.exp
 *.lib
 *.pdb
-giftLog.log

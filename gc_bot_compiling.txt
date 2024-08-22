@@ -8,20 +8,17 @@ Sub(CheckDLLErrors, $exitCode)
         case(20)
             $dialog = DIALOGBOX("For some reason couldnt get current directory path. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
             halt
+        case(10)
+            $dialog = DIALOGBOX("Wrong parameters count. Should be 1 or 2", 1, 1)
+            halt
+        case(11)
+            $dialog = DIALOGBOX("Wrong parameter 1. Must be 0 or 1", 1, 1)
+            halt
+        case(12)
+            $dialog = DIALOGBOX("Wrong parameter 2. Must be 0 or 1", 1, 1)
+            halt
         case(100)
             $dialog = DIALOGBOX("Wrong test input. Should be 69", 1, 1)
-            halt
-        case(101)
-            $dialog = DIALOGBOX("Wrong heronum (parameter 1). Should be 0 - 7", 1, 1)
-            halt
-        case(102)
-            $dialog = DIALOGBOX("Wrong drawMode (parameter 2). Should be -1, 0 or 1", 1, 1)
-            halt
-        case(103)
-            $dialog = DIALOGBOX("Wrong parameters count. Should be 1 or 3", 1, 1)
-            halt
-        case(104)
-            $dialog = DIALOGBOX("Wrong logOutput (parameter 3). Should be 0 or 1", 1, 1)
             halt
 
     END_SWITCH

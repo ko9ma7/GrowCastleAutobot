@@ -191,7 +191,7 @@ SUB(SolveCaptcha)
 
                 getscreen(504, 204, 972, 672)
 
-                $imageFilePath = STRCONCAT($_pdir, "GiftScreen_", $screen_counter+1, ".bmp")
+                $imageFilePath = STRCONCAT($_pdir, "CaptchaImage_", $screen_counter+1, ".bmp")
                 screenshotFix(504 + $screenShiftX, 204 + $screenShiftY, 972 + $screenShiftX, 672 + $screenShiftY, $imageFilePath) // updated
                 
                 //$curr_frame_wait = $wms[$screen_counter] - $_ms + $ms_of_last_screen
@@ -207,34 +207,40 @@ SUB(SolveCaptcha)
 
             // last screen out of loop to avoid unneeded wait
             getscreen(504, 204, 972, 672)
-            $imageFilePath = STRCONCAT($_pdir, "GiftScreen_", $screen_counter+1, ".bmp")
+            $imageFilePath = STRCONCAT($_pdir, "CaptchaImage_", $screen_counter+1, ".bmp")
             screenshotFix(504 + $screenShiftX, 204 + $screenShiftY, 972 + $screenShiftX, 672 + $screenShiftY, $imageFilePath) // updated
 
             logwrite($_date_str, " Transfer control to slpx.dll")
 
-            // parameters: TODO
-            call("slpx.dll")
+            // parameters: 1 - save images, 2 - fail mode (make screens in separate folder)
+            call("slpx.dll", 1, 0)
 
             $returnedValue = $_return1
             CheckDLLErrors($returnedValue)
 
             logwrite("returnedValue: ", $returnedValue)
             
-            $captcha_answer = $returnedValue
+            $captcha_answer = $returnedValue - int($returnedValue / 8) * 8
 
-            $returnedValue = $returnedValue - $captcha_answer 
-            // $conflict_count = ($returnedValue - (int($returnedValue / 65536) * 65536)) / 256
+            $returnedValue = $returnedValue - $captcha_answer
 
-            // $returnedValue = $returnedValue - $conflict_count * 256
+            $captcha_answer = $captcha_answer + 1
 
-            $durationSolving = int($returnedValue / 65536)
+            $scoreMax = ($returnedValue - (int($returnedValue / 8192) * 8192)) / 256
+            $returnedValue = $returnedValue - $scoreMax * 256
+
+            $secondScoreMax = ($returnedValue - (int($returnedValue / 131072) * 131072)) / 8192
+            $returnedValue = $returnedValue - $secondScoreMax * 8192
+
+            $durationSolving = int($returnedValue / 131072)
 
             logwrite("answer: ", $captcha_answer)
-            // logwrite("conflict_count: ", $conflict_count)
-            // logwrite("Time solving: ", $durationSolving/1000, "s.")
+            logwrite("scoreMax: ", $scoreMax)
+            logwrite("secondScoreMax: ", $secondScoreMax)
+            logwrite("Time solving: ", $durationSolving/1000, "s.")
 
             // small wait to make sure that all boxes are clickable
-            wait(0.3)
+            //wait(0.3)
 
             IF($captcha_clickpass = 1)
 
@@ -362,21 +368,24 @@ SUB(SolveCaptcha)
                     if($gift_saveFailedGiftScreenshots = 1)
 
                         logwrite($_date_str, " Transfer control to slpx.dll (FAIL mode)")
-                        call("slpx.dll", $heronum-1, -1, $gift_logOutput)
-
-                        $returnedValue = $_return1
-                        CheckDLLErrors($returnedValue)
+                        call("slpx.dll", 1, 1)
 
                         logwrite("returnedValue: ", $returnedValue)
                         
                         $captcha_answer = $returnedValue - int($returnedValue / 8) * 8
 
-                        $returnedValue = $returnedValue - $captcha_answer 
-                        $conflict_count = ($returnedValue - (int($returnedValue / 65536) * 65536)) / 256
+                        $returnedValue = $returnedValue - $captcha_answer
 
-                        $returnedValue = $returnedValue - $conflict_count * 256
+                        $captcha_answer = $captcha_answer + 1
 
-                        $durationSolving = int($returnedValue / 65536)
+                        $scoreMax = ($returnedValue - (int($returnedValue / 8192) * 8192)) / 256
+                        $returnedValue = $returnedValue - $scoreMax * 256
+
+                        $secondScoreMax = ($returnedValue - (int($returnedValue / 131072) * 131072)) / 8192
+                        $returnedValue = $returnedValue - $secondScoreMax * 8192
+
+                        $durationSolving = int($returnedValue / 131072)
+
 
                         logwrite("Saved screens of failed gift in ", $durationSolving, "s.")
 

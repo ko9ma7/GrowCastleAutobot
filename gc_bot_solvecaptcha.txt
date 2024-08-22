@@ -2,27 +2,6 @@ $SCREENS_COUNT = 15
 
 SUB(CaptchaInit)
 
-    // $heronum = 5
-
-    $ancillary_area_SX = 322
-    $ancillary_area_SY = 302
-    $ancillary_area_FX = 496
-    $ancillary_area_FY = 832
-
-    $ancillary_area2_SX = 938
-    $ancillary_area2_SY = 302
-    $ancillary_area2_FX = 1141
-    $ancillary_area2_FY = 832
-
-    $color_array[0] = $color_RED
-    $color_array[1] = $color_ORANGE
-    $color_array[2] = $color_YELLOW
-    $color_array[3] = $color_GREEN
-    $color_array[4] = $color_CYAN
-    $color_array[5] = $color_BLUE
-    $color_array[6] = $color_MAGENTA
-    $color_array[7] = $color_HOTPINK
-
     // to make transition from low wait to higher wait, so they add up to $whole_path_time:
     // (x + nx) / 2 * c = t
     // where x = time for first frame wait,
@@ -33,6 +12,7 @@ SUB(CaptchaInit)
     // x = 2t / (cn + c)
 
     $whole_path_time = 0.65
+
     // $diffTimesFirstLast = 4
     // $waitsCount = $SCREENS_COUNT - 1
     // $firstFrameWait = 2*$whole_path_time / ($waitsCount * $diffTimesFirstLast + $waitsCount)
@@ -54,42 +34,6 @@ SUB(CaptchaInit)
 
     $captcha_answer = 0
 
-    switch($heronum)
-
-        case(1)
-
-            $vertical_length = 89
-            
-        case(2)
-
-            $vertical_length = 115
-
-        case(3)
-
-            $vertical_length = 84
-
-        case(4)
-
-            $vertical_length = -90
-
-        case(5)
-
-            $vertical_length = -123
-
-        case(6)
-
-            $vertical_length = -95
-
-        case(7)
-
-            $vertical_length = 0
-
-        case(8)
-
-            $vertical_length = 0
-
-    END_SWITCH
-
 END_SUB
 
 SUB(SolveCaptcha)
@@ -110,7 +54,6 @@ SUB(SolveCaptcha)
     WHILE(($finished = 0) & ($failcounter < 4))
 
         $crystalrightpos= 0
-        $heronum= 0
         $captcha_solving_bool = 1
 
         WHILE(($crystalrightpos = 0) & ($finished = 0))
@@ -163,7 +106,8 @@ SUB(SolveCaptcha)
         if($crystalrightpos = 1)
 
             getscreen
-            WHILE(PXL(376-85,564) = 3687243)
+            
+            WHILE(PXL(420,732) = 3423819)
 
                 logwrite($_date_str, " wait for gift timer")
                 WAIT(1)
@@ -219,7 +163,7 @@ SUB(SolveCaptcha)
             CheckDLLErrors($returnedValue)
 
             logwrite("returnedValue: ", $returnedValue)
-            
+
             $captcha_answer = $returnedValue - int($returnedValue / 8) * 8
 
             $returnedValue = $returnedValue - $captcha_answer
@@ -239,14 +183,12 @@ SUB(SolveCaptcha)
             logwrite("secondScoreMax: ", $secondScoreMax)
             logwrite("Time solving: ", $durationSolving/1000, "s.")
 
-            // small wait to make sure that all boxes are clickable
-            //wait(0.3)
+            // wait to make sure that all boxes are clickable
+            wait(0.5)
 
             IF($captcha_clickpass = 1)
 
-                //move(rnd(($captcha_answer) * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
-
-                $test_captcha_mode = 1
+                $test_captcha_mode = 0
 
                 // LCLICK(719,278,762,338)  // 1
                 // LCLICK(823,312,866,373)  // 2
@@ -326,8 +268,6 @@ SUB(SolveCaptcha)
 
                 END_SWITCH
 
-                // message_click(rnd($captcha_answer * 101 + 349,($captcha_answer) * 101 + 373),rnd(560,591))
-
                 WAIT(0.5)
                 GETSCREEN
 
@@ -358,7 +298,7 @@ SUB(SolveCaptcha)
 
                     //inc($failcounter, 1)
                     logwrite($_date_str, " Fail ", $failcounter)
-                    TFWRITE("informgift.txt", STRCONCAT( " -   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", CC: ", $conflict_count, ", ", $restarts, " restarts"))
+                    TFWRITE("informgift.txt", STRCONCAT(" -   ", $captcha_answer, ", ", $_date_str, " ", $_time_str, ", F: ", $secondScoreMax, "/", $scoreMax, ", ", $restarts, " R"))
                     message_click(790,714)  // 1974563
 
                     if($make_hints_failGift = 1)
@@ -395,7 +335,7 @@ SUB(SolveCaptcha)
 
                     $captcha_solving_bool = 0
                     logwrite($_date_str, " Gift solved in ", $hoursnum,":", $minsnum,":", $secsnum, ":", $millisecsnum)
-                    TFWRITE("informgift.txt", STRCONCAT( " +   ", "h", $heronum, "p", $captcha_answer+1 , ", ", $_date_str, " ", $_time_str, ", CC: ", $conflict_count, ", ", $restarts, " restarts, ", $hoursnum, ":", $minsnum, ":", $secsnum, ":", $millisecsnum))
+                    TFWRITE("informgift.txt", STRCONCAT( " +   ", $captcha_answer, ", ", $_date_str, " ", $_time_str, ", F: ", $secondScoreMax, "/", $scoreMax, ", ", $restarts, " R, ", $hoursnum, ":", $minsnum, ":", $secsnum, ":", $millisecsnum))
 
                     $failcounter =0
                     $finished =1

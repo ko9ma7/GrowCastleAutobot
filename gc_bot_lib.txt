@@ -208,12 +208,13 @@ END_SUB
 
 SUB(CheckExitWindow)
 
-    if(pxl(512,419) = 4806498)
-    if(pxl(1056,419) = 4806498)
-    if(pxl(442,534) = 2839928)
-    if(pxl(684,540) = 2839928)
-    if(pxl(794,538) =1551083)
-    if(pxl(1030,540) = 1551083)
+
+    if(pxl(444,481) = 9487843)
+    if(pxl(464,494) = 3896999)
+    if(pxl(693,491) = 3896999)
+    if(pxl(681,540) = 2839928)
+    if(pxl(828,489) = 2342642)
+    if(pxl(829,540) = 1551083)
     
         logwrite($_date_str, " Close quit window ")
 
@@ -232,12 +233,14 @@ END_SUB
 
 SUB(CheckPauseWindow)
 
-    if(pxl(605,364) = 4806498)
-    if(pxl(867,364) = 4806498)
-    if(pxl(509,470) = 3896999)
-    if(pxl(690,470) = 3896999)
-    if(pxl(1022,476) = 2342642)
-    if(pxl(867,526) = 1551083)
+    if(pxl(470,378) = 4806241)
+    if(pxl(504,483) = 3896999)
+    if(pxl(690,480) = 3896999)
+    if(pxl(516,540) = 2839928)
+    if(pxl(693,538) = 2839928)
+    if(pxl(784,481) = 6869487)
+    if(pxl(1024,536) = 1551083)
+    if(pxl(869,486) = 2342642)
 
         logwrite($_date_str, " pause exit ")
 
@@ -245,6 +248,8 @@ SUB(CheckPauseWindow)
         wait(0.05)
         GETSCREEN
 
+    END_IF
+    END_IF
     END_IF
     END_IF
     END_IF
@@ -277,24 +282,23 @@ END_SUB
 
 SUB(CheckLoseABWindow)
 
-    //if(pxl(508,297) = 16777215)
-    //if(pxl(612,275) = 16777215)
-    //if(pxl(755,297) = 16777215)
-    //if(pxl(814,275) = 16777215)
-    //if(pxl(663,370) = 14342874)
-    //if(pxl(471,384) = 4806498)
-    
-    if(pxl(483,265)  = 4806498)
-    if(pxl(995,375)  = 4806498)
-    if(pxl(481,385)  = 4806498)
-    if(pxl(1020,522) = 3423819)
-    if(pxl(1029,246) = 1974563)
+    if(pxl(454,345) = 3423819)
+    if(pxl(1027,344) = 3423819)
+    if(pxl(457,508) = 3423819)
+    if(pxl(1025,512) = 3423819)
+    if(pxl(666,572) = 6869487)
+    if(pxl(812,574) = 2342642)
+    if(pxl(663,618) = 1551083)
+    if(pxl(818,284) = 4806498)
 
         Rmessage_click(1157,466)
         logwrite($_date_str, " ab lost window exit")
         wait(0.05)
         GETSCREEN
 
+    END_IF
+    END_IF
+    END_IF
     END_IF
     END_IF
     END_IF

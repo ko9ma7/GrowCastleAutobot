@@ -106,7 +106,7 @@ SUB(SolveCaptcha)
         if($crystalrightpos = 1)
 
             getscreen
-            
+
             WHILE(PXL(420,732) = 3423819)
 
                 logwrite($_date_str, " wait for gift timer")
@@ -170,17 +170,15 @@ SUB(SolveCaptcha)
 
             $captcha_answer = $captcha_answer + 1
 
-            $scoreMax = ($returnedValue - (int($returnedValue / 8192) * 8192)) / 256
-            $returnedValue = $returnedValue - $scoreMax * 256
+            $resemblance = ($returnedValue - (int($returnedValue / 131072) * 131072)) / 256
+            $returnedValue = $returnedValue - $resemblance * 256
 
-            $secondScoreMax = ($returnedValue - (int($returnedValue / 131072) * 131072)) / 8192
-            $returnedValue = $returnedValue - $secondScoreMax * 8192
+            $resemblance = $resemblance / 10
 
             $durationSolving = int($returnedValue / 131072)
 
             logwrite("answer: ", $captcha_answer)
-            logwrite("scoreMax: ", $scoreMax)
-            logwrite("secondScoreMax: ", $secondScoreMax)
+            logwrite("resemblance: ", $resemblance, "%")
             logwrite("Time solving: ", $durationSolving/1000, "s.")
 
             // wait to make sure that all boxes are clickable
@@ -298,7 +296,7 @@ SUB(SolveCaptcha)
 
                     //inc($failcounter, 1)
                     logwrite($_date_str, " Fail ", $failcounter)
-                    TFWRITE("informgift.txt", STRCONCAT(" -   ", $captcha_answer, ", ", $_date_str, " ", $_time_str, ", F: ", $secondScoreMax, "/", $scoreMax, ", ", $restarts, " R"))
+                    TFWRITE("informgift.txt", STRCONCAT(" -   ", $captcha_answer, ", ", $_date_str, " ", $_time_str, ", R: ", $resemblance, ", ", $restarts, " r"))
                     message_click(790,714)  // 1974563
 
                     if($make_hints_failGift = 1)
@@ -318,14 +316,12 @@ SUB(SolveCaptcha)
 
                         $captcha_answer = $captcha_answer + 1
 
-                        $scoreMax = ($returnedValue - (int($returnedValue / 8192) * 8192)) / 256
-                        $returnedValue = $returnedValue - $scoreMax * 256
+                        $resemblance = ($returnedValue - (int($returnedValue / 131072) * 131072)) / 256
+                        $returnedValue = $returnedValue - $resemblance * 256
 
-                        $secondScoreMax = ($returnedValue - (int($returnedValue / 131072) * 131072)) / 8192
-                        $returnedValue = $returnedValue - $secondScoreMax * 8192
+                        $resemblance = $resemblance / 10
 
                         $durationSolving = int($returnedValue / 131072)
-
 
                         logwrite("Saved screens of failed gift in ", $durationSolving, "s.")
 
@@ -335,7 +331,7 @@ SUB(SolveCaptcha)
 
                     $captcha_solving_bool = 0
                     logwrite($_date_str, " Gift solved in ", $hoursnum,":", $minsnum,":", $secsnum, ":", $millisecsnum)
-                    TFWRITE("informgift.txt", STRCONCAT( " +   ", $captcha_answer, ", ", $_date_str, " ", $_time_str, ", F: ", $secondScoreMax, "/", $scoreMax, ", ", $restarts, " R, ", $hoursnum, ":", $minsnum, ":", $secsnum, ":", $millisecsnum))
+                    TFWRITE("informgift.txt", STRCONCAT( " +   ", $captcha_answer, ", ", $_date_str, " ", $_time_str, ", R: ", $resemblance, ", ", $restarts, " R, ", $hoursnum, ":", $minsnum, ":", $secsnum, ":", $millisecsnum))
 
                     $failcounter =0
                     $finished =1
@@ -350,7 +346,8 @@ SUB(SolveCaptcha)
 
                         $replaysforskip20 = $replaysforskip20 - 1
                         $quitcycle = 0
-                        while(($quitcycle < 5) & ((pxl(605,364) ! 4806498) | (pxl(867,364) ! 4806498) | (pxl(509,470) ! 3896999) | (pxl(690,470) ! 3896999) | (pxl(1022,476) ! 2342642) | (pxl(867,526) ! 1551083)))
+
+                        while(($quitcycle < 5) & ((pxl(504,483) ! 3896999) & (pxl(690,480) ! 3896999) & (pxl(516,540) ! 2839928) & (pxl(693,538) ! 2839928) & (pxl(784,481) ! 6869487) & (pxl(1024,536) ! 1551083) & (pxl(869,486) ! 2342642)))
 
                             inc($quitcycle, 1)
                             Rmessage_click(915-85,362)
@@ -361,7 +358,7 @@ SUB(SolveCaptcha)
 
                         if($quitcycle < 5)
 
-                            message_click(997-85,500)  
+                            message_click(915,507)
                             wait(0.3)
 
                         end_if
@@ -373,7 +370,7 @@ SUB(SolveCaptcha)
 
                         Rmessage_click(915-85,362)
                         wait(0.3)
-                        message_click(997-85,500)  
+                        message_click(915,507)
                         wait(0.3)
 
                     END_IF

@@ -359,7 +359,7 @@ END_SUB
 
 sub(CheckABExitWindow)
 
-    if(pxl(659,561) = 3879896)
+    if(pxl(788,506) = 3879896)
 
         wait(0.2)
         logwrite($_date_str, " ab quit")
@@ -1592,7 +1592,7 @@ sub(Wait_for_cancel_ab_button)
 
     $stopwatch = 0
 
-    while((pxl(659,561) = 3879896) & ($stopwatch < 50))
+    while((pxl(788,506) = 3879896) & ($stopwatch < 50))
 
         wait(0.2)
         getscreen
@@ -1612,7 +1612,7 @@ sub(Wait_for_cancel_ab_button)
         $stopwatch = 0
         $AB_LOST_WINDOW = 0
 
-        while((pxl(659,561) ! 3879896) & ($stopwatch < 2400) & ($AB_LOST_WINDOW = 0))
+        while((pxl(788,506) ! 3879896) & ($stopwatch < 2400) & ($AB_LOST_WINDOW = 0))
 
             AddSpeed()
             CheckSky()
@@ -1621,12 +1621,14 @@ sub(Wait_for_cancel_ab_button)
                 CheckPauseWindow()
                 CheckExitWindow()
 
-                if(pxl(508,297) = 16777215)
-                if(pxl(612,275) = 16777215)
-                if(pxl(755,297) = 16777215)
-                if(pxl(814,275) = 16777215)
-                if(pxl(663,370) = 14342874)
-                if(pxl(471,384) = 4806498)
+                if(pxl(454,345) = 3423819)
+                if(pxl(1027,344) = 3423819)
+                if(pxl(457,508) = 3423819)
+                if(pxl(1025,512) = 3423819)
+                if(pxl(666,572) = 6869487)
+                if(pxl(812,574) = 2342642)
+                if(pxl(663,618) = 1551083)
+                if(pxl(818,284) = 4806498)
 
                     Rmessage_click(1157,466)
                     logwrite($_date_str, " ab lost window exit")
@@ -1634,6 +1636,8 @@ sub(Wait_for_cancel_ab_button)
                     GETSCREEN
                     $AB_LOST_WINDOW = 1
 
+                END_IF
+                END_IF
                 END_IF
                 END_IF
                 END_IF
@@ -2030,15 +2034,15 @@ sub(Put_on_AB)
 
     message_click(1343-85,796)  // 10657679
     wait($wait_after_AB_open)
-    
+
     if($ab_tab = 1)
 
-        message_click(592-85,528)  // 2143978
+        message_click(509,468)  // 2143978
         wait($wait_after_gab_open)
 
     END_IF
 
-    message_click(rnd(738-85,910-85),rnd(504,561))  // 6869487
+    message_click(742,473)  // 6869487
     wait(0.3)
 
 END_SUB

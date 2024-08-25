@@ -9,7 +9,7 @@ WHILE(true)
     CheckIfCaptcha()
     IF($captcha_on_screen = 1)
 
-        if($make_hints_gift = 1)
+        if($make_hints_captcha = 1)
             hintpopup("Gift")
         end_if
 

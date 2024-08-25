@@ -43,7 +43,7 @@ $gift_notFoundScreen = 1
 
 //background_mode only
 
-$make_hints_gift = 0
+$make_hints_captcha = 0
 $make_hints_failGift = 0
 
 $make_hints_cant_fight_dungeon = 0

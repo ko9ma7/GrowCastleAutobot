@@ -94,7 +94,7 @@ $adforcoins = strfilter( TFREAD("_main_settings.txt", 15),"1234567890." , 1 )// 
 $adafterskip20 = strfilter( TFREAD("_main_settings.txt", 16),"1234567890." , 1 )// 0 or 1
 $adduringspeedup = strfilter( TFREAD("_main_settings.txt", 17),"1234567890." , 1 )// 0 or 1
 
-$solve_capcha = strfilter( TFREAD("_main_settings.txt", 18),"1234567890." , 1 )// 0 or 1
+$solve_capcha = 0 // strfilter( TFREAD("_main_settings.txt", 18),"1234567890." , 1 )// 0 or 1
 $restartongift = strfilter( TFREAD("_main_settings.txt", 19),"1234567890." , 1 )// 0 or 1
 
 $heal_altar = strfilter( TFREAD("_main_settings.txt", 20),"1234567890." , 1 )// 0 or 1

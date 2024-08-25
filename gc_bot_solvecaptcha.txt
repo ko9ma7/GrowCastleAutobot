@@ -1,4 +1,4 @@
-$SCREENS_COUNT = 15
+$SCREENS_COUNT = 48
 
 SUB(CaptchaInit)
 
@@ -11,7 +11,7 @@ SUB(CaptchaInit)
     // t = whole path time
     // x = 2t / (cn + c)
 
-    $whole_path_time = 0.65
+    $whole_path_time = 2
 
     // $diffTimesFirstLast = 4
     // $waitsCount = $SCREENS_COUNT - 1
@@ -123,8 +123,6 @@ SUB(SolveCaptcha)
             logwrite($_date_str, " start click")
             message_click(rnd(1002, 1123),rnd(671, 731)) // updated
 
-            wait(1.6)
-
             $screen_counter = 0
 
             while($screen_counter < $SCREENS_COUNT - 1)
@@ -186,7 +184,7 @@ SUB(SolveCaptcha)
 
             IF($captcha_clickpass = 1)
 
-                $test_captcha_mode = 0
+                $test_captcha_mode = 1
 
                 // LCLICK(719,278,762,338)  // 1
                 // LCLICK(823,312,866,373)  // 2
@@ -392,7 +390,7 @@ SUB(SolveCaptcha)
 
     END_CYC
 
-    IF(($failcounter > 3) & (PXL(406-85,152) = 4806498))
+    IF(($failcounter > 1) & (PXL(406-85,152) = 4806498))
 
         logwrite($_date_str, " 4 fails on captcha. clicker will be stopped ")
         WAIT(310)

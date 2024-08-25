@@ -2358,9 +2358,11 @@ END_SUB
 
 SUB(WaitIfDragonTimer)
 
-    GETSCREEN(697-85,146,699-85,148)
+    // LCLICK(605,137)  // 5197823
+
+    GETSCREEN(605,137,605,137)
     
-    if((pxl(698-85,147) = 5197823) & ($dungeon_number < 7))
+    if((pxl(605,137) = 5197823) & ($dungeon_number < 7))
 
         wait(0.05)
         logwrite($_date_str, " dungeon farm: timer detected. waiting for timer ends")
@@ -2371,10 +2373,10 @@ SUB(WaitIfDragonTimer)
 
         WHILE(($dungeontimer_disapp = 0) & ($_ms - $dungeon_timer_start_ms < 10000))
 
-            if(pxl(613,147) = 5197823)
+            if(pxl(605,137) = 5197823)
 
                 wait(0.03)
-                GETSCREEN(697-85,146,699-85,148)
+                GETSCREEN(605,137,605,137)
 
             ELSE
 

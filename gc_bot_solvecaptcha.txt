@@ -121,6 +121,7 @@ SUB(SolveCaptcha)
             CaptchaInit()
 
             logwrite($_date_str, " start click")
+            $start_Click_ms = $_ms
             message_click(rnd(1002, 1123),rnd(671, 731)) // updated
 
             $screen_counter = 0
@@ -180,7 +181,10 @@ SUB(SolveCaptcha)
             logwrite("Time solving: ", $durationSolving/1000, "s.")
 
             // wait to make sure that all boxes are clickable
-            wait(0.5)
+
+            if($_ms - $start_Click_ms < 2000)
+                waitms(2000 - $_ms + $start_Click_ms)
+            end_if
 
             IF($captcha_clickpass = 1)
 

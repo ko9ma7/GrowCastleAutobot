@@ -174,7 +174,7 @@ SUB(SolveCaptcha)
 
             $resemblance = $resemblance / 10
 
-            $durationSolving = int($returnedValue / 131072)
+            $durationSolving = int($returnedValue / 131072) * 4
 
             logwrite("answer: ", $captcha_answer)
             logwrite("resemblance: ", $resemblance, "%")
@@ -323,7 +323,7 @@ SUB(SolveCaptcha)
 
                         $resemblance = $resemblance / 10
 
-                        $durationSolving = int($returnedValue / 131072)
+                        $durationSolving = int($returnedValue / 131072) * 4
 
                         logwrite("Saved screens of failed gift in ", $durationSolving, "s.")
 

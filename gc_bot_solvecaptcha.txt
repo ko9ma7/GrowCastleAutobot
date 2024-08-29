@@ -1,4 +1,4 @@
-$SCREENS_COUNT = 48
+$SCREENS_COUNT = 24
 
 SUB(CaptchaInit)
 
@@ -182,13 +182,13 @@ SUB(SolveCaptcha)
 
             // wait to make sure that all boxes are clickable
 
-            if($_ms - $start_Click_ms < 2000)
-                waitms(2000 - $_ms + $start_Click_ms)
+            if($_ms - $start_Click_ms < 3500)
+                waitms(3500 - $_ms + $start_Click_ms)
             end_if
 
             IF($captcha_clickpass = 1)
 
-                $test_captcha_mode = 1
+                $test_captcha_mode = 0
 
                 // LCLICK(719,278,762,338)  // 1
                 // LCLICK(823,312,866,373)  // 2

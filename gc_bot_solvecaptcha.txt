@@ -178,7 +178,6 @@ SUB(SolveCaptcha)
 
                     $time_quit = $time_quit + 1
                     wait(0.1)
-                    logwrite("waittttt")
 
                 end_if
 
@@ -364,7 +363,6 @@ SUB(SolveCaptcha)
 
                                     $time_quit = $time_quit + 1
                                     wait(0.1)
-                                    logwrite("waittttt")
 
                                 end_if
 

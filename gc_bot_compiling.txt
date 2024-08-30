@@ -8,8 +8,8 @@ Sub(CheckDLLErrors, $exitCode)
         case(20)
             $dialog = DIALOGBOX("For some reason couldnt get current directory path. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
             halt
-        case(10)
-            $dialog = DIALOGBOX("Wrong parameters count. Should be 1 or 2", 1, 1)
+        case(159)
+            $dialog = DIALOGBOX("slpx.exe wasnt found.", 1, 1)
             halt
         case(11)
             $dialog = DIALOGBOX("Wrong parameter 1. Must be 0 or 1", 1, 1)
@@ -18,17 +18,13 @@ Sub(CheckDLLErrors, $exitCode)
             $dialog = DIALOGBOX("Wrong parameter 2. Must be 0 or 1", 1, 1)
             halt
         case(100)
-            $dialog = DIALOGBOX("Wrong test input. Should be 69", 1, 1)
+            $dialog = DIALOGBOX("Wrong parameters count. Must be 4", 1, 1)
             halt
 
     END_SWITCH
 
-    if(($exitCode > 50) & ($exitCode < 69))
-        $dialog = DIALOGBOX(STRCONCAT("Couldnt find image ", $_pdir, "GiftScreen_", $exitCode - 50, ".bmp'. Should be in clicker core folder"), 1, 1)
-        halt
-    end_if
-    if($exitCode = 69)
-        $dialog = DIALOGBOX(STRCONCAT("Couldnt find image ", $_pdir, "IgnoreColorArea.bmp'. Should be in clicker core folder"), 1, 1)
+    if(($exitCode > 50) & ($exitCode < 75))
+        $dialog = DIALOGBOX(STRCONCAT("Couldnt find image ", $_pdir, "CaptchaImage_", $exitCode - 50, ".bmp'. Should be in clicker core folder"), 1, 1)
         halt
     end_if
 

@@ -2,15 +2,6 @@ logwrite($_date_str, " Clicker started")
 
 $last_cleanup_time = $_time_t
 
-
-$relogins_count = 0
-$relogins_current = 0
-
-$reloads_to_reset = 20
-
-
-
-
 WHILE(true)
 
     GETSCREEN
@@ -24,106 +15,11 @@ WHILE(true)
 
         IF($solve_capcha = 1)
             SolveCaptcha()
-
-
-
-            getscreen
-
-            while(pxl(877,527) ! 1551083)
-
-                Rmessage_click(1157,466) // try open pause
-                wait(0.5)
-                getscreen
-
-            end_cyc
-
-            message_click(877,527)  // 2342642
-            wait(0.5)
-
-
-            $reload_made = 0
-
-            while($reload_made = 0)
-            
-                message_click(306,796) // save icon
-
-                wait(0.2)
-
-                getscreen
-                
-                $stopwatch = 0
-                while(pxl(804,498)  ! 4806498 & ($stopwatch < 200))
-
-                    wait(0.05)
-                    getscreen
-
-                    $stopwatch = $stopwatch + 1
-
-                end_cyc
-
-                if($stopwatch > 199)
-
-                    Restart()
-
-                else
-
-                    wait(1)
-
-                    message_click(518,518) // load button
-
-                    wait(0.7)
-
-
-                    message_click(564,271)  // 5789784 // select acc
-                    wait(0.8)
-                    message_click(1054,800)  // 4408131 // OK
-
-                    getscreen
-
-                    $stopwatch = 0
-
-                    while((pxl(1012,473) ! 1551083) & ($stopwatch < 150))
-
-                        wait(0.1)
-                        getscreen
-
-                        $stopwatch = $stopwatch + 1
-
-                    end_cyc
-
-                    if($stopwatch > 149)
-                        Restart()
-                        $relogins_count = $relogins_count + 1
-                        $relogins_current = $relogins_current + 1
-
-                    else
-
-                        $relogins_count = $relogins_count + 1
-                        $relogins_current = $relogins_current + 1
-
-
-                        wait(0.5)
-                        Restart()
-                        $reload_made = 1
-
-                    end_if
-
-                    if($relogins_current > $reloads_to_reset)
-                        MakeCleanup()
-                        $relogins_current = 0
-                    end_if
-
-                end_if
-
-            end_cyc
-
-
         ELSE
             EmergStop()
         END_IF
 
     END_IF
-
 
     GETSCREEN
 

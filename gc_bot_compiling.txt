@@ -62,10 +62,10 @@ end_if
 
 if($solve_capcha = 1)
 
-    call("slpx.dll", 420)
+    call("solver.dll", 0,0, 420, $_hwnd_self)
     $r1 = $_return1
 
-    call("slpx.dll", 69)
+    call("solver.dll", 0,0, 69, $_hwnd_self)
     $r2 = $_return1
 
     if($r1 ! 69)

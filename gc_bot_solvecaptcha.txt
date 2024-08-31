@@ -153,10 +153,14 @@ SUB(SolveCaptcha)
             $imageFilePath = STRCONCAT($_pdir, "CaptchaImage_", $screen_counter+1, ".bmp")
             screenshotFix(504 + $screenShiftX, 204 + $screenShiftY, 972 + $screenShiftX, 672 + $screenShiftY, $imageFilePath) // updated
 
-            logwrite($_date_str, " Transfer control to solver.dll")
+            logwrite($_date_str, " call solver.dll")
 
             // parameters: 1 - save images, 2 - fail mode (make screens in separate folder)
             call("solver.dll", 1, 0, 0, $_hwnd_self)
+
+            $returnedValue = $_return1
+
+            CheckDLLErrors($returnedValue)
 
             wait(1)
 
@@ -340,8 +344,12 @@ SUB(SolveCaptcha)
 
                         if($gift_saveFailedGiftScreenshots = 1)
 
-                            logwrite($_date_str, " Transfer control to slpx.dll (FAIL mode)")
+                            logwrite($_date_str, " call solver.dll (FAIL mode)")
                             call("solver.dll", 0, 1, 0, $_hwnd_self)
+
+                            $returnedValue = $_return1
+
+                            CheckDLLErrors($returnedValue)
 
                             wait(1)
 

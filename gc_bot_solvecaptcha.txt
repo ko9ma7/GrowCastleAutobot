@@ -472,7 +472,7 @@ SUB(SolveCaptcha)
 
     END_CYC
 
-    IF(($failcounter > 1) & (PXL(406-85,152) = 4806498))
+    IF(($failcounter > 3) & (PXL(406-85,152) = 4806498))
 
         logwrite($_date_str, " 4 fails on captcha. clicker will be stopped ")
         WAIT(310)

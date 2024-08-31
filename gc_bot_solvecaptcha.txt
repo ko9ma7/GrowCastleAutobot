@@ -46,10 +46,10 @@ SUB(SolveCaptcha)
 
     $failcounter = 0
     $finished = 0
-    $timergift = $_ms
+    $captchaTimer = $_ms
     $restarts = 0
 
-    logwrite($_date_str, " Gift solving start")
+    logwrite($_date_str, " Captcha solving start")
 
     WHILE(($finished = 0) & ($failcounter < 4))
 
@@ -79,8 +79,8 @@ SUB(SolveCaptcha)
 
                     if($captcha_start_b = 1)
                         logwrite($_date_str, " couldnt find crystal on captcha. restart")
-                        if($gift_notFoundScreen = 1)
-                            screenshot("giftNotFound")
+                        if($captcha_notFoundScreen = 1)
+                            screenshot("captchaNotFound")
                         end_if
                     END_IF
 
@@ -109,7 +109,7 @@ SUB(SolveCaptcha)
 
             WHILE(PXL(420,732) = 3423819)
 
-                logwrite($_date_str, " wait for gift timer")
+                logwrite($_date_str, " wait for captcha timer")
                 WAIT(1)
                 GETSCREEN
 
@@ -156,7 +156,7 @@ SUB(SolveCaptcha)
             logwrite($_date_str, " call solver.dll")
 
             // parameters: 1 - save images, 2 - fail mode (make screens in separate folder)
-            call("solver.dll", 1, 0, 0, $_hwnd_self)
+            call("solver.dll", $captcha_saveScreenshotsAlways, 0, 0, $_hwnd_self)
 
             $returnedValue = $_return1
 
@@ -308,7 +308,7 @@ SUB(SolveCaptcha)
                     WAIT(0.5)
                     GETSCREEN
 
-                    $totalmilliseconds = $_ms-$timergift
+                    $totalmilliseconds = $_ms-$captchaTimer
 
                     $hoursnum =  INT($totalmilliseconds/3600000)
                     $millisecsnum = $totalmilliseconds - int($totalmilliseconds / 3600000) * 3600000
@@ -335,14 +335,14 @@ SUB(SolveCaptcha)
 
                         //inc($failcounter, 1)
                         logwrite($_date_str, " Fail ", $failcounter)
-                        TFWRITE("informgift.txt", STRCONCAT(" -   ", $captcha_answer, ", ", $_date_str, " ", $_time_str, ", R: ", $resemblance, ", ", $restarts, " r"))
+                        TFWRITE("informCaptcha.txt", STRCONCAT(" -   ", $captcha_answer, ", ", $_date_str, " ", $_time_str, ", R: ", $resemblance, ", ", $restarts, " r"))
                         message_click(790,714)  // 1974563
 
-                        if($make_hints_failGift = 1)
-                            hintpopup("Gift fail")
+                        if($make_hints_failCaptcha = 1)
+                            hintpopup("Captcha fail")
                         end_if
 
-                        if($gift_saveFailedGiftScreenshots = 1)
+                        if($captcha_saveFailedScreenshots = 1)
 
                             logwrite($_date_str, " call solver.dll (FAIL mode)")
                             call("solver.dll", 0, 1, 0, $_hwnd_self)
@@ -399,7 +399,7 @@ SUB(SolveCaptcha)
 
                                 $durationSolving = int($returnedValue / 131072) * 4
 
-                                logwrite("Saved screens of failed gift in ", $durationSolving, "s.")
+                                logwrite("Saved screens of failed captcha in ", $durationSolving, "s.")
 
                             end_if
 
@@ -408,8 +408,8 @@ SUB(SolveCaptcha)
                     ELSE
 
                         $captcha_solving_bool = 0
-                        logwrite($_date_str, " Gift solved in ", $hoursnum,":", $minsnum,":", $secsnum, ":", $millisecsnum)
-                        TFWRITE("informgift.txt", STRCONCAT( " +   ", $captcha_answer, ", ", $_date_str, " ", $_time_str, ", R: ", $resemblance, ", ", $restarts, " R, ", $hoursnum, ":", $minsnum, ":", $secsnum, ":", $millisecsnum))
+                        logwrite($_date_str, " Catpcha solved in ", $hoursnum,":", $minsnum,":", $secsnum, ":", $millisecsnum)
+                        TFWRITE("informCaptcha.txt", STRCONCAT( " +   ", $captcha_answer, ", ", $_date_str, " ", $_time_str, ", R: ", $resemblance, ", ", $restarts, " R, ", $hoursnum, ":", $minsnum, ":", $secsnum, ":", $millisecsnum))
 
                         $failcounter =0
                         $finished =1

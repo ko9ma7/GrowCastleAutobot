@@ -635,8 +635,8 @@ END_IF
 
 if($background_mode = 0)
 
-    $make_hints_gift = 0
-    $make_hints_failGift = 0
+    $make_hints_captcha = 0
+    $make_hints_failCaptcha = 0
     $make_hints_cant_fight_dungeon = 0
     $make_hints_clearallfail = 0
     $make_hints_emergstop = 0
@@ -652,8 +652,8 @@ end_if
 tfwrite("gc.log", "teststring")
 tfdelete("gc.log", tfcount("gc.log"))
 
-tfwrite("informgift.txt", "teststring")
-tfdelete("informgift.txt", tfcount("informgift.txt"))
+tfwrite("informCaptcha.txt", "teststring")
+tfdelete("informCaptcha.txt", tfcount("informCaptcha.txt"))
 
 $tempval = strfilter(TFREAD("dungeon_statistics.txt", 2),"1234567890", 1)
 if(strlen($tempval) < 1)

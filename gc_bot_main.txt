@@ -46,6 +46,7 @@ WHILE(true)
                 CheckAdForX3()
 
                 WaitForAdAndWatch() // ?
+                TryUpgradeHero()
                 TryUpgradeTower()
                 Replay()
 

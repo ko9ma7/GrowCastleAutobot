@@ -1215,12 +1215,13 @@ SUB(UpgradeTower)
 
         END_SWITCH
 
-        WAIT(0.2)
+        WAIT(0.4)
 
         message_click(1101-85,588)
         WAIT(0.1)
 
         CountCrystals(0)
+        $upgradecounter = 0
         
         WHILE(($crystals_count_result > 7) & ($upgradecounter < 60))
 
@@ -1589,6 +1590,8 @@ sub(Wait_for_cancel_ab_button)
 
     logwrite($_date_str, " wait for cancel ab button")
     getscreen
+
+    $replaysforupg = 100 // to ensure that tower or hero will be upgraded for crystals after quitting ab
 
     $stopwatch = 0
 
@@ -2048,12 +2051,6 @@ sub(Put_on_AB)
 END_SUB
 
 
-
-
-
-
-
-
 sub(Perform_replay)
 
     wait(0.05)
@@ -2224,18 +2221,8 @@ sub(Perform_AB_with_skips_mode)
 
         Perform_skip()
         CloseTop()
-        if($always_manual_skips_in_ab_mode = 0)
-
-            Put_on_AB()
-            $wait_for_cancel_AB_button_b = 1
-
-        else
-
-            ChronoClick()
-            Perform_OrcBand_Milit()
-            wait(0.3)
-
-        end_if
+        Put_on_AB()
+        $wait_for_cancel_AB_button_b = 1
 
     end_if
 
@@ -2563,9 +2550,9 @@ SUB(TryUpgradeTower)
     
     if($autoupgrade = 1)
 
-        if($first_tower_upgrade = 1)
+        if($first_crystal_upgrade = 1)
 
-            $first_tower_upgrade = 0
+            $first_crystal_upgrade = 0
 
             logwrite($_date_str, " first tower upgrade")
             
@@ -2582,6 +2569,253 @@ SUB(TryUpgradeTower)
                 logwrite($_date_str, " tower upgrade calling")
 
                 UpgradeTower()
+                
+            END_IF
+
+        END_IF
+
+    END_IF
+
+END_SUB
+
+
+Sub(UpgradeHero)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    logwrite($_date_str, " [hero upgrade] called")
+
+    CountCrystals(1)
+    
+    IF($crystals_count_result > 7)
+
+        logwrite($_date_str, " >7 crystals. open hero [hero upgrade]")
+
+        WAIT(0.2)
+
+        switch($upgrade_hero_num)
+
+            case(1)
+                Random_click_in(323,119,363,157)  // 9214623
+            case(2)
+                Random_click_in(417,115,461,163)  // 10269365
+            case(3)
+                Random_click_in(508,114,550,162)  // 7837870
+            case(4)
+                Random_click_in(324,227,368,271)  // 9412772
+            case(5)
+                Random_click_in(417,226,462,276)  // 10269365
+            case(6)
+                Random_click_in(509,226,555,278)  // 7434619
+            case(7)
+                Random_click_in(319,333,367,385)  // 9933452
+            case(8)
+                Random_click_in(412,334,463,385)  // 13617855
+            case(9)
+                Random_click_in(507,333,553,387)  // 6735012
+            case(10)
+                Random_click_in(321,437,369,485)  // 12438479
+            case(11)
+                Random_click_in(413,439,460,483)  // 6710886
+            case(12)
+                Random_click_in(507,432,557,488)  // 7390132
+            case(13)
+                Random_click_in(222,221,272,271)  // 6800805
+
+        END_SWITCH
+
+        WAIT(0.8)
+
+        getscreen
+
+        $cyanpxls = pxlcount(958,586,1126,621, 16768256)
+
+        if(($cyanpxls < 50) | ($cyanpxls > 90))
+
+            logwrite("hero is not crystal upgradable. quit hero upgrading")
+            Rmessage_click(1157,466)
+            WAIT(0.2)
+            Rmessage_click(1157,466)
+            WAIT(0.2)
+        
+        else
+
+            Random_click_in(958,554,1108,606)
+            WAIT(0.1)
+
+            CountCrystals(0)
+            $upgradecounter = 0
+
+            WHILE(($crystals_count_result > 7) & ($upgradecounter < 5))
+
+                Random_click_in(958,554,1108,606)
+
+                waitms(300)
+
+                $cyanpxls = pxlcount(958,586,1126,621, 16768256)
+                logwrite("cyanpxls: ", $cyanpxls)
+
+                if(($cyanpxls < 50) | ($cyanpxls > 100))
+
+                    logwrite("not seeing correct upgrade button. quit upgrading.")
+                    Rmessage_click(1157,466)
+                    WAIT(0.2)
+                    Rmessage_click(1157,466)
+                    WAIT(0.2)
+
+                    $upgradecounter = 100
+                
+                end_if
+
+                $upgradecounter = $upgradecounter+1
+
+                CountCrystals(0)
+
+            END_CYC
+
+            $upgradecounter = 0
+
+            wait(0.2)
+            getscreen
+
+            Rmessage_click(1157,466)
+            WAIT(0.2)
+            Rmessage_click(1157,466)
+            WAIT(0.2)
+
+        end_if
+
+    else
+
+        logwrite($_date_str, " no upgrading [tower upgrade]")
+
+    END_IF
+
+    GETSCREEN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+END_SUB
+
+SUB(TryUpgradeHero)
+    
+    if($upgrade_hero_num ! 0)
+
+        if($first_crystal_upgrade = 1)
+
+            $first_crystal_upgrade = 0
+
+            logwrite($_date_str, " first hero upgrade")
+            
+            $replaysforupg=0
+
+            UpgradeHero()
+
+        else
+
+            IF($replaysforupg > 9)
+
+                $replaysforupg=0
+
+                logwrite($_date_str, " hero upgrade")
+
+                if(($upgrade_hero_num < 0) | ($upgrade_hero_num > 13))
+                    $dialog = DIALOGBOX("upgrade hero number is wrong!", 1, 1)
+                    HALT
+                end_if
+
+                UpgradeHero()
                 
             END_IF
 

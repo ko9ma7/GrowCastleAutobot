@@ -143,6 +143,27 @@ if($background_mode = 0)
 
 end_if
 
+if(($upgrade_hero_num < 0) | ($upgrade_hero_num > 13))
+
+    $dialog = DIALOGBOX("upgrade hero number is wrong. Allowed range: 1 - 13", 1, 1)
+    HALT
+
+end_if
+
+if(($upgrade_hero_num ! 0) & ($autoupgrade ! 0))
+
+    $dialog = DIALOGBOX("Cannot upgrade hero and tower part together", 1, 1)
+    HALT
+
+end_if
+
+if(($upgrade_hero_num ! 0) & ($skipwaves ! 0))
+
+    $dialog = DIALOGBOX("Cannot upgrade hero and skip together", 1, 1)
+    HALT
+
+end_if
+
 IF(strlen($error_string) > 1)
 
     $dialog = DIALOGBOX($error_string, 1, 1)
@@ -234,28 +255,6 @@ IF($autoupgrade = 1)
         halt
         
     end_if
-
-end_if
-
-if(($autobattlemode = 1) & ($skipwaves = 0))
-
-    $dialog = DIALOGBOX("cannot autobattlemode without skipwaves", 1, 1)
-    halt
-
-end_if
-
-if(($autobattlemode = 1) & ($fivewavespauseskip = 1))
-
-    $dialog = DIALOGBOX("cannot autobattlemode with five waves between skips", 1, 1)
-    halt
-
-end_if
-
-if($autobattlemode = 1)
-
-    $skipwaves = 1
-    $makereplays = 0
-    $fivewavespauseskip = 0
 
 end_if
 

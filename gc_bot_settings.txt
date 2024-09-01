@@ -16,6 +16,9 @@ $wait_after_gab_open = 0.05
 $orc_and_military_on_skip_only = 1
 
 
+$upgrade_hero_num = 0 // 0 = no upgrade. Choose the slot number. Allowed range: 1 - 13. The slot numeration is in the end of file
+
+
 $cleanup_interval = 10800
 
 $I_have_3x = 0
@@ -135,7 +138,6 @@ $dungeon_start_cast_delay_ms = strfilter( TFREAD("_main_settings.txt", 48),"1234
 
 $replays_if_dungeon_dont_load = strfilter( TFREAD("_main_settings.txt", 49),"1234567890." , 1 )// 0 or 1
 
-$always_manual_skips_in_ab_mode = strfilter( TFREAD("_main_settings.txt", 50),"1234567890." , 1 )// 0 or 1
 $wave_canceling = strfilter( TFREAD("_main_settings.txt", 51),"1234567890." , 1 )// 0 or 1
 $break_AB_on_30_cry = strfilter( TFREAD("_main_settings.txt", 52),"1234567890." , 1 )// 0 or 1
 

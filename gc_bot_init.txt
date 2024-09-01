@@ -88,7 +88,6 @@ DEFINE($gc_menu_open, 0)
 DEFINE($windefeat_str, "")
 DEFINE($captcha_solving_bool, 0)
 DEFINE($Is_skip, 0)
-DEFINE($first_tower_upgrade, 1)
 DEFINE($current_battle_length, 0)
 DEFINE($ms_of_last_replay_call, $_ms)
 DEFINE($prev_frame_game_status, 0)
@@ -103,6 +102,7 @@ $skip_next_wave = 0
 
 $castle_upgrade_color = 15379789
 
+$first_crystal_upgrade = 1
 
 DEFINE($drawline_dx, 0)
 DEFINE(drawline_dy, 0)

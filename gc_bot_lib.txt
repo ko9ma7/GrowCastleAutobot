@@ -2581,51 +2581,6 @@ END_SUB
 
 Sub(UpgradeHero)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     logwrite($_date_str, " [hero upgrade] called")
 
     CountCrystals(1)
@@ -2730,61 +2685,11 @@ Sub(UpgradeHero)
 
     else
 
-        logwrite($_date_str, " no upgrading [tower upgrade]")
+        logwrite($_date_str, " no upgrading [hero upgrade]")
 
     END_IF
 
     GETSCREEN
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 END_SUB
 

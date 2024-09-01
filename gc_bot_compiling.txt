@@ -8,30 +8,23 @@ Sub(CheckDLLErrors, $exitCode)
         case(20)
             $dialog = DIALOGBOX("For some reason couldnt get current directory path. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
             halt
+        case(159)
+            $dialog = DIALOGBOX("slpx.exe wasnt found.", 1, 1)
+            halt
+        case(11)
+            $dialog = DIALOGBOX("Wrong parameter 1. Must be 0 or 1", 1, 1)
+            halt
+        case(12)
+            $dialog = DIALOGBOX("Wrong parameter 2. Must be 0 or 1", 1, 1)
+            halt
         case(100)
-            $dialog = DIALOGBOX("Wrong test input. Should be 69", 1, 1)
-            halt
-        case(101)
-            $dialog = DIALOGBOX("Wrong heronum (parameter 1). Should be 0 - 7", 1, 1)
-            halt
-        case(102)
-            $dialog = DIALOGBOX("Wrong drawMode (parameter 2). Should be -1, 0 or 1", 1, 1)
-            halt
-        case(103)
-            $dialog = DIALOGBOX("Wrong parameters count. Should be 1 or 3", 1, 1)
-            halt
-        case(104)
-            $dialog = DIALOGBOX("Wrong logOutput (parameter 3). Should be 0 or 1", 1, 1)
+            $dialog = DIALOGBOX("Wrong parameters count. Must be 4", 1, 1)
             halt
 
     END_SWITCH
 
-    if(($exitCode > 50) & ($exitCode < 69))
-        $dialog = DIALOGBOX(STRCONCAT("Couldnt find image ", $_pdir, "GiftScreen_", $exitCode - 50, ".bmp'. Should be in clicker core folder"), 1, 1)
-        halt
-    end_if
-    if($exitCode = 69)
-        $dialog = DIALOGBOX(STRCONCAT("Couldnt find image ", $_pdir, "IgnoreColorArea.bmp'. Should be in clicker core folder"), 1, 1)
+    if(($exitCode > 50) & ($exitCode < 75))
+        $dialog = DIALOGBOX(STRCONCAT("Couldnt find image ", $_pdir, "CaptchaImage_", $exitCode - 50, ".bmp'. Should be in clicker core folder"), 1, 1)
         halt
     end_if
 
@@ -65,10 +58,10 @@ end_if
 
 if($solve_capcha = 1)
 
-    call("slpx.dll", 420)
+    call("solver.dll", 0,0, 420, $_hwnd_self)
     $r1 = $_return1
 
-    call("slpx.dll", 69)
+    call("solver.dll", 0,0, 69, $_hwnd_self)
     $r2 = $_return1
 
     if($r1 ! 69)
@@ -642,8 +635,8 @@ END_IF
 
 if($background_mode = 0)
 
-    $make_hints_gift = 0
-    $make_hints_failGift = 0
+    $make_hints_captcha = 0
+    $make_hints_failCaptcha = 0
     $make_hints_cant_fight_dungeon = 0
     $make_hints_clearallfail = 0
     $make_hints_emergstop = 0
@@ -659,8 +652,8 @@ end_if
 tfwrite("gc.log", "teststring")
 tfdelete("gc.log", tfcount("gc.log"))
 
-tfwrite("informgift.txt", "teststring")
-tfdelete("informgift.txt", tfcount("informgift.txt"))
+tfwrite("informCaptcha.txt", "teststring")
+tfdelete("informCaptcha.txt", tfcount("informCaptcha.txt"))
 
 $tempval = strfilter(TFREAD("dungeon_statistics.txt", 2),"1234567890", 1)
 if(strlen($tempval) < 1)

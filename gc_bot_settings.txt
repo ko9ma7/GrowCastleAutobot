@@ -35,16 +35,15 @@ $simulate_mouse_movement = 0
 
 $log_CurrentBattleLength = 0
 
-$gift_logOutput = 1
-$gift_saveScreenshotsAlways = 0
-$gift_saveFailedGiftScreenshots = 1
+$captcha_saveScreenshotsAlways = 1
+$captcha_saveFailedScreenshots = 1
 
-$gift_notFoundScreen = 1
+$captcha_notFoundScreen = 1
 
 //background_mode only
 
 $make_hints_captcha = 0
-$make_hints_failGift = 0
+$make_hints_failCaptcha = 0
 
 $make_hints_cant_fight_dungeon = 0
 $make_hints_clearallfail = 0
@@ -94,8 +93,8 @@ $adforcoins = strfilter( TFREAD("_main_settings.txt", 15),"1234567890." , 1 )// 
 $adafterskip20 = strfilter( TFREAD("_main_settings.txt", 16),"1234567890." , 1 )// 0 or 1
 $adduringspeedup = strfilter( TFREAD("_main_settings.txt", 17),"1234567890." , 1 )// 0 or 1
 
-$solve_capcha = 0 // strfilter( TFREAD("_main_settings.txt", 18),"1234567890." , 1 )// 0 or 1
-$restartongift = strfilter( TFREAD("_main_settings.txt", 19),"1234567890." , 1 )// 0 or 1
+$solve_capcha = strfilter( TFREAD("_main_settings.txt", 18),"1234567890." , 1 )// 0 or 1
+$restartonCaptcha = strfilter( TFREAD("_main_settings.txt", 19),"1234567890." , 1 )// 0 or 1
 
 $heal_altar = strfilter( TFREAD("_main_settings.txt", 20),"1234567890." , 1 )// 0 or 1
 
@@ -123,13 +122,11 @@ $screenshot_10esc = strfilter( TFREAD("_main_settings.txt", 37),"1234567890." , 
 $screenshot_noxloadfail = strfilter( TFREAD("_main_settings.txt", 38),"1234567890." , 1 )// 0 or 1
 $screenshot_noxmainmenuloadfail = strfilter( TFREAD("_main_settings.txt", 39),"1234567890." , 1 )// 0 or 1
 $screenshot_clearallfail = strfilter( TFREAD("_main_settings.txt", 40),"1234567890." , 1 )// 0 or 1
-$gift_screen_before = strfilter( TFREAD("_main_settings.txt", 41),"1234567890." , 1 )// 0 or 1
-$gift_screen_after = strfilter( TFREAD("_main_settings.txt", 42),"1234567890." , 1 )// 0 or 1
 
-$captcha_fail0_maxConflicts = strfilter( TFREAD("_main_settings.txt", 43),"1234567890." , 1 )// 10 to 100
-$captcha_fail1_maxConflicts = strfilter( TFREAD("_main_settings.txt", 44),"1234567890." , 1 )// 10 to 100
-$captcha_fail2_maxConflicts = strfilter( TFREAD("_main_settings.txt", 45),"1234567890." , 1 )// 10 to 100
-$captcha_fail3_maxConflicts = strfilter( TFREAD("_main_settings.txt", 46),"1234567890." , 1 )// 10 to 100
+// $captcha_fail0_maxConflicts = strfilter( TFREAD("_main_settings.txt", 43),"1234567890." , 1 )// 10 to 100
+// $captcha_fail1_maxConflicts = strfilter( TFREAD("_main_settings.txt", 44),"1234567890." , 1 )// 10 to 100
+// $captcha_fail2_maxConflicts = strfilter( TFREAD("_main_settings.txt", 45),"1234567890." , 1 )// 10 to 100
+// $captcha_fail3_maxConflicts = strfilter( TFREAD("_main_settings.txt", 46),"1234567890." , 1 )// 10 to 100
 
 
 

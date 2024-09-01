@@ -2672,7 +2672,7 @@ Sub(UpgradeHero)
         else
 
             Random_click_in(958,554,1108,606)
-            WAIT(0.1)
+            WAIT(0.3)
 
             CountCrystals(0)
             $upgradecounter = 0

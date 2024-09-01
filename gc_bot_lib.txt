@@ -2684,7 +2684,7 @@ Sub(UpgradeHero)
                 waitms(300)
 
                 $cyanpxls = pxlcount(958,586,1126,621, 16768256)
-                logwrite("cyanpxls: ", $cyanpxls)
+                // logwrite("cyanpxls: ", $cyanpxls)
 
                 if(($cyanpxls < 50) | ($cyanpxls > 100))
 

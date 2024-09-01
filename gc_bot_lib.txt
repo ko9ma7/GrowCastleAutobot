@@ -1798,7 +1798,11 @@ SUB(AB_WAIT, $seconds_to_wait)
 
     if($seconds_to_wait ! -1)
         Wait_for_cancel_ab_button()
-        logwrite($_date_str," ", $manuals_between_skips, " battles with skips")
+
+        if($skipwaves = 1)
+            logwrite($_date_str," ", $manuals_between_skips, " battles with skips")
+        end_if
+
     end_if
 
 END_SUB
@@ -2187,19 +2191,57 @@ sub(CloseTop)
 
 END_SUB
 
-sub(Perform_AB_with_skips_mode)
+sub(Perform_AB_mode)
 
-    logwrite($_date_str, " Perform_AB_with_skips_mode")
-    if($ab_skip_num < 1)
+    logwrite($_date_str, " Perform_AB_mode")
 
-        wait(0.3)
+    if($skipwaves = 1)
+
+        if($ab_skip_num < 1)
+
+            wait(0.3)
+            CheckSky()
+            CheckGCMenu()
+            if(($sky_clear = 1) & ($gc_menu_open = 0))
+
+                logwrite($_date_str, " sky clear on AB start [Perform_AB_mode, skipwaves]")
+
+                Perform_skip()
+                CloseTop()
+                Put_on_AB()
+
+                logwrite("AB ",$seconds_between_skips, " seconds")
+
+                AB_WAIT($seconds_between_skips)
+
+                $ms_of_last_replay_call = $_ms
+
+                $ab_skip_num = $manuals_between_skips + 1
+
+            else
+
+                logwrite($_date_str, " sky not clear [Perform_AB_mode, skipwaves]")
+
+            end_if
+
+        else
+
+            Perform_skip()
+            CloseTop()
+            Put_on_AB()
+            $wait_for_cancel_AB_button_b = 1
+
+        end_if
+
+    else
+
+        wait(0.2)
         CheckSky()
         CheckGCMenu()
         if(($sky_clear = 1) & ($gc_menu_open = 0))
 
-            logwrite($_date_str, " sky clear on AB start [Perform_AB_with_skips_mode]")
+            logwrite($_date_str, " sky clear on AB start [Perform_AB_mode, no skipwaves]")
 
-            Perform_skip()
             CloseTop()
             Put_on_AB()
 
@@ -2209,20 +2251,11 @@ sub(Perform_AB_with_skips_mode)
 
             $ms_of_last_replay_call = $_ms
 
-            $ab_skip_num = $manuals_between_skips + 1
-
         else
 
-            logwrite($_date_str, " sky not clear [Perform_AB_with_skips_mode]")
+            logwrite($_date_str, " sky not clear [Perform_AB_mode, no skipwaves]")
 
         end_if
-
-    else
-
-        Perform_skip()
-        CloseTop()
-        Put_on_AB()
-        $wait_for_cancel_AB_button_b = 1
 
     end_if
 
@@ -2304,7 +2337,7 @@ SUB(Replay)
                 $wait_for_cancel_AB_button_b = 0
 
                 if($autobattlemode = 1)
-                    Perform_AB_with_skips_mode()
+                    Perform_AB_mode()
                 else
 
                     if($wave_canceling = 1)

@@ -333,7 +333,7 @@ SUB(SolveCaptcha)
 
                     IF(PXL(632-85,134) = 4806498)
 
-                        //inc($failcounter, 1)
+                        inc($failcounter, 1)
                         logwrite($_date_str, " Fail ", $failcounter)
                         TFWRITE("informCaptcha.txt", STRCONCAT(" -   ", $captcha_answer, ", ", $_date_str, " ", $_time_str, ", R: ", $resemblance, ", ", $restarts, " r"))
                         message_click(790,714)  // 1974563

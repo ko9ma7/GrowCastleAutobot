@@ -2677,7 +2677,7 @@ Sub(UpgradeHero)
             CountCrystals(0)
             $upgradecounter = 0
 
-            WHILE(($crystals_count_result > 7) & ($upgradecounter < 5))
+            WHILE(($crystals_count_result > 7) & ($upgradecounter < 80))
 
                 Random_click_in(958,554,1108,606)
 

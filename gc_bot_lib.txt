@@ -2679,10 +2679,6 @@ Sub(UpgradeHero)
 
             WHILE(($crystals_count_result > 7) & ($upgradecounter < 80))
 
-                Random_click_in(958,554,1108,606)
-
-                waitms(300)
-
                 $cyanpxls = pxlcount(958,586,1126,621, 16768256)
                 // logwrite("cyanpxls: ", $cyanpxls)
 
@@ -2695,12 +2691,18 @@ Sub(UpgradeHero)
                     WAIT(0.2)
 
                     $upgradecounter = 100
-                
+
+                else
+
+                    Random_click_in(958,554,1108,606)
+
+                    waitms(300)
+
+                    $upgradecounter = $upgradecounter+1
+
+                    CountCrystals(0)
+
                 end_if
-
-                $upgradecounter = $upgradecounter+1
-
-                CountCrystals(0)
 
             END_CYC
 

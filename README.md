@@ -21,6 +21,7 @@ All notable changes will be here.
 ### 🔄 Changed
 - Bring upgrading hero slot setting to app
 - clickergc.exe settings location change
+- Bring saving screenshots of captchas and failed captchas checkboxes to app
 
 ### ✅ Fixed
 - Hero upgrading stops at 9999 lvl now

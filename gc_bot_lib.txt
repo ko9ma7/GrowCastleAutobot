@@ -1591,7 +1591,9 @@ sub(Wait_for_cancel_ab_button)
     logwrite($_date_str, " wait for cancel ab button")
     getscreen
 
-    $replaysforupg = 100 // to ensure that tower or hero will be upgraded for crystals after quitting ab
+    if($wave_canceling = 0)
+        $replaysforupg = 100 // to ensure that tower or hero will be upgraded for crystals after quitting ab
+    end_if
 
     $stopwatch = 0
 

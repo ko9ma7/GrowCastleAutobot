@@ -2728,7 +2728,7 @@ END_SUB
 
 SUB(TryUpgradeHero)
     
-    if($upgrade_hero_num ! 0)
+    if($upgrade_hero_b = 1)
 
         if($first_crystal_upgrade = 1)
 
@@ -2748,7 +2748,7 @@ SUB(TryUpgradeHero)
 
                 logwrite($_date_str, " hero upgrade")
 
-                if(($upgrade_hero_num < 0) | ($upgrade_hero_num > 13))
+                if(($upgrade_hero_num < 1) | ($upgrade_hero_num > 13))
                     $dialog = DIALOGBOX("upgrade hero number is wrong!", 1, 1)
                     HALT
                 end_if

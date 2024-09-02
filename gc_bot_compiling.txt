@@ -143,21 +143,21 @@ if($background_mode = 0)
 
 end_if
 
-if(($upgrade_hero_num < 0) | ($upgrade_hero_num > 13))
+if(($upgrade_hero_b = 1) & (($upgrade_hero_num < 1) | ($upgrade_hero_num > 13)))
 
     $dialog = DIALOGBOX("upgrade hero number is wrong. Allowed range: 1 - 13", 1, 1)
     HALT
 
 end_if
 
-if(($upgrade_hero_num ! 0) & ($autoupgrade ! 0))
+if(($upgrade_hero_b = 1) & ($autoupgrade ! 0))
 
     $dialog = DIALOGBOX("Cannot upgrade hero and tower part together", 1, 1)
     HALT
 
 end_if
 
-if(($upgrade_hero_num ! 0) & ($skipwaves ! 0))
+if(($upgrade_hero_b = 1) & ($skipwaves ! 0))
 
     $dialog = DIALOGBOX("Cannot upgrade hero and skip together", 1, 1)
     HALT

@@ -16,27 +16,27 @@ Requirements:
 All notable changes will be here.
 
 
-## 02.09.2024
+## 📅 02.09.2024 📅
 
-### Changed
+### 🔄 Changed
 - Bring upgrading hero slot setting to app
 - clickergc.exe settings location change
 
-### Fixed
+### ✅ Fixed
 - Hero upgrading stops at 9999 lvl now
 
-### Instructions are not updated yet!
+### ⚠️ Instructions are not updated yet! ⚠️
 
-## 01.09.2024
+## 📅 01.09.2024 📅
 
-### Added
+### ⭐ Added
 - Solving new captcha ability
 - Upgrade heroes for crystals ability
 
-### Changed
+### 🔄 Changed
 - AB mode can now be set without skip mode - to allow heroes for crystals upgrading between AB sessions
 
-### Fixed
+### ✅ Fixed
 - UI panels detections
 
-### Instructions are not updated yet!
+### ⚠️ Instructions are not updated yet! ⚠️

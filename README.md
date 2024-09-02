@@ -15,6 +15,18 @@ Requirements:
 
 All notable changes will be here.
 
+
+## 02.09.2024
+
+### Changed
+- Bring upgrading hero slot setting to app
+- clickergc.exe settings location change
+
+### Fixed
+- Hero upgrading stops at 9999 lvl now
+
+### Instructions are not updated yet!
+
 ## 01.09.2024
 
 ### Added

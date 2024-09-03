@@ -15,6 +15,9 @@ Requirements:
 
 All notable changes will be here.
 
+## 📅 03.09.2024 📅
+
+### 🧾 Instructions update
 
 ## 📅 02.09.2024 📅
 

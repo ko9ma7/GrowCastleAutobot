@@ -231,6 +231,12 @@ if(($autobattlemode = 1) & ($skipwaves = 1) & ($fivewavespauseskip = 1))
 
 end_if
 
+if(($autobattlemode = 1) & ($skipwaves = 1) & ($adforcoins = 1) & ($adafterskip20 = 1))
+
+    $dialog = DIALOGBOX("cannot ab mode, skip waves and ad after skip only ", 1, 1)
+    HALT
+
+end_if
 
 IF(($adforcoins = 1) & ($skipwaves = 0) & ($adafterskip20 = 1))
 

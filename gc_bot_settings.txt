@@ -143,9 +143,6 @@ $upgrade_hero_num = strfilter( TFREAD("_main_settings.txt", 54),"1234567890." , 
 $captcha_saveScreenshotsAlways = strfilter( TFREAD("_main_settings.txt", 55),"1234567890." , 1 )// 0 or 1
 $captcha_saveFailedScreenshots = strfilter( TFREAD("_main_settings.txt", 56),"1234567890." , 1 )// 0 or 1
 
-logwrite("save always: ", $captcha_saveScreenshotsAlways)
-logwrite("save fails : ", $captcha_saveFailedScreenshots)
-
 $b1start = 69
 $diff = 20
 

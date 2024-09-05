@@ -2687,10 +2687,6 @@ Sub(UpgradeHero)
                 if(($cyanpxls < 50) | ($cyanpxls > 100))
 
                     logwrite("not seeing correct upgrade button. quit upgrading.")
-                    Rmessage_click(1157,466)
-                    WAIT(0.2)
-                    Rmessage_click(1157,466)
-                    WAIT(0.2)
 
                     $upgradecounter = 100
 

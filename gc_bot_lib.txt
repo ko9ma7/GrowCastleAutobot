@@ -13,7 +13,7 @@ SUB(message_click, $posX, $posY)
         SendMessage($hwnd,514,0,$posX+$posY*65536)
 
     else
-        
+
         lclick($posX, $posY)
 
     end_if
@@ -84,7 +84,7 @@ SUB(CheckNoxState)
     wndgetinfo($hwnd,$v1,$v2,$v3,$v4)
 
     if(($v1 = -32000) & ($v2 = -32000))
-        
+
         $nox_state = 0
         WNDSTATE($hwnd, 1)
 
@@ -171,11 +171,11 @@ SUB(GetCurrentBattleLength)
     if($captcha_solving_bool ! 1)
 
         $current_battle_length = $_ms - $ms_of_last_replay_call
-    
+
     else
 
         $current_battle_length = -1
-    
+
     end_if
 
     if($log_CurrentBattleLength = 1)
@@ -208,14 +208,13 @@ END_SUB
 
 SUB(CheckExitWindow)
 
-
     if(pxl(444,481) = 9487843)
     if(pxl(464,494) = 3896999)
     if(pxl(693,491) = 3896999)
     if(pxl(681,540) = 2839928)
     if(pxl(828,489) = 2342642)
     if(pxl(829,540) = 1551083)
-    
+
         logwrite($_date_str, " Close quit window ")
 
         message_click(656-85,514)  // 3896999
@@ -373,7 +372,7 @@ END_SUB
 SUB(CountCrystals, $lightmode)
 
     getscreen
-    
+
     if($lightmode = 1)
         $crystalwhitepxl = 16777215
     else
@@ -409,7 +408,7 @@ SUB(CountCrystals, $lightmode)
             $counterx = $counterx - 1
 
         END_IF
-    
+
     END_CYC
 
     if(($foundmax ! 0) & ($foundmax > 432))
@@ -422,7 +421,7 @@ SUB(CountCrystals, $lightmode)
         $crystals_2_width = 15
         $counterx = $foundmax - 50
         //logwrite("no oranges")
-        
+
     else
 
         //logwrite("has oranges")
@@ -430,13 +429,12 @@ SUB(CountCrystals, $lightmode)
 
     end_if
 
-
     WHILE(($counterx < $upgxmax) & ($foundmin=0))
 
         if_pixel_in($counterx,$upgymin,$counterx, $upgymax, $crystalwhitepxl)
 
             $foundmin = $counterx
-            
+
         ELSE
 
             $counterx = $counterx + 1
@@ -546,7 +544,7 @@ SUB(Item_Drop, $itemgrade, $string_number)
                 ELSE
 
                     getscreen
-                    
+
                     if($screenshot_items = 1)
                         screenshot("ItemB")
                     END_IF
@@ -578,7 +576,7 @@ SUB(Item_Drop, $itemgrade, $string_number)
                 ELSE
 
                     getscreen
-                    
+
                     if($screenshot_items = 1)
                         screenshot("ItemA")
                     END_IF
@@ -596,7 +594,7 @@ SUB(Item_Drop, $itemgrade, $string_number)
                 if($string_number ! 0)
 
                     TFWRITE("dungeon_statistics.txt", STRCONCAT("S: ", $temp_item_grade), $string_number)
-                
+
                 END_IF
 
                 IF($delete_S = 1)
@@ -610,13 +608,13 @@ SUB(Item_Drop, $itemgrade, $string_number)
                 ELSE
 
                     getscreen
-                    
+
                     if($screenshot_items = 1)
                         screenshot("ItemS")
                     END_IF
-                    
+
                     if_pixel_in(420-85,188,1225-85,700,6869487)
-                    
+
                         message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
 
                     END_IF
@@ -642,13 +640,13 @@ SUB(Item_Drop, $itemgrade, $string_number)
                 ELSE
 
                     getscreen
-                    
+
                     if($screenshot_items = 1)
                         screenshot("ItemL")
                     END_IF
-                    
+
                     if_pixel_in(420-85,188,1225-85,700,6869487)
-                    
+
                         message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
 
                     END_IF
@@ -660,7 +658,7 @@ SUB(Item_Drop, $itemgrade, $string_number)
                 if($string_number ! 0)
 
                     TFWRITE("dungeon_statistics.txt", STRCONCAT("E: ", $temp_item_grade), $string_number)
-                
+
                 END_IF
 
                 IF($delete_E = 1)
@@ -680,7 +678,7 @@ SUB(Item_Drop, $itemgrade, $string_number)
                     END_IF
 
                     if_pixel_in(420-85,188,1225-85,700,6869487)
-                    
+
                         message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
 
                     END_IF
@@ -754,7 +752,7 @@ SUB(Item_Drop, $itemgrade, $string_number)
                             if_pixel_in(420-85,188,1225-85,700,2894051)
                                 dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
                             end_if
-                        
+
                         else
 
                             if_pixel_in(420-85,188,1225-85,700,6869487)
@@ -769,9 +767,8 @@ SUB(Item_Drop, $itemgrade, $string_number)
 
                             logwrite("L item")
 
-
                             IF($delete_L = 1)
-                                
+
                                 dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
 
                             else
@@ -781,7 +778,7 @@ SUB(Item_Drop, $itemgrade, $string_number)
                                 END_IF
 
                             END_IF
-                        
+
                         END_IF
 
                     END_IF
@@ -799,17 +796,17 @@ SUB(Item_Drop, $itemgrade, $string_number)
 END_SUB
 
 sub(AddSpeed)
-    
+
     if($_ms - $last_addspeed > 1000)
 
         IF(pxlcount(105-85,757,206-85,813,0) > 500)
 
             CheckNoxState()
-            
-            if($nox_state ! 0) 
+
+            if($nox_state ! 0)
 
                 logwrite($_date_str, " add speed")
-                
+
                 message_click(174-85 + rnd(-10,10),788+ rnd(-10,10))
                 wait(0.1)
 
@@ -886,7 +883,7 @@ sub(EnterGC)
         $ms_of_last_replay_call = $_ms
 
     else
-        
+
         if($make_hints_long_gc_load = 1)
             hintpopup("gc loading too long")
         END_IF
@@ -948,7 +945,7 @@ SUB(Reset)
         end_if
 
         $stopwatch =0
-        
+
         logwrite($_date_str, " nox load stuck. [reset]")
         logwrite($_date_str, " window is overlapped by sth or wrong nox path. [reset]")
         logwrite($_date_str, " stopped. [reset]")
@@ -959,7 +956,7 @@ SUB(Reset)
 END_SUB
 
 sub(MakeCleanup)
-    
+
     $closed_GC = 0
     $stopwatch = 0
     logwrite($_date_str, " open recent")
@@ -1075,7 +1072,7 @@ SUB(Restart)
 
         $restartcounter = $restartcounter + 1
         logwrite($_date_str, " Restart ", $restartcounter)
-        
+
         if($restartcounter < $max_restarts_in_row_for_reset+1)
 
             $stopwatch = 0
@@ -1162,7 +1159,7 @@ SUB(Restart)
                 logwrite($_date_str, " cant see clear all button.")
 
             END_IF
-        
+
         else
 
             if($make_hints_reset = 1)
@@ -1193,7 +1190,7 @@ SUB(UpgradeTower)
     logwrite($_date_str, " [tower upgrade] called")
 
     CountCrystals(1)
-    
+
     IF($crystals_count_result > 7)
 
         logwrite($_date_str, " >7 crystals. castle open [tower upgrade]")
@@ -1222,7 +1219,7 @@ SUB(UpgradeTower)
 
         CountCrystals(0)
         $upgradecounter = 0
-        
+
         WHILE(($crystals_count_result > 7) & ($upgradecounter < 60))
 
             message_click(1101-85,588)
@@ -1263,11 +1260,10 @@ SUB(UpgradeTower)
 
 END_SUB
 
-
 SUB(GetItem)
 
     logwrite($_date_str, " GetItem")
-    
+
     $stopwatch = 0
 
     WHILE(($quitcycle = 0) & ($stopwatch < 35))
@@ -1277,14 +1273,14 @@ SUB(GetItem)
             $quitcycle = 1
 
         END_IF
-        
+
         CheckGCMenu()
         if($gc_menu_open = 1)
 
             $stopwatch = 9999
 
         END_IF
-        
+
         wait(0.03)
         $stopwatch = $stopwatch + 1
         GETSCREEN
@@ -1321,7 +1317,7 @@ SUB(GetItem)
                     if(pxlcount($_return1-5, $_return2-5,$_return1+5, $_return2+5, 16777215) = 0)
 
                         Item_Drop(1, 0)
-                        
+
                         $item_correct_b = 1
 
                     end_if
@@ -1359,12 +1355,10 @@ SUB(GetItem)
 
             CASE(3) // red dragon
 
-
-
                 if_pixel_in(482-85,134,1201-85,440,15292148) // S
 
                     Item_Drop(3, 8)
-                
+
                 else
 
                     if_pixel_in(482-85,134,1201-85,440, 14352196) // A
@@ -1385,7 +1379,7 @@ SUB(GetItem)
                         end_if
 
                     end_if
-                
+
                 end_if
 
             CASE(4) // SIN
@@ -1393,7 +1387,7 @@ SUB(GetItem)
                 if_pixel_in(482-85,134,1201-85,440,15292148) // S
 
                     Item_Drop(3, 13)
-                
+
                 else
 
                     if_pixel_in(482-85,134,1201-85,440, 14352196) // A
@@ -1414,11 +1408,10 @@ SUB(GetItem)
                         end_if
 
                     end_if
-                
+
                 end_if
 
             CASE(5) // legendary dragon
-
 
                 if_pixel_in(482-85,134,1201-85,440, 14352196)
 
@@ -1477,18 +1470,16 @@ SUB(GetItem)
                 END_IF
 
         END_SWITCH
-    
-    else
 
+    else
 
         CheckGCMenu()
         if($gc_menu_open = 0)
 
-
             logwrite($_date_str, " Cant see GET button. rclick")
-            
+
             Rmessage_click(603-85,404)  // 4806498
-            
+
             wait(0.1)
             getscreen
 
@@ -1496,9 +1487,7 @@ SUB(GetItem)
 
     END_IF
 
-
 END_SUB
-
 
 SUB(CHECK_ON_HINT)
 
@@ -1665,9 +1654,9 @@ sub(Wait_for_cancel_ab_button)
             Restart()
 
         else
-            
+
             if($AB_LOST_WINDOW = 0)
-                
+
                 wait(0.05)
                 logwrite($_date_str, " cancel button detected")
                 Rmessage_click(515,404)  // 4806498
@@ -1695,7 +1684,7 @@ SUB(AB_WAIT, $seconds_to_wait)
             AddSpeed()
 
             $stopwatch = $stopwatch + 1
-            
+
             WAIT(0.5)
             CheckSky()
 
@@ -1720,7 +1709,7 @@ SUB(AB_WAIT, $seconds_to_wait)
             $stopwatch = 0
 
             logwrite($_date_str, " 2min wave. restart gc")
-            
+
             if($screenshot_on_esc = 1)
                 screenshot("AB_error2")
             end_if
@@ -1815,9 +1804,9 @@ sub(Perform_dungeon_start)
     getscreen
 
     logwrite($_date_str, " dungeon click. wait 15s for opening")
-    
+
     message_click(rnd(699,752),rnd(280,323))  // 8028550
-    
+
     $stopwatch = 0
 
     WHILE((PXL(646-85,676) ! 3160645) & (pxl(943-85,575) ! 47615) & ($stopwatch < 500))
@@ -1941,7 +1930,7 @@ sub(Perform_dungeon_start)
                     logwrite($_date_str, " replays will be called")
 
                 end_if
-                
+
                 // close current dungeon
                 message_click(1250-85,134)  // 2105635
                 wait(0.1)
@@ -2001,7 +1990,7 @@ sub(Perform_dungeon_start)
             END_IF
 
         END_IF
-    
+
     END_IF
 
     $stopwatch = 0
@@ -2056,7 +2045,6 @@ sub(Put_on_AB)
 
 END_SUB
 
-
 sub(Perform_replay)
 
     wait(0.05)
@@ -2103,9 +2091,6 @@ sub(Perform_replay)
     END_IF
 
 END_SUB
-
-
-
 
 sub(Perform_skip)
 
@@ -2263,7 +2248,6 @@ sub(Perform_AB_mode)
 
 END_SUB
 
-
 sub(Perform_wave_canceling)
 
     Perform_skip()
@@ -2283,7 +2267,6 @@ sub(Perform_manual_battle_start)
     Perform_OrcBand_Milit()
 
 END_SUB
-
 
 SUB(Replay)
 
@@ -2359,7 +2342,7 @@ SUB(Replay)
                         logwrite($_date_str, " sky not clear after ab call")
                     end_if
                 end_if
-    
+
             END_IF
 
         END_IF
@@ -2387,14 +2370,14 @@ SUB(WaitIfDragonTimer)
     // LCLICK(605,137)  // 5197823
 
     GETSCREEN(605,137,605,137)
-    
+
     if((pxl(605,137) = 5197823) & ($dungeon_number < 7))
 
         wait(0.05)
         logwrite($_date_str, " dungeon farm: timer detected. waiting for timer ends")
-        
+
         $dungeontimer_disapp = 0
-        
+
         $dungeon_timer_start_ms = $_ms
 
         WHILE(($dungeontimer_disapp = 0) & ($_ms - $dungeon_timer_start_ms < 10000))
@@ -2422,7 +2405,7 @@ SUB(WaitIfDragonTimer)
 
                         wait(0.1)
                         Random_click_in(50,781,95,825)
-                    
+
                     end_if
 
                     $dungeontimer_disapp = 1
@@ -2460,9 +2443,8 @@ SUB(WaitIfDragonTimer)
         $stopwatch = 0
 
     END_IF
-    
-END_SUB
 
+END_SUB
 
 SUB(WaitForAdEnd, $coins_0_x3_1)
 
@@ -2470,25 +2452,22 @@ SUB(WaitForAdEnd, $coins_0_x3_1)
         logwrite($_date_str, " [WaitForAdEnd] wait for ", $fixed_ad_wait, "s.")
         wait($fixed_ad_wait)
     end_if
-    
+
     $esccounter = 0
 
     CheckSky()
     WHILE(($sky_clear = 0) & ($esccounter<51))
-
 
         Rmessage_click(1157,466)
 
         $esccounter = $esccounter+1
         logwrite($_date_str, " ESC ", $esccounter)
 
-
         WHILE(($resumead = 0) & ($stopwatch < 17))
-
 
             GETSCREEN
             $stopwatch = $stopwatch +1
-            
+
             CheckSky()
             IF($sky_clear = 1)
 
@@ -2496,9 +2475,9 @@ SUB(WaitForAdEnd, $coins_0_x3_1)
                 logwrite($_date_str, " gc detected")
 
             END_IF
-            
+
             IF((PXL(976-85,586)>16220000) & (PXL(976-85,586)<16221000))
-                
+
                 logwrite($_date_str, " pause button[1] detected. click and 3s wait")
                 message_click(976-85,586)
                 WAIT(3)
@@ -2522,7 +2501,7 @@ SUB(WaitForAdEnd, $coins_0_x3_1)
                         logwrite($_date_str, " pause button[3] detected. click and 3s wait")
                         message_click(1164-85,591)
                         WAIT(3)
-                    
+
                         $resumead = 1
 
                     END_IF
@@ -2544,7 +2523,6 @@ SUB(WaitForAdEnd, $coins_0_x3_1)
 
     if($coins_0_x3_1 = 0)
 
-
         IF($esccounter > 50)
 
             logwrite($_date_str, " 51 esc clicked. restart will be called")
@@ -2558,7 +2536,6 @@ SUB(WaitForAdEnd, $coins_0_x3_1)
         END_IF
 
     else
-
 
         IF($esccounter > 50)
 
@@ -2578,11 +2555,11 @@ SUB(WaitForAdEnd, $coins_0_x3_1)
     END_IF
 
     $esccounter = 0
-    
+
 END_SUB
 
 SUB(TryUpgradeTower)
-    
+
     if($autoupgrade = 1)
 
         if($first_crystal_upgrade = 1)
@@ -2590,7 +2567,7 @@ SUB(TryUpgradeTower)
             $first_crystal_upgrade = 0
 
             logwrite($_date_str, " first tower upgrade")
-            
+
             $replaysforupg=0
 
             UpgradeTower()
@@ -2604,7 +2581,7 @@ SUB(TryUpgradeTower)
                 logwrite($_date_str, " tower upgrade calling")
 
                 UpgradeTower()
-                
+
             END_IF
 
         END_IF
@@ -2613,13 +2590,12 @@ SUB(TryUpgradeTower)
 
 END_SUB
 
-
 Sub(UpgradeHero)
 
     logwrite($_date_str, " [hero upgrade] called")
 
     CountCrystals(1)
-    
+
     IF($crystals_count_result > 7)
 
         logwrite($_date_str, " >7 crystals. open hero [hero upgrade]")
@@ -2670,7 +2646,7 @@ Sub(UpgradeHero)
             WAIT(0.2)
             Rmessage_click(1157,466)
             WAIT(0.2)
-        
+
         else
 
             Random_click_in(958,554,1108,606)
@@ -2727,7 +2703,7 @@ Sub(UpgradeHero)
 END_SUB
 
 SUB(TryUpgradeHero)
-    
+
     if($upgrade_hero_b = 1)
 
         if($first_crystal_upgrade = 1)
@@ -2735,7 +2711,7 @@ SUB(TryUpgradeHero)
             $first_crystal_upgrade = 0
 
             logwrite($_date_str, " first hero upgrade")
-            
+
             $replaysforupg=0
 
             UpgradeHero()
@@ -2754,7 +2730,7 @@ SUB(TryUpgradeHero)
                 end_if
 
                 UpgradeHero()
-                
+
             END_IF
 
         END_IF
@@ -2765,19 +2741,17 @@ END_SUB
 
 SUB(CheckItemOnScreen, $itemdustcolor)
 
-
     //message_click(1110-85,507)  // 10920838     b stone
     //message_click(162-85,648)  // 15453464      a stone
     //message_click(163-85,506)  // 13897453     s stone
     //message_click(636-85,497)  // 2894051     l stone
 
     if_pixel_in(486-85,268,1277-85,703, $itemdustcolor)
-        
 
         IF((pxl(1488-85,799) ! 1881240) & (pxl(1488-85,799) ! 13750211))
-        
+
             logwrite($_date_str, " item[", $itemdustcolor, "]")
-            
+
             GetItem()
 
             $quitcycle = 1
@@ -2795,7 +2769,6 @@ SUB(EmergStop)
     END_IF
 
     IF($restartonCaptcha = 1)
-        
 
         Restart()
 
@@ -2806,16 +2779,15 @@ SUB(EmergStop)
             UpgradeTower()
 
         END_IF
-        
+
     END_IF
 
     logwrite("stopped")
     halt
-    
+
 END_SUB
 
 SUB(EscClickStart)
-    
 
     if($make_hints_escclick = 1)
         hintpopup("overlap. esc click")
@@ -2833,14 +2805,13 @@ SUB(EscClickStart)
 
     $quitcycle = 0
 
-
     CheckSky()
 
     WHILE(($sky_clear = 0) & ($esccounter<10) & ($quitcycle = 0))
 
         CheckIfCaptcha()
         if($captcha_on_screen = 1)
-            
+
             logwrite($_date_str, " captcha[esc]")
             $quitcycle = 1
 
@@ -2858,23 +2829,21 @@ SUB(EscClickStart)
 
     IF($esccounter>9)
 
-
         logwrite($_date_str, " 10 escapes pressed. unknown thing")
 
         if($screenshot_10esc = 1)
             screenshot("unknown")
         end_if
-        
+
         Restart()
         wait(0.3)
-    
+
     END_IF
-    
+
     $esccounter = 0
     $quitcycle = 0
-    
-END_SUB
 
+END_SUB
 
 //===================================================================================================================================================================
 //===================================================================================================================================================================
@@ -2902,9 +2871,8 @@ SUB(AdForCoins)
 END_SUB
 
 SUB(CheckAdForX3)
-    
-    IF(($adforx3 = 1) & ($_time_t - $x3timer > 3610))
 
+    IF(($adforx3 = 1) & ($_time_t - $x3timer > 3610))
 
         logwrite($_date_str, " ad for x3 open[adforx3]")
 
@@ -2917,7 +2885,6 @@ SUB(CheckAdForX3)
         getscreen
 
         logwrite($_date_str, " wait for loading[adforx3]")
-
 
         $stopwatch = 0
 
@@ -2944,13 +2911,13 @@ SUB(CheckAdForX3)
 
                 $stopwatch = 0
                 logwrite($_date_str, " no internet (?)")
-            
+
             else
-                
+
                 $stopwatch = 0
                 logwrite($_date_str, " too long loading. restart will be called[adforx3]")
                 Restart()
-            
+
             end_if
 
             wait(0.3)
@@ -2962,7 +2929,6 @@ SUB(CheckAdForX3)
             $stopwatch =0
 
             if(pxl(147,746) = 4806498)
-
 
                 logwrite($_date_str, " connection lost (?)")
 
@@ -2986,9 +2952,8 @@ SUB(CheckAdForX3)
                     message_click(1442,137)
 
                 else
-                    
-                    if_pixel_in(140,253,592,367,5439314)  // 3293262
 
+                    if_pixel_in(140,253,592,367,5439314)  // 3293262
 
                         logwrite($_date_str, " click on ad and 2s wait[adforx3]")
 
@@ -2999,7 +2964,7 @@ SUB(CheckAdForX3)
                         IF(PXL(78,418) = 4806498)
 
                             logwrite($_date_str, " ad didnt open. closing[adforx3]")
-                            
+
                             $adforx3 = 0
                             message_click(1442,137)
                             WAIT(0.3)
@@ -3009,7 +2974,7 @@ SUB(CheckAdForX3)
                             logwrite($_date_str, " ad started. 4.5s wait[adforx3]")
                             WAIT(4.5)
                             GETSCREEN
-                            
+
                             WaitForAdEnd(1)
 
                             $esccounter = 0
@@ -3019,7 +2984,7 @@ SUB(CheckAdForX3)
                     else
 
                         logwrite("cant see ad for x3 (???)")
-                        
+
                         $adforx3 = 0
                         message_click(1442,137)
                         wait(0.3)
@@ -3027,7 +2992,7 @@ SUB(CheckAdForX3)
                     end_if
 
                 end_if
-            
+
             end_if
 
         END_IF
@@ -3046,7 +3011,7 @@ SUB(TryOpenSky)
     IF($captcha_on_screen = 1)
 
         logwrite($_date_str, " captcha ")
-        
+
         $quitcycle = 1
 
     else
@@ -3082,11 +3047,8 @@ END_SUB
 //===================================================================================================================================================================
 
 sub(WaitForAdAndWatch)
-    
-
 
     IF((($adafterskip20 = 0)|($Is_skip = 1))&(($waitforad > 4) & ($adforcoins = 1) & (($adduringspeedup = 1)|(($_time_t - $x3timer) > 1205))))
-
 
         logwrite($_date_str, " waiting ad for coins button[0]")
         WAIT(0.4)
@@ -3099,7 +3061,7 @@ sub(WaitForAdAndWatch)
             AdForCoins()
 
             $waitforad = 0
-        
+
         else
 
             logwrite($_date_str, " button wasnt detected. continue[0]")
@@ -3200,22 +3162,18 @@ SUB(ActivateHeroes)
             wait($hero_click_pause)
         END_IF
 
-
         IF(($this_smith_pos ! 0) | ($heal_altar = 1))
 
             IF(PXL(949-85,54) = 0)
 
                 IF(($this_smith_pos ! 0) & (PXL($this_smithpxl_X, $this_smithpxl_Y) = 16759892))
 
-
                     message_click($this_smithpxl_X - RND(0,60), $this_smithpxl_Y+RND(0,60))
                     logwrite($_date_str, " smith clicked [1,0] ")
 
                 else
 
-
                     if(($heal_altar = 1) & ($heal_altar_used = 0))
-
 
                         message_click(227-85,279)  // 11190201
                         logwrite($_date_str, " altar clicked [1,0] ")
@@ -3225,7 +3183,7 @@ SUB(ActivateHeroes)
                     END_IF
 
                 END_IF
-            
+
             END_IF
 
         END_IF
@@ -3235,7 +3193,6 @@ SUB(ActivateHeroes)
         if(($this_pure_pos ! 0) & ($use_pw_on_boss = 1))
 
             IF((PXL(1042-85,96) = 5066216) & ($puretimerbool = 0))
-
 
                 logwrite($_date_str, " boss hp bar detected[1,0]")
 
@@ -3250,7 +3207,6 @@ SUB(ActivateHeroes)
         IF(($this_pure_pos ! 0) & (PXL($this_purepxl_X,$this_purepxl_Y) = 16759892) & (($this_deck_1 = 0) | (PXL(450-85,88) ! 5066239)) & (($this_deck_2 = 0) | (PXL(543-85,92) ! 5066239)) & (($this_deck_3 = 0) | (PXL(636-85,91) ! 5066239)) & (($this_deck_4 = 0) | (PXL(450-85,202) ! 5066239)) & (($this_deck_5 = 0) | (PXL(543-85,202) ! 5066239)) & (($this_deck_6 = 0) | (PXL(636-85,201) ! 5066239)) & (($this_deck_7 = 0) | (PXL(450-85,311) ! 5066239)) & (($this_deck_8 = 0) | (PXL(543-85,310) ! 5066239)) & (($this_deck_9 = 0) | (PXL(636-85,311) ! 5066239)) & (($this_deck_10 = 0) | (PXL(450-85,414) ! 5066239)) & (($this_deck_11 = 0) | (PXL(543-85,414) ! 5066239)) & (($this_deck_12 = 0) | (PXL(636-85,415) ! 5066239)) & (($this_deck_13 = 0) | (PXL(358-85,203) ! 5066239)))
 
             if(($use_pw_on_boss = 1) & ($dungeonfarm_global = 0))
-
 
                 IF(((PXL(894-85,95)=16777215) | (((($_ms - $puretimer > $bosspause*0.7) & ($_time_t - $x3timer <= 1205)) | (($_ms - $puretimer > $bosspause) & ($_time_t - $x3timer > 1205))) & ($puretimerbool = 1))))
 
@@ -3272,7 +3228,6 @@ SUB(ActivateHeroes)
 
         GetCurrentBattleLength()
         if($current_battle_length > $max_battle_length_ms)
-
 
             logwrite("battle length: ", $current_battle_length/1000, "s. restart will be called")
 
@@ -3306,18 +3261,16 @@ SUB(ActivateHeroesDun)
 
         ChronoClick()
 
-
         IF(($this_deck_1 = 1) & ((PXL(445-85,88) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
 
             message_click(RND(407-85,448-85),RND(110,165))
-            
+
             wait($hero_click_pause)
-            
+
             getscreen
 
         END_IF
 
-        
         IF(($this_deck_2 = 1) & ((PXL(541-85,92) = 16759892)) & (pxl(1407,159) ! $castle_upgrade_color))
             message_click(RND(503-85,540-85),RND(110,165))
             wait($hero_click_pause)
@@ -3405,10 +3358,9 @@ SUB(ActivateHeroesDun)
         IF(($this_smith_pos ! 0) | ($heal_altar = 1))
 
             IF(PXL(949-85,54) ! 5066216)
-            
+
                 IF(($this_smith_pos ! 0) & (PXL($this_smithpxl_X, $this_smithpxl_Y) = 16759892) & (pxl(1407,159) ! $castle_upgrade_color))
 
-                    
                     message_click($this_smithpxl_X - RND(0,60), $this_smithpxl_Y+RND(0,60))
                     wait($hero_click_pause)
                     getscreen
@@ -3416,21 +3368,19 @@ SUB(ActivateHeroesDun)
 
                 else
 
-
                     if(($heal_altar = 1) & ($heal_altar_used = 0))
-
 
                         message_click(227-85,279)  // 11190201
                         wait($hero_click_pause)
                         getscreen
                         logwrite($_date_str, " altar clicked [1,0]")
-                        
+
                         $heal_altar_used = 1
 
                     END_IF
 
                 END_IF
-            
+
             END_IF
 
         END_IF
@@ -3461,10 +3411,8 @@ SUB(ActivateHeroesDun)
 
         ChronoClick()
 
-
         GetCurrentBattleLength()
         if($current_battle_length > $max_battle_length_ms)
-
 
             logwrite("battle length: ", $current_battle_length/1000, "s. restart will be called")
 

@@ -30,7 +30,6 @@ Sub(CheckDLLErrors, $exitCode)
 
 END_SUB
 
-
 $error_string = ""
 getscreen
 
@@ -178,7 +177,6 @@ if(($dungeonfarm = 1) & ($makereplays = 1))
 
 end_if
 
-
 if(($dungeonfarm = 1) & ($skipwaves = 1))
 
     $dialog = DIALOGBOX("cannot farm dungeon and skips", 1, 1)
@@ -192,8 +190,6 @@ if(($makereplays = 1) & ($skipwaves = 1))
     HALT
 
 end_if
-
-
 
 if(($dungeonfarm = 1) & ($autobattlemode = 1))
 
@@ -215,7 +211,6 @@ if(($makereplays = 1) & ($wave_canceling = 1))
     HALT
 
 end_if
-
 
 if(($dungeonfarm = 1) & ($wave_canceling = 1))
 
@@ -257,7 +252,7 @@ IF($autoupgrade = 1)
 
         $dialog = DIALOGBOX("wrong floor to upgrade", 1, 1)
         halt
-        
+
     end_if
 
 end_if

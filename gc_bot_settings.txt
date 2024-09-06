@@ -163,10 +163,10 @@ $this_deck_11 = strfilter( TFREAD("_main_settings.txt", $b1start + $diff*($deckt
 $this_deck_12 = strfilter( TFREAD("_main_settings.txt", $b1start + $diff*($decktoplay-1)+11),"1234567890." , 1 )   // 0 or 1
 
 $this_deck_13 = strfilter( TFREAD("_main_settings.txt", $b1start + $diff*($decktoplay-1)+12),"1234567890." , 1 )// 0 or 1
-                
+
 $this_deck_14 = strfilter( TFREAD("_main_settings.txt", $b1start + $diff*($decktoplay-1)+13),"1234567890." , 1 )// 0 or 1
 $this_deck_15 = strfilter( TFREAD("_main_settings.txt", $b1start + $diff*($decktoplay-1)+14),"1234567890." , 1 )// 0 or 1
-                
+
 $this_pure_pos = strfilter( TFREAD("_main_settings.txt", $b1start + $diff*($decktoplay-1)+15),"1234567890." , 1 )//position on castle. 0 - no hero
 
 $this_smith_pos = strfilter( TFREAD("_main_settings.txt", $b1start + $diff*($decktoplay-1)+16),"1234567890." , 1 )//position on castle. 0 - no hero

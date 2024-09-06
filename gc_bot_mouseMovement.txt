@@ -43,7 +43,6 @@ sub(GetCP, $MSX, $MSY, $MFX, $MFY)
 
 END_SUB
 
-
 Sub(GetXBezier, $t)
     $returned_x = (1-$t) * (1-$t) * (1-$t) * (1-$t) * $mouseStartX + 4 * $t * (1-$t) *(1-$t) *(1-$t) * $bezierCP_1X + 6 * $t * $t * (1-$t) * (1-$t) * $bezierCP_2X + 4 * $t * $t * $t * (1-$t) * $bezierCP_3X + $t * $t * $t * $t * $mouseFinishX
 END_SUB
@@ -97,6 +96,5 @@ sub(MoveTo, $moveToX, $moveToY)
         end_cyc
 
     end_if
-
 
 END_SUB

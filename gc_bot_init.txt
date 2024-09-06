@@ -1,11 +1,5 @@
-
-
-
-
 $x3timer = TFREAD("timerx3spd.txt", 1)
 //TFWRITE("timerx3spd.txt" ,$_time_t)
-
-
 
 $last_mouse_posX = $_xmouse
 $last_mouse_posY = $_ymouse

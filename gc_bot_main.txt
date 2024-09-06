@@ -67,7 +67,7 @@ WHILE(true)
             $prev_frame_game_status = 1
 
         END_IF
-    
+
     ELSE
 
         logwrite($_date_str, " sky not clear. wait 4s")
@@ -104,7 +104,7 @@ WHILE(true)
             if(($timePassed > 1500) & ($timePassed < 2000))
                 ShowBattleLength()
             end_if
-            
+
             logwrite($_date_str, " sky cleared. continue")
 
         END_IF

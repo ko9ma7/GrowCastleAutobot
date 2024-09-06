@@ -136,7 +136,7 @@ SUB(SolveCaptcha)
 
                 $imageFilePath = STRCONCAT($_pdir, "CaptchaImage_", $screen_counter+1, ".bmp")
                 screenshotFix(504 + $screenShiftX, 204 + $screenShiftY, 972 + $screenShiftX, 672 + $screenShiftY, $imageFilePath) // updated
-                
+
                 //$curr_frame_wait = $wms[$screen_counter] - $_ms + $ms_of_last_screen
                 $curr_frame_wait = $frameWaitMs - $_ms + $ms_of_last_screen
 
@@ -261,7 +261,7 @@ SUB(SolveCaptcha)
                             else
                                 Random_move_in(857,414,899,477)
                             end_if
-                            
+
                         case(4)
 
                             if($test_captcha_mode = 0)
@@ -301,7 +301,6 @@ SUB(SolveCaptcha)
                             else
                                 Random_move_in(616,309,660,372)
                             end_if
-
 
                     END_SWITCH
 
@@ -385,7 +384,7 @@ SUB(SolveCaptcha)
                             else
 
                                 logwrite("returnedValue: ", $returnedValue)
-                                
+
                                 $captcha_answer = $returnedValue - int($returnedValue / 8) * 8
 
                                 $returnedValue = $returnedValue - $captcha_answer
@@ -467,7 +466,7 @@ SUB(SolveCaptcha)
                 getscreen
 
             end_if
-            
+
         end_if
 
     END_CYC

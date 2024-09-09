@@ -2023,7 +2023,7 @@ END_SUB
 
 sub(Put_on_AB)
 
-    Perform_OrcBand_Milit()
+    // Perform_OrcBand_Milit()
 
     logwrite($_date_str, " ab open")
     wait($wait_before_AB_open)

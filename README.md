@@ -15,6 +15,11 @@ Requirements:
 
 All notable changes will be here.
 
+## 📅 09.09.2024 📅
+
+### ✅ Fixed
+- Orc band and military F are not activated before starting AB
+
 ## 📅 03.09.2024 📅
 
 ### 🧾 Instructions update

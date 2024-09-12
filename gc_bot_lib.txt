@@ -281,20 +281,24 @@ END_SUB
 
 SUB(CheckLoseABWindow)
 
-    if(pxl(454,345) = 3423819)
-    if(pxl(1027,344) = 3423819)
-    if(pxl(457,508) = 3423819)
-    if(pxl(1025,512) = 3423819)
-    if(pxl(666,572) = 6869487)
-    if(pxl(812,574) = 2342642)
-    if(pxl(663,618) = 1551083)
-    if(pxl(818,284) = 4806498)
+    if(pxl(526,277) = 4806498)
+    if(pxl(555,281) = 16777215)
+    if(pxl(717,281) = 16777215)
+    if(pxl(516,372) = 3423819)
+    if(pxl(965,363) = 3423819)
+    if(pxl(611,604) = 4806498)
+    if(pxl(878,594) = 4806498)
+    if(pxl(668,573) = 6869487)
+    if(pxl(802,580) = 2342642)
+    if(pxl(808,622) = 1551083)
 
         Rmessage_click(1157,466)
         logwrite($_date_str, " ab lost window exit")
         wait(0.05)
         GETSCREEN
 
+    END_IF
+    END_IF
     END_IF
     END_IF
     END_IF
@@ -1724,12 +1728,16 @@ SUB(AB_WAIT, $seconds_to_wait)
         CheckSky()
         WHILE(($sky_clear = 0) & ($stopwatch < 200) & ($seconds_to_wait ! -1) & ($_ms - $AB_START < $seconds_to_wait * 1000))
 
-            if(pxl(508,297) = 16777215)
-            if(pxl(612,275) = 16777215)
-            if(pxl(755,297) = 16777215)
-            if(pxl(814,275) = 16777215)
-            if(pxl(663,370) = 14342874)
-            if(pxl(471,384) = 4806498)
+            if(pxl(526,277) = 4806498)
+            if(pxl(555,281) = 16777215)
+            if(pxl(717,281) = 16777215)
+            if(pxl(516,372) = 3423819)
+            if(pxl(965,363) = 3423819)
+            if(pxl(611,604) = 4806498)
+            if(pxl(878,594) = 4806498)
+            if(pxl(668,573) = 6869487)
+            if(pxl(802,580) = 2342642)
+            if(pxl(808,622) = 1551083)
 
                 Rmessage_click(1157,466)
                 logwrite($_date_str, " ab lost window exit")
@@ -1737,6 +1745,10 @@ SUB(AB_WAIT, $seconds_to_wait)
                 GETSCREEN
                 $seconds_to_wait = -1
 
+            END_IF
+            END_IF
+            END_IF
+            END_IF
             END_IF
             END_IF
             END_IF

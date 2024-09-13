@@ -1869,31 +1869,31 @@ sub(Perform_dungeon_start)
             SWITCH($dungeon_number)
 
                 CASE(1)
-                    message_click(rnd(154-85,495),rnd(179,229))  // 2700867
+                    Random_click_in(57,168,371,218)
 
                 CASE(2)
-                    message_click(rnd(630-85,980-85),rnd(169,228))  // 2700867
+                    Random_click_in(539,170,903,227)
 
                 CASE(3)
-                    message_click(rnd(1100-85,1455-85),rnd(177,230))  // 3161419
+                    Random_click_in(1082,166,1368,212)
 
                 CASE(4)
-                    message_click(rnd(168-85,498-85),rnd(312,363))  // 2700867
+                    Random_click_in(57,308,302,366)
 
                 CASE(5)
-                    message_click(rnd(638-85,975-85),rnd(302,360))  // 2700867
+                    Random_click_in(544,304,891,365)
 
                 CASE(6)
-                    message_click(rnd(1099-85,1452-85),rnd(312,366))  // 2700867
+                    Random_click_in(1094,301,1367,367)
 
                 CASE(7)
-                    message_click(rnd(158-85,508-85),rnd(440,490))  // 2700867
+                    Random_click_in(160,443,414,483)
 
                 CASE(8)
-                    message_click(rnd(626-85,969-85),rnd(437,492))  // 2700867
+                    Random_click_in(625,444,879,485)
 
                 CASE(9)
-                    message_click(rnd(1099-85,1452-85),rnd(433,494))  // 2700867
+                    Random_click_in(1113,438,1361,486)
 
             END_SWITCH
 

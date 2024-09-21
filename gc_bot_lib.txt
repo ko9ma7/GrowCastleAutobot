@@ -384,7 +384,7 @@ SUB(CountCrystals, $lightmode)
     END_IF
 
     $upgxmin=288
-    $upgxmax=442
+    $upgxmax=464
     $upgymin=40
     $upgymax=70
 

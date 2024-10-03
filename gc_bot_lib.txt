@@ -2651,7 +2651,7 @@ Sub(UpgradeHero)
 
         $cyanpxls = pxlcount(958,586,1126,621, 16768256)
 
-        if(($cyanpxls < 50) | ($cyanpxls > 90))
+        if(($cyanpxls < 50) | ($cyanpxls > 110))
 
             logwrite("hero is not crystal upgradable. quit hero upgrading")
             Rmessage_click(1157,466)

@@ -527,41 +527,41 @@ SUB(Item_Drop, $itemgrade, $string_number)
 
         END_IF
 
-        SWITCH($itemgrade)
+        if($itemgrade = 1)
 
-            CASE(1) // B
+            if($string_number ! 0)
 
-                if($string_number ! 0)
+                TFWRITE("dungeon_statistics.txt", STRCONCAT("B: ", $temp_item_grade), $string_number)
 
-                    TFWRITE("dungeon_statistics.txt", STRCONCAT("B: ", $temp_item_grade), $string_number)
+            END_IF
 
-                END_IF
+            IF($delete_B = 1)
 
-                IF($delete_B = 1)
+                if_pixel_in(420-85,188,1225-85,700,10920838)
 
-                    if_pixel_in(420-85,188,1225-85,700,10920838)
-
-                        dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
-
-                    END_IF
-
-                ELSE
-
-                    getscreen
-
-                    if($screenshot_items = 1)
-                        screenshot("ItemB")
-                    END_IF
-
-                    if_pixel_in(420-85,188,1225-85,700,6869487)
-
-                        message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
-
-                    END_IF
+                    dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
 
                 END_IF
 
-            CASE(2) // A
+            ELSE
+
+                getscreen
+
+                if($screenshot_items = 1)
+                    screenshot("ItemB")
+                END_IF
+
+                if_pixel_in(420-85,188,1225-85,700,6869487)
+
+                    message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+
+                END_IF
+
+            END_IF
+            
+        else
+
+            if($itemgrade = 2)
 
                 if($string_number ! 0)
 
@@ -592,104 +592,118 @@ SUB(Item_Drop, $itemgrade, $string_number)
                     END_IF
 
                 END_IF
+            
+            else
 
-            CASE(3) // S
+                if($itemgrade = 3)
 
-                if($string_number ! 0)
+                    if($string_number ! 0)
 
-                    TFWRITE("dungeon_statistics.txt", STRCONCAT("S: ", $temp_item_grade), $string_number)
-
-                END_IF
-
-                IF($delete_S = 1)
-
-                    if_pixel_in(420-85,188,1225-85,700,13897453)
-
-                        dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+                        TFWRITE("dungeon_statistics.txt", STRCONCAT("S: ", $temp_item_grade), $string_number)
 
                     END_IF
 
-                ELSE
+                    IF($delete_S = 1)
 
-                    getscreen
+                        if_pixel_in(420-85,188,1225-85,700,13897453)
 
-                    if($screenshot_items = 1)
-                        screenshot("ItemS")
-                    END_IF
+                            dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
 
-                    if_pixel_in(420-85,188,1225-85,700,6869487)
+                        END_IF
 
-                        message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+                    ELSE
 
-                    END_IF
+                        getscreen
 
-                END_IF
+                        if($screenshot_items = 1)
+                            screenshot("ItemS")
+                        END_IF
 
-            CASE(4) // L
+                        if_pixel_in(420-85,188,1225-85,700,6869487)
 
-                if($string_number ! 0)
+                            message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
 
-                    TFWRITE("dungeon_statistics.txt", STRCONCAT("L: ", $temp_item_grade), $string_number)
-
-                END_IF
-
-                IF($delete_L = 1)
-
-                    if_pixel_in(420-85,188,1225-85,700,2894051)
-
-                        dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+                        END_IF
 
                     END_IF
+                
+                else
 
-                ELSE
+                    if($itemgrade = 4)
 
-                    getscreen
+                        if($string_number ! 0)
 
-                    if($screenshot_items = 1)
-                        screenshot("ItemL")
-                    END_IF
+                            TFWRITE("dungeon_statistics.txt", STRCONCAT("L: ", $temp_item_grade), $string_number)
 
-                    if_pixel_in(420-85,188,1225-85,700,6869487)
+                        END_IF
 
-                        message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+                        IF($delete_L = 1)
 
-                    END_IF
+                            if_pixel_in(420-85,188,1225-85,700,2894051)
 
-                END_IF
+                                dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
 
-            CASE(5) // E
+                            END_IF
 
-                if($string_number ! 0)
+                        ELSE
 
-                    TFWRITE("dungeon_statistics.txt", STRCONCAT("E: ", $temp_item_grade), $string_number)
+                            getscreen
 
-                END_IF
+                            if($screenshot_items = 1)
+                                screenshot("ItemL")
+                            END_IF
 
-                IF($delete_E = 1)
+                            if_pixel_in(420-85,188,1225-85,700,6869487)
 
-                    if_pixel_in(420-85,188,1225-85,700,2894051)
+                                message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
 
-                        dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
+                            END_IF
 
-                    END_IF
+                        END_IF
+                    
+                    else
 
-                ELSE
+                        if($itemgrade = 5)
 
-                    getscreen
+                            if($string_number ! 0)
 
-                    if($screenshot_items = 1)
-                        screenshot("ItemE")
-                    END_IF
+                                TFWRITE("dungeon_statistics.txt", STRCONCAT("E: ", $temp_item_grade), $string_number)
 
-                    if_pixel_in(420-85,188,1225-85,700,6869487)
+                            END_IF
 
-                        message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+                            IF($delete_E = 1)
 
-                    END_IF
+                                if_pixel_in(420-85,188,1225-85,700,2894051)
 
-                END_IF
+                                    dbmessage_click($_return1+rnd(-30,30),$_return2+rnd(10,60))
 
-        END_SWITCH
+                                END_IF
+
+                            ELSE
+
+                                getscreen
+
+                                if($screenshot_items = 1)
+                                    screenshot("ItemE")
+                                END_IF
+
+                                if_pixel_in(420-85,188,1225-85,700,6869487)
+
+                                    message_click($_return1+rnd(0,130), $_return2+rnd(0,60))
+
+                                END_IF
+
+                            END_IF
+
+                        end_if
+
+                    end_if
+
+                end_if
+
+            end_if
+
+        end_if
 
     else
 
@@ -1203,18 +1217,27 @@ SUB(UpgradeTower)
 
         WAIT(0.2)
 
-        SWITCH($floor_to_upgrade)
+        if($floor_to_upgrade = 1)
+            message_click(525-85,557)
+        else
 
-            CASE(1)
-                message_click(525-85,557)
-            CASE(2)
+            if($floor_to_upgrade = 2)
                 message_click(525-85,455)
-            CASE(3)
-                message_click(525-85,346)
-            CASE(4)
-                message_click(525-85,233)
+            else
 
-        END_SWITCH
+                if($floor_to_upgrade = 3)
+                    message_click(525-85,346)
+                else
+
+                    if($floor_to_upgrade = 4)
+                        message_click(525-85,233)
+                    end_if
+
+                end_if
+
+            end_if
+
+        end_if
 
         WAIT(0.4)
 
@@ -1311,32 +1334,32 @@ SUB(GetItem)
         GETSCREEN
 
         $item_correct_b = 0
+        
+        if($dungeon_number = 1)
 
-        SWITCH($dungeon_number)
+            if_pixel_in(482-85,134,1201-85,440, 14342874)
 
-            CASE(1) // green dragon
+                if(pxlcount($_return1-5, $_return2-5,$_return1+5, $_return2+5, 16777215) = 0)
 
-                if_pixel_in(482-85,134,1201-85,440, 14342874)
+                    Item_Drop(1, 0)
 
-                    if(pxlcount($_return1-5, $_return2-5,$_return1+5, $_return2+5, 16777215) = 0)
-
-                        Item_Drop(1, 0)
-
-                        $item_correct_b = 1
-
-                    end_if
+                    $item_correct_b = 1
 
                 end_if
 
-                if($item_correct_b = 0)
+            end_if
 
-                    $wrong_item_bool = 1
+            if($item_correct_b = 0)
 
-                    Item_Drop(0, 0)
+                $wrong_item_bool = 1
 
-                end_if
+                Item_Drop(0, 0)
 
-            CASE(2) // black dragon
+            end_if
+        
+        else
+
+            if($dungeon_number = 2)
 
                 if_pixel_in(482-85,134,1201-85,440, 14352196) // A
 
@@ -1357,28 +1380,131 @@ SUB(GetItem)
 
                 end_if
 
-            CASE(3) // red dragon
+            else
+            
+                if($dungeon_number = 3)
 
-                if_pixel_in(482-85,134,1201-85,440,15292148) // S
+                    if_pixel_in(482-85,134,1201-85,440,15292148) // S
 
-                    Item_Drop(3, 8)
+                        Item_Drop(3, 8)
+
+                    else
+
+                        if_pixel_in(482-85,134,1201-85,440, 14352196) // A
+
+                            Item_Drop(2, 7)
+
+                        ELSE
+
+                            if_pixel_in(482-85,134,1201-85,440, 14342874) // B
+
+                                Item_Drop(1, 6)
+
+                            else
+
+                                $wrong_item_bool = 1
+                                Item_Drop(0, 0)
+
+                            end_if
+
+                        end_if
+
+                    end_if
 
                 else
 
-                    if_pixel_in(482-85,134,1201-85,440, 14352196) // A
+                    IF($dungeon_number = 4)
 
-                        Item_Drop(2, 7)
+                        if_pixel_in(482-85,134,1201-85,440,15292148) // S
 
-                    ELSE
-
-                        if_pixel_in(482-85,134,1201-85,440, 14342874) // B
-
-                            Item_Drop(1, 6)
+                            Item_Drop(3, 13)
 
                         else
 
-                            $wrong_item_bool = 1
-                            Item_Drop(0, 0)
+                            if_pixel_in(482-85,134,1201-85,440, 14352196) // A
+
+                                Item_Drop(2, 12)
+
+                            ELSE
+
+                                if_pixel_in(482-85,134,1201-85,440, 14342874) // B
+
+                                    Item_Drop(1, 11)
+
+                                else
+
+                                    $wrong_item_bool = 1
+                                    Item_Drop(0, 0)
+
+                                end_if
+
+                            end_if
+
+                        end_if
+                    
+                    else
+
+                        if($dungeon_number = 5)
+
+                            if_pixel_in(482-85,134,1201-85,440, 14352196)
+
+                                Item_Drop(2, 16)
+
+                            ELSE
+
+                                if_pixel_in(482-85,134,1201-85,440,15292148)
+
+                                    Item_Drop(3, 17)
+
+                                ELSE
+
+                                    if_pixel_in(482-85,134,1201-85,440,3289855)
+
+                                        Item_Drop(4, 18)
+
+                                    else
+
+                                        $wrong_item_bool = 1
+                                        Item_Drop(0, 0)
+
+                                    END_IF
+
+                                END_IF
+
+                            END_IF
+
+                        else
+                        
+                            if($dungeon_number = 6)
+
+                                if_pixel_in(482-85,134,1201-85,440, 14352196)
+
+                                    Item_Drop(2, 21)
+
+                                ELSE
+
+                                    if_pixel_in(482-85,134,1201-85,440,15292148)
+
+                                        Item_Drop(3, 22)
+
+                                    ELSE
+
+                                        if_pixel_in(482-85,134,1201-85,440,55551)
+
+                                            Item_Drop(5, 23)
+
+                                        else
+
+                                            $wrong_item_bool = 1
+                                            Item_Drop(0, 0)
+
+                                        end_if
+
+                                    END_IF
+
+                                END_IF
+
+                            end_if
 
                         end_if
 
@@ -1386,94 +1512,9 @@ SUB(GetItem)
 
                 end_if
 
-            CASE(4) // SIN
+            end_if
 
-                if_pixel_in(482-85,134,1201-85,440,15292148) // S
-
-                    Item_Drop(3, 13)
-
-                else
-
-                    if_pixel_in(482-85,134,1201-85,440, 14352196) // A
-
-                        Item_Drop(2, 12)
-
-                    ELSE
-
-                        if_pixel_in(482-85,134,1201-85,440, 14342874) // B
-
-                            Item_Drop(1, 11)
-
-                        else
-
-                            $wrong_item_bool = 1
-                            Item_Drop(0, 0)
-
-                        end_if
-
-                    end_if
-
-                end_if
-
-            CASE(5) // legendary dragon
-
-                if_pixel_in(482-85,134,1201-85,440, 14352196)
-
-                    Item_Drop(2, 16)
-
-                ELSE
-
-                    if_pixel_in(482-85,134,1201-85,440,15292148)
-
-                        Item_Drop(3, 17)
-
-                    ELSE
-
-                        if_pixel_in(482-85,134,1201-85,440,3289855)
-
-                            Item_Drop(4, 18)
-
-                        else
-
-                            $wrong_item_bool = 1
-                            Item_Drop(0, 0)
-
-                        END_IF
-
-                    END_IF
-
-                END_IF
-
-            CASE(6) // bone dragon
-
-                if_pixel_in(482-85,134,1201-85,440, 14352196)
-
-                    Item_Drop(2, 21)
-
-                ELSE
-
-                    if_pixel_in(482-85,134,1201-85,440,15292148)
-
-                        Item_Drop(3, 22)
-
-                    ELSE
-
-                        if_pixel_in(482-85,134,1201-85,440,55551)
-
-                            Item_Drop(5, 23)
-
-                        else
-
-                            $wrong_item_bool = 1
-                            Item_Drop(0, 0)
-
-                        end_if
-
-                    END_IF
-
-                END_IF
-
-        END_SWITCH
+        end_if
 
     else
 
@@ -1866,36 +1907,43 @@ sub(Perform_dungeon_start)
 
         else
 
-            SWITCH($dungeon_number)
 
-                CASE(1)
-                    Random_click_in(57,168,371,218)
+            if($dungeon_number = 1)
+                Random_click_in(57,168,371,218)
+            end_if
 
-                CASE(2)
-                    Random_click_in(539,170,903,227)
+            if($dungeon_number = 2)
+                Random_click_in(539,170,903,227)
+            end_if
 
-                CASE(3)
-                    Random_click_in(1082,166,1368,212)
+            if($dungeon_number = 3)
+                Random_click_in(1082,166,1368,212)
+            end_if
 
-                CASE(4)
-                    Random_click_in(57,308,302,366)
+            if($dungeon_number = 4)
+                Random_click_in(57,308,302,366)
+            end_if
 
-                CASE(5)
-                    Random_click_in(544,304,891,365)
+            if($dungeon_number = 5)
+                Random_click_in(544,304,891,365)
+            end_if
 
-                CASE(6)
-                    Random_click_in(1094,301,1367,367)
+            if($dungeon_number = 6)
+                Random_click_in(1094,301,1367,367)
+            end_if
 
-                CASE(7)
-                    Random_click_in(160,443,414,483)
+            if($dungeon_number = 7)
+                Random_click_in(160,443,414,483)
+            end_if
 
-                CASE(8)
-                    Random_click_in(625,444,879,485)
+            if($dungeon_number = 8)
+                Random_click_in(625,444,879,485)
+            end_if
 
-                CASE(9)
-                    Random_click_in(1113,438,1361,486)
+            if($dungeon_number = 9)
+                Random_click_in(1113,438,1361,486)
+            end_if
 
-            END_SWITCH
 
             wait(0.15)
             message_click(rnd(1124-85,1226-85),rnd(728,770))  // 2700867
@@ -2614,36 +2662,46 @@ Sub(UpgradeHero)
 
         WAIT(0.2)
 
-        switch($upgrade_hero_num)
 
-            case(1)
-                Random_click_in(323,119,363,157)  // 9214623
-            case(2)
-                Random_click_in(417,115,461,163)  // 10269365
-            case(3)
-                Random_click_in(508,114,550,162)  // 7837870
-            case(4)
-                Random_click_in(324,227,368,271)  // 9412772
-            case(5)
-                Random_click_in(417,226,462,276)  // 10269365
-            case(6)
-                Random_click_in(509,226,555,278)  // 7434619
-            case(7)
-                Random_click_in(319,333,367,385)  // 9933452
-            case(8)
-                Random_click_in(412,334,463,385)  // 13617855
-            case(9)
-                Random_click_in(507,333,553,387)  // 6735012
-            case(10)
-                Random_click_in(321,437,369,485)  // 12438479
-            case(11)
-                Random_click_in(413,439,460,483)  // 6710886
-            case(12)
-                Random_click_in(507,432,557,488)  // 7390132
-            case(13)
-                Random_click_in(222,221,272,271)  // 6800805
-
-        END_SWITCH
+        if($upgrade_hero_num = 1)
+            Random_click_in(323,119,363,157)  // 9214623
+        end_if
+        if($upgrade_hero_num = 2)
+            Random_click_in(417,115,461,163)  // 10269365
+        end_if
+        if($upgrade_hero_num = 3)
+            Random_click_in(508,114,550,162)  // 7837870
+        end_if
+        if($upgrade_hero_num = 4)
+            Random_click_in(324,227,368,271)  // 9412772
+        end_if
+        if($upgrade_hero_num = 5)
+            Random_click_in(417,226,462,276)  // 10269365
+        end_if
+        if($upgrade_hero_num = 6)
+            Random_click_in(509,226,555,278)  // 7434619
+        end_if
+        if($upgrade_hero_num = 7)
+            Random_click_in(319,333,367,385)  // 9933452
+        end_if
+        if($upgrade_hero_num = 8)
+            Random_click_in(412,334,463,385)  // 13617855
+        end_if
+        if($upgrade_hero_num = 9)
+            Random_click_in(507,333,553,387)  // 6735012
+        end_if
+        if($upgrade_hero_num = 10)
+            Random_click_in(321,437,369,485)  // 12438479
+        end_if
+        if($upgrade_hero_num = 11)
+            Random_click_in(413,439,460,483)  // 6710886
+        end_if
+        if($upgrade_hero_num = 12)
+            Random_click_in(507,432,557,488)  // 7390132
+        end_if
+        if($upgrade_hero_num = 13)
+            Random_click_in(222,221,272,271)  // 6800805
+        end_if
 
         WAIT(0.8)
 

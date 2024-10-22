@@ -1,27 +1,29 @@
 Sub(CheckDLLErrors, $exitCode)
-
-    switch($exitCode)
-
-        case(0)
-            $dialog = DIALOGBOX("dll is missing or cannot be called. Should be in core folder", 1, 1)
-            halt
-        case(20)
-            $dialog = DIALOGBOX("For some reason couldnt get current directory path. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
-            halt
-        case(159)
-            $dialog = DIALOGBOX("slpx.exe wasnt found.", 1, 1)
-            halt
-        case(11)
-            $dialog = DIALOGBOX("Wrong parameter 1. Must be 0 or 1", 1, 1)
-            halt
-        case(12)
-            $dialog = DIALOGBOX("Wrong parameter 2. Must be 0 or 1", 1, 1)
-            halt
-        case(100)
-            $dialog = DIALOGBOX("Wrong parameters count. Must be 4", 1, 1)
-            halt
-
-    END_SWITCH
+        
+    if($exitCode = 0)
+        $dialog = DIALOGBOX("dll is missing or cannot be called. Should be in core folder", 1, 1)
+        halt
+    end_if
+    if($exitCode = 20)
+        $dialog = DIALOGBOX("For some reason couldnt get current directory path. Try removing spaces and cyrillic symbols from path to core folder", 1, 1)
+        halt
+    end_if
+    if($exitCode = 159)
+        $dialog = DIALOGBOX("slpx.exe wasnt found.", 1, 1)
+        halt
+    end_if
+    if($exitCode = 11)
+        $dialog = DIALOGBOX("Wrong parameter 1. Must be 0 or 1", 1, 1)
+        halt
+    end_if
+    if($exitCode = 12)
+        $dialog = DIALOGBOX("Wrong parameter 2. Must be 0 or 1", 1, 1)
+        halt
+    end_if
+    if($exitCode = 100)
+        $dialog = DIALOGBOX("Wrong parameters count. Must be 4", 1, 1)
+        halt
+    end_if
 
     if(($exitCode > 50) & ($exitCode < 75))
         $dialog = DIALOGBOX(STRCONCAT("Couldnt find image ", $_pdir, "CaptchaImage_", $exitCode - 50, ".bmp'. Should be in clicker core folder"), 1, 1)
@@ -356,275 +358,331 @@ DEFINE($this_militaryF_Y,250)
 DEFINE($this_chrono_X,100-85)
 DEFINE($this_chrono_Y,250)
 
-SWITCH($this_pure_pos)
 
-    CASE(0)
-        $this_purepxl_X = 100-85
-        $this_purepxl_Y = 250
-    CASE(2)
-        $this_deck_2 = 0
-        $this_purepxl_Y = 92
-    CASE(5)
-        $this_deck_5 = 0
-        $this_purepxl_Y = 202
-    CASE(8)
-        $this_deck_8 = 0
-        $this_purepxl_Y = 310
-    CASE(11)
-        $this_deck_11 = 0
-        $this_purepxl_Y = 414
-    DEFAULT
-        $error_string = STRCONCAT($error_string, "put pw on center",char(10))
+if($this_pure_pos = 0)
+    $this_purepxl_X = 100-85
+    $this_purepxl_Y = 250
+end_if
+if($this_pure_pos = 2)
+    $this_deck_2 = 0
+    $this_purepxl_Y = 92
+end_if
+if($this_pure_pos = 5)
+    $this_deck_5 = 0
+    $this_purepxl_Y = 202
+end_if
+if($this_pure_pos = 8)
+    $this_deck_8 = 0
+    $this_purepxl_Y = 310
+end_if
+if($this_pure_pos = 11)
+    $this_deck_11 = 0
+    $this_purepxl_Y = 414
+end_if
+if(($this_pure_pos ! 0) & ($this_pure_pos ! 2) & ($this_pure_pos ! 5) & ($this_pure_pos ! 8) & ($this_pure_pos ! 11))
+    $error_string = STRCONCAT($error_string, "put pw on center",char(10))
+end_if
 
-END_SWITCH
 
-SWITCH($this_smith_pos)
+if($this_smith_pos = 0)
+    $this_smithpxl_X = 100-85
+    $this_smithpxl_Y = 250
+end_if
+if($this_smith_pos = 1)
+    $this_deck_1 = 0
+    $this_smithpxl_X = 449-85
+    $this_smithpxl_Y = 90
+end_if
+if($this_smith_pos = 2)
+    $this_deck_2 = 0
+    $this_smithpxl_X = 541-85
+    $this_smithpxl_Y = 90
+end_if
+if($this_smith_pos = 3)
+    $this_deck_3 = 0
+    $this_smithpxl_X = 632-85
+    $this_smithpxl_Y = 90
+end_if
+if($this_smith_pos = 4)
+    $this_deck_4 = 0
+    $this_smithpxl_X = 449-85
+    $this_smithpxl_Y = 202
+end_if
+if($this_smith_pos = 5)
+    $this_deck_5 = 0
+    $this_smithpxl_X = 541-85
+    $this_smithpxl_Y = 202
+end_if
+if($this_smith_pos = 6)
+    $this_deck_6 = 0
+    $this_smithpxl_X = 632-85
+    $this_smithpxl_Y = 202
+end_if
+if($this_smith_pos = 7)
+    $this_deck_7 = 0
+    $this_smithpxl_X = 449-85
+    $this_smithpxl_Y = 311
+end_if
+if($this_smith_pos = 8)
+    $this_deck_8 = 0
+    $this_smithpxl_X = 541-85
+    $this_smithpxl_Y = 311
+end_if
+if($this_smith_pos = 9)
+    $this_deck_9 = 0
+    $this_smithpxl_X = 632-85
+    $this_smithpxl_Y = 311
+end_if
+if($this_smith_pos = 10)
+    $this_deck_10 = 0
+    $this_smithpxl_X = 449-85
+    $this_smithpxl_Y = 415
+end_if
+if($this_smith_pos = 11)
+    $this_deck_11 = 0
+    $this_smithpxl_X = 541-85
+    $this_smithpxl_Y = 415
+end_if
+if($this_smith_pos = 12)
+    $this_deck_12 = 0
+    $this_smithpxl_X = 632-85
+    $this_smithpxl_Y = 415
+end_if
+if($this_smith_pos = 13)
+    $this_deck_13 = 0
+    $this_smithpxl_X = 356-85
+    $this_smithpxl_Y = 203
+end_if
+if(($this_smith_pos < 0) | ($this_smith_pos > 13))
 
-    CASE(0)
-        $this_smithpxl_X = 100-85
-        $this_smithpxl_Y = 250
-    CASE(1)
-        $this_deck_1 = 0
-        $this_smithpxl_X = 449-85
-        $this_smithpxl_Y = 90
-    CASE(2)
-        $this_deck_2 = 0
-        $this_smithpxl_X = 541-85
-        $this_smithpxl_Y = 90
-    CASE(3)
-        $this_deck_3 = 0
-        $this_smithpxl_X = 632-85
-        $this_smithpxl_Y = 90
-    CASE(4)
-        $this_deck_4 = 0
-        $this_smithpxl_X = 449-85
-        $this_smithpxl_Y = 202
-    CASE(5)
-        $this_deck_5 = 0
-        $this_smithpxl_X = 541-85
-        $this_smithpxl_Y = 202
-    CASE(6)
-        $this_deck_6 = 0
-        $this_smithpxl_X = 632-85
-        $this_smithpxl_Y = 202
-    CASE(7)
-        $this_deck_7 = 0
-        $this_smithpxl_X = 449-85
-        $this_smithpxl_Y = 311
-    CASE(8)
-        $this_deck_8 = 0
-        $this_smithpxl_X = 541-85
-        $this_smithpxl_Y = 311
-    CASE(9)
-        $this_deck_9 = 0
-        $this_smithpxl_X = 632-85
-        $this_smithpxl_Y = 311
-    CASE(10)
-        $this_deck_10 = 0
-        $this_smithpxl_X = 449-85
-        $this_smithpxl_Y = 415
-    CASE(11)
-        $this_deck_11 = 0
-        $this_smithpxl_X = 541-85
-        $this_smithpxl_Y = 415
-    CASE(12)
-        $this_deck_12 = 0
-        $this_smithpxl_X = 632-85
-        $this_smithpxl_Y = 415
-    CASE(13)
-        $this_deck_13 = 0
-        $this_smithpxl_X = 356-85
-        $this_smithpxl_Y = 203
-    DEFAULT
-        $error_string = STRCONCAT($error_string, "smith wrong position",char(10))
+    $error_string = STRCONCAT($error_string, "smith wrong position",char(10))
+end_if
 
-END_SWITCH
 
-SWITCH($this_orcband_pos)
 
-    CASE(0)
-        $this_orcband_X = 100-85
-        $this_orcband_Y = 250
-    CASE(1)
-        $this_deck_1 = 0
-        $this_orcband_X = 449-85
-        $this_orcband_Y = 90
-    CASE(2)
-        $this_deck_2 = 0
-        $this_orcband_X = 541-85
-        $this_orcband_Y = 90
-    CASE(3)
-        $this_deck_3 = 0
-        $this_orcband_X = 632-85
-        $this_orcband_Y = 90
-    CASE(4)
-        $this_deck_4 = 0
-        $this_orcband_X = 449-85
-        $this_orcband_Y = 202
-    CASE(5)
-        $this_deck_5 = 0
-        $this_orcband_X = 541-85
-        $this_orcband_Y = 202
-    CASE(6)
-        $this_deck_6 = 0
-        $this_orcband_X = 632-85
-        $this_orcband_Y = 202
-    CASE(7)
-        $this_deck_7 = 0
-        $this_orcband_X = 449-85
-        $this_orcband_Y = 311
-    CASE(8)
-        $this_deck_8 = 0
-        $this_orcband_X = 541-85
-        $this_orcband_Y = 311
-    CASE(9)
-        $this_deck_9 = 0
-        $this_orcband_X = 632-85
-        $this_orcband_Y = 311
-    CASE(10)
-        $this_deck_10 = 0
-        $this_orcband_X = 449-85
-        $this_orcband_Y = 415
-    CASE(11)
-        $this_deck_11 = 0
-        $this_orcband_X = 541-85
-        $this_orcband_Y = 415
-    CASE(12)
-        $this_deck_12 = 0
-        $this_orcband_X = 632-85
-        $this_orcband_Y = 415
-    CASE(13)
-        $this_deck_13 = 0
-        $this_orcband_X = 356-85
-        $this_orcband_Y = 203
-    DEFAULT
-        $error_string = STRCONCAT($error_string, "orcband wrong position",char(10))
+if($this_orcband_pos = 0)
+    $this_orcband_X = 100-85
+    $this_orcband_Y = 250
+end_if
+if($this_orcband_pos = 1)
+    $this_deck_1 = 0
+    $this_orcband_X = 449-85
+    $this_orcband_Y = 90
+end_if
+if($this_orcband_pos = 2)
+    $this_deck_2 = 0
+    $this_orcband_X = 541-85
+    $this_orcband_Y = 90
+end_if
+if($this_orcband_pos = 3)
+    $this_deck_3 = 0
+    $this_orcband_X = 632-85
+    $this_orcband_Y = 90
+end_if
+if($this_orcband_pos = 4)
+    $this_deck_4 = 0
+    $this_orcband_X = 449-85
+    $this_orcband_Y = 202
+end_if
+if($this_orcband_pos = 5)
+    $this_deck_5 = 0
+    $this_orcband_X = 541-85
+    $this_orcband_Y = 202
+end_if
+if($this_orcband_pos = 6)
+    $this_deck_6 = 0
+    $this_orcband_X = 632-85
+    $this_orcband_Y = 202
+end_if
+if($this_orcband_pos = 7)
+    $this_deck_7 = 0
+    $this_orcband_X = 449-85
+    $this_orcband_Y = 311
+end_if
+if($this_orcband_pos = 8)
+    $this_deck_8 = 0
+    $this_orcband_X = 541-85
+    $this_orcband_Y = 311
+end_if
+if($this_orcband_pos = 9)
+    $this_deck_9 = 0
+    $this_orcband_X = 632-85
+    $this_orcband_Y = 311
+end_if
+if($this_orcband_pos = 10)
+    $this_deck_10 = 0
+    $this_orcband_X = 449-85
+    $this_orcband_Y = 415
+end_if
+if($this_orcband_pos = 11)
+    $this_deck_11 = 0
+    $this_orcband_X = 541-85
+    $this_orcband_Y = 415
+end_if
+if($this_orcband_pos = 12)
+    $this_deck_12 = 0
+    $this_orcband_X = 632-85
+    $this_orcband_Y = 415
+end_if
+if($this_orcband_pos = 13)
+    $this_deck_13 = 0
+    $this_orcband_X = 356-85
+    $this_orcband_Y = 203
+end_if
+if(($this_orcband_pos < 0) | ($this_orcband_pos > 13))
+    $error_string = STRCONCAT($error_string, "orcband wrong position",char(10))
+end_if
 
-END_SWITCH
 
-SWITCH($this_militaryF_pos)
+if($this_militaryF_pos = 0)
+    $this_militaryF_X = 100-85
+    $this_militaryF_Y = 250
+end_if
+if($this_militaryF_pos = 1)
+    $this_deck_1 = 0
+    $this_militaryF_X = 449-85
+    $this_militaryF_Y = 90
+end_if
+if($this_militaryF_pos = 2)
+    $this_deck_2 = 0
+    $this_militaryF_X = 541-85
+    $this_militaryF_Y = 90
+end_if
+if($this_militaryF_pos = 3)
+    $this_deck_3 = 0
+    $this_militaryF_X = 632-85
+    $this_militaryF_Y = 90
+end_if
+if($this_militaryF_pos = 4)
+    $this_deck_4 = 0
+    $this_militaryF_X = 449-85
+    $this_militaryF_Y = 202
+end_if
+if($this_militaryF_pos = 5)
+    $this_deck_5 = 0
+    $this_militaryF_X = 541-85
+    $this_militaryF_Y = 202
+end_if
+if($this_militaryF_pos = 6)
+    $this_deck_6 = 0
+    $this_militaryF_X = 632-85
+    $this_militaryF_Y = 202
+end_if
+if($this_militaryF_pos = 7)
+    $this_deck_7 = 0
+    $this_militaryF_X = 449-85
+    $this_militaryF_Y = 311
+end_if
+if($this_militaryF_pos = 8)
+    $this_deck_8 = 0
+    $this_militaryF_X = 541-85
+    $this_militaryF_Y = 311
+end_if
+if($this_militaryF_pos = 9)
+    $this_deck_9 = 0
+    $this_militaryF_X = 632-85
+    $this_militaryF_Y = 311
+end_if
+if($this_militaryF_pos = 10)
+    $this_deck_10 = 0
+    $this_militaryF_X = 449-85
+    $this_militaryF_Y = 415
+end_if
+if($this_militaryF_pos = 11)
+    $this_deck_11 = 0
+    $this_militaryF_X = 541-85
+    $this_militaryF_Y = 415
+end_if
+if($this_militaryF_pos = 12)
+    $this_deck_12 = 0
+    $this_militaryF_X = 632-85
+    $this_militaryF_Y = 415
+end_if
+if($this_militaryF_pos = 13)
+    $this_deck_13 = 0
+    $this_militaryF_X = 356-85
+    $this_militaryF_Y = 203
+end_if
+if(($this_militaryF_pos < 0) | ($this_militaryF_pos > 13))
+    $error_string = STRCONCAT($error_string, "militaryF wrong position",char(10))
+end_if
 
-    CASE(0)
-        $this_militaryF_X = 100-85
-        $this_militaryF_Y = 250
-    CASE(1)
-        $this_deck_1 = 0
-        $this_militaryF_X = 449-85
-        $this_militaryF_Y = 90
-    CASE(2)
-        $this_deck_2 = 0
-        $this_militaryF_X = 541-85
-        $this_militaryF_Y = 90
-    CASE(3)
-        $this_deck_3 = 0
-        $this_militaryF_X = 632-85
-        $this_militaryF_Y = 90
-    CASE(4)
-        $this_deck_4 = 0
-        $this_militaryF_X = 449-85
-        $this_militaryF_Y = 202
-    CASE(5)
-        $this_deck_5 = 0
-        $this_militaryF_X = 541-85
-        $this_militaryF_Y = 202
-    CASE(6)
-        $this_deck_6 = 0
-        $this_militaryF_X = 632-85
-        $this_militaryF_Y = 202
-    CASE(7)
-        $this_deck_7 = 0
-        $this_militaryF_X = 449-85
-        $this_militaryF_Y = 311
-    CASE(8)
-        $this_deck_8 = 0
-        $this_militaryF_X = 541-85
-        $this_militaryF_Y = 311
-    CASE(9)
-        $this_deck_9 = 0
-        $this_militaryF_X = 632-85
-        $this_militaryF_Y = 311
-    CASE(10)
-        $this_deck_10 = 0
-        $this_militaryF_X = 449-85
-        $this_militaryF_Y = 415
-    CASE(11)
-        $this_deck_11 = 0
-        $this_militaryF_X = 541-85
-        $this_militaryF_Y = 415
-    CASE(12)
-        $this_deck_12 = 0
-        $this_militaryF_X = 632-85
-        $this_militaryF_Y = 415
-    CASE(13)
-        $this_deck_13 = 0
-        $this_militaryF_X = 356-85
-        $this_militaryF_Y = 203
-    DEFAULT
-        $error_string = STRCONCAT($error_string, "militaryF wrong position",char(10))
 
-END_SWITCH
 
-SWITCH($this_chrono_pos)
+if($this_chrono_pos = 0)
+    $this_chrono_X = 100-85
+    $this_chrono_Y = 250
+end_if
+if($this_chrono_pos = 1)
+    $this_deck_1 = 0
+    $this_chrono_X = 449-85
+    $this_chrono_Y = 90
+end_if
+if($this_chrono_pos = 2)
+    $this_deck_2 = 0
+    $this_chrono_X = 541-85
+    $this_chrono_Y = 90
+end_if
+if($this_chrono_pos = 3)
+    $this_deck_3 = 0
+    $this_chrono_X = 632-85
+    $this_chrono_Y = 90
+end_if
+if($this_chrono_pos = 4)
+    $this_deck_4 = 0
+    $this_chrono_X = 449-85
+    $this_chrono_Y = 202
+end_if
+if($this_chrono_pos = 5)
+    $this_deck_5 = 0
+    $this_chrono_X = 541-85
+    $this_chrono_Y = 202
+end_if
+if($this_chrono_pos = 6)
+    $this_deck_6 = 0
+    $this_chrono_X = 632-85
+    $this_chrono_Y = 202
+end_if
+if($this_chrono_pos = 7)
+    $this_deck_7 = 0
+    $this_chrono_X = 449-85
+    $this_chrono_Y = 311
+end_if
+if($this_chrono_pos = 8)
+    $this_deck_8 = 0
+    $this_chrono_X = 541-85
+    $this_chrono_Y = 311
+end_if
+if($this_chrono_pos = 9)
+    $this_deck_9 = 0
+    $this_chrono_X = 632-85
+    $this_chrono_Y = 311
+end_if
+if($this_chrono_pos = 10)
+    $this_deck_10 = 0
+    $this_chrono_X = 449-85
+    $this_chrono_Y = 415
+end_if
+if($this_chrono_pos = 11)
+    $this_deck_11 = 0
+    $this_chrono_X = 541-85
+    $this_chrono_Y = 415
+end_if
+if($this_chrono_pos = 12)
+    $this_deck_12 = 0
+    $this_chrono_X = 632-85
+    $this_chrono_Y = 415
+end_if
+if($this_chrono_pos = 13)
+    $this_deck_13 = 0
+    $this_chrono_X = 356-85
+    $this_chrono_Y = 203
+end_if
 
-    CASE(0)
-        $this_chrono_X = 100-85
-        $this_chrono_Y = 250
-    CASE(1)
-        $this_deck_1 = 0
-        $this_chrono_X = 449-85
-        $this_chrono_Y = 90
-    CASE(2)
-        $this_deck_2 = 0
-        $this_chrono_X = 541-85
-        $this_chrono_Y = 90
-    CASE(3)
-        $this_deck_3 = 0
-        $this_chrono_X = 632-85
-        $this_chrono_Y = 90
-    CASE(4)
-        $this_deck_4 = 0
-        $this_chrono_X = 449-85
-        $this_chrono_Y = 202
-    CASE(5)
-        $this_deck_5 = 0
-        $this_chrono_X = 541-85
-        $this_chrono_Y = 202
-    CASE(6)
-        $this_deck_6 = 0
-        $this_chrono_X = 632-85
-        $this_chrono_Y = 202
-    CASE(7)
-        $this_deck_7 = 0
-        $this_chrono_X = 449-85
-        $this_chrono_Y = 311
-    CASE(8)
-        $this_deck_8 = 0
-        $this_chrono_X = 541-85
-        $this_chrono_Y = 311
-    CASE(9)
-        $this_deck_9 = 0
-        $this_chrono_X = 632-85
-        $this_chrono_Y = 311
-    CASE(10)
-        $this_deck_10 = 0
-        $this_chrono_X = 449-85
-        $this_chrono_Y = 415
-    CASE(11)
-        $this_deck_11 = 0
-        $this_chrono_X = 541-85
-        $this_chrono_Y = 415
-    CASE(12)
-        $this_deck_12 = 0
-        $this_chrono_X = 632-85
-        $this_chrono_Y = 415
-    CASE(13)
-        $this_deck_13 = 0
-        $this_chrono_X = 356-85
-        $this_chrono_Y = 203
-    DEFAULT
-        $error_string = STRCONCAT($error_string, "chrono wrong position",char(10))
+if(($this_chrono_pos < 0) | ($this_chrono_pos > 13))
+    $error_string = STRCONCAT($error_string, "chrono wrong position",char(10))
+end_if
 
-END_SWITCH
 
 IF(strlen($error_string) > 1)
     $dialog = DIALOGBOX($error_string, 1, 1)

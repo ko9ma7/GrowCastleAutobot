@@ -236,73 +236,78 @@ SUB(SolveCaptcha)
                     // LCLICK(582,411,625,478)  // 7
                     // LCLICK(616,309,660,372)  // 8
 
-                    switch($captcha_answer)
 
-                        case(1)
+                    if($captcha_answer = 1)
 
-                            if($test_captcha_mode = 0)
-                                Random_click_in(719,278,762,338)
-                            else
-                                Random_move_in(719,278,762,338)
-                            end_if
+                        if($test_captcha_mode = 0)
+                            Random_click_in(719,278,762,338)
+                        else
+                            Random_move_in(719,278,762,338)
+                        end_if
+                    end_if
 
-                        case(2)
+                    if($captcha_answer = 2)
 
-                            if($test_captcha_mode = 0)
-                                Random_click_in(823,312,866,373)
-                            else
-                                Random_move_in(823,312,866,373)
-                            end_if
+                        if($test_captcha_mode = 0)
+                            Random_click_in(823,312,866,373)
+                        else
+                            Random_move_in(823,312,866,373)
+                        end_if
+                    end_if
 
-                        case(3)
+                    if($captcha_answer = 3)
+                        if($test_captcha_mode = 0)
+                            Random_click_in(857,414,899,477)
+                        else
+                            Random_move_in(857,414,899,477)
+                        end_if
+                    end_if
 
-                            if($test_captcha_mode = 0)
-                                Random_click_in(857,414,899,477)
-                            else
-                                Random_move_in(857,414,899,477)
-                            end_if
+                    if($captcha_answer = 4)
 
-                        case(4)
+                        if($test_captcha_mode = 0)
+                            Random_click_in(820,517,864,584)
+                        else
+                            Random_move_in(820,517,864,584)
+                        end_if
+                    end_if
 
-                            if($test_captcha_mode = 0)
-                                Random_click_in(820,517,864,584)
-                            else
-                                Random_move_in(820,517,864,584)
-                            end_if
+                    if($captcha_answer = 5)
 
-                        case(5)
+                        if($test_captcha_mode = 0)
+                            Random_click_in(719,551,760,618)
+                        else
+                            Random_move_in(719,551,760,618)
+                        end_if
+                    end_if
 
-                            if($test_captcha_mode = 0)
-                                Random_click_in(719,551,760,618)
-                            else
-                                Random_move_in(719,551,760,618)
-                            end_if
+                    if($captcha_answer = 6)
 
-                        case(6)
+                        if($test_captcha_mode = 0)
+                            Random_click_in(615,516,661,582)
+                        else
+                            Random_move_in(615,516,661,582)
+                        end_if
+                    end_if
 
-                            if($test_captcha_mode = 0)
-                                Random_click_in(615,516,661,582)
-                            else
-                                Random_move_in(615,516,661,582)
-                            end_if
+                    if($captcha_answer = 7)
 
-                        case(7)
+                        if($test_captcha_mode = 0)
+                            Random_click_in(582,411,625,478)
+                        else
+                            Random_move_in(582,411,625,478)
+                        end_if
+                    end_if
 
-                            if($test_captcha_mode = 0)
-                                Random_click_in(582,411,625,478)
-                            else
-                                Random_move_in(582,411,625,478)
-                            end_if
+                    if($captcha_answer = 8)
 
-                        case(8)
+                        if($test_captcha_mode = 0)
+                            Random_click_in(616,309,660,372)
+                        else
+                            Random_move_in(616,309,660,372)
+                        end_if
+                    end_if
 
-                            if($test_captcha_mode = 0)
-                                Random_click_in(616,309,660,372)
-                            else
-                                Random_move_in(616,309,660,372)
-                            end_if
-
-                    END_SWITCH
 
                     WAIT(0.5)
                     GETSCREEN

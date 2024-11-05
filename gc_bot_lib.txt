@@ -104,7 +104,8 @@ SUB(CheckMimic)
 
             logwrite($_date_str, " mimic check")
 
-            IF_PIXEL_IN(437,768,1339,855,2857416)
+            colormode(4,437,768,1339,855)
+            IF_PIXEL_IN(437,768,1339,855,3121103)
 
                 $mimic_randomizer = rnd(1,100)
                 //logwrite("mimic return: ", $_return1, ", ", $_return2)

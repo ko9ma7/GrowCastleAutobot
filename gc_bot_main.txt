@@ -48,7 +48,10 @@ WHILE(true)
                 WaitForAdAndWatch() // ?
                 TryUpgradeHero()
                 TryUpgradeTower()
-                Replay()
+                //Replay()
+                $replaysforupg = 100
+                wait(0.1)
+                logwrite("123")
 
                 $prev_frame_game_status = 2
 

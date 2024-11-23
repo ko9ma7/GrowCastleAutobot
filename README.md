@@ -9,7 +9,7 @@ Requirements:
 ### Instructions are in the file gcAutobot_guide.pdf
 ### Read instuctions carefully before use!
 
-<br/><br/>
+## ⚠️Warning: using this to gain an advantage will result in a ban. Use for fun
 
 # Change Log
 

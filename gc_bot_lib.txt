@@ -1021,7 +1021,7 @@ sub(MakeCleanup)
             GETSCREEN
             $stopwatch = $stopwatch + 1
 
-        END_CYC
+        END_CYCk
 
         IF($stopwatch<50)
 
@@ -2726,7 +2726,7 @@ Sub(UpgradeHero)
             CountCrystals(0)
             $upgradecounter = 0
 
-            WHILE(($crystals_count_result > 7) & ($upgradecounter < 80))
+            WHILE(($crystals_count_result > 7) & ($upgradecounter < 3))
 
                 $cyanpxls = pxlcount(958,586,1126,621, 16768256)
                 // logwrite("cyanpxls: ", $cyanpxls)

@@ -9,6 +9,8 @@ Requirements:
 ### Instructions are in the file gcAutobot_guide.pdf
 ### Read instuctions carefully before use!
 
+## ❓ If you encounter problems during clicker setup, open an issue, or create new discussion in `Discussions` section
+
 ## ⚠️Warning: using this to gain an advantage will result in a ban. Use for fun
 
 # Change Log

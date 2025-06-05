@@ -17,6 +17,11 @@ Requirements:
 
 All notable changes will be here.
 
+## 📅 05.06.2025 📅
+
+### ⏳ New feature in development
+Started making WPF app for clicker to replace external program for simulating user input.
+
 ## 📅 09.09.2024 📅
 
 ### ✅ Fixed
